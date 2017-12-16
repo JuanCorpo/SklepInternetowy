@@ -15,7 +15,6 @@ $sql = new SQL();
 
 $_SESSION['menuData'] = $sql->GetMenuData($sql);
 
-echo "<br>aą cc nń oó lł zż xź";
 echo "<pre>";
 print_r($_SESSION['menuData']);
 die();
