@@ -15,12 +15,6 @@ $sql = new SQL();
 
 $_SESSION['menuData'] = $sql->GetMenuData($sql);
 
-echo "<h1>Connected To Deploy Server Working</h1>";
-
-echo "<pre>";
-print_r($_SESSION['menuData']);
-die();
-
 echo '<div id="MainContainer" class="panel-body container">';
 
     $route->submit($sql);
