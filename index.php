@@ -15,7 +15,7 @@ $sql = new SQL();
 
 $_SESSION['menuData'] = $sql->GetMenuData($sql);
 
-echo "<h1>Connected To Deploy Server 2</h1>";
+echo "<h1>Connected To Deploy Server Working</h1>";
 
 echo "<pre>";
 print_r($_SESSION['menuData']);
