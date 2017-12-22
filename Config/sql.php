@@ -9,15 +9,15 @@ class SQL
 
     public function __construct()
     {
-        $this->host = 'localhost';
-        $this->user = 'Alan';
-        $this->pass = 'Alan';
-        $this->base = 'juancorp';
-
-        //$this->host = 'mysql.cba.pl';
-        //$this->user = 'AllonerCorp';
-        //$this->pass = 'AllonerCorp12';
+        //$this->host = 'localhost';
+        //$this->user = 'Alan';
+        //$this->pass = 'Alan';
         //$this->base = 'juancorp';
+
+        $this->host = 'mysql.cba.pl';
+        $this->user = 'AllonerCorp';
+        $this->pass = 'AllonerCorp12';
+        $this->base = 'juancorp';
     }
 
     public function Query($query)
