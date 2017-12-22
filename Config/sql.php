@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class SQL
 {
@@ -12,7 +12,7 @@ class SQL
         $this->host = 'localhost';
         $this->user = 'Alan';
         $this->pass = 'Alan';
-        $this->base = 'shop';
+        $this->base = 'juancorp';
 
         //$this->host = 'mysql.cba.pl';
         //$this->user = 'AllonerCorp';

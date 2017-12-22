@@ -1,5 +1,5 @@
-﻿<nav id="Header" class="navbar navbar-default" style="margin-bottom: 0px;">
-    <div class="container" style="width: 1170p">
+<nav id="Header" class="navbar navbar-default" style="margin-bottom: 0px;">
+    <div class="container" style="width: 1170px">
         <div class="container-fluid">
 
             <div id="TopMenuContainer">
@@ -30,7 +30,7 @@
 
                         </div>
                         <div id="UserPanel">
-                            <a href="/Login/Index">
+                            <a href="/Account/Index">
                                 <div id="UserProfile">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-user"></span>

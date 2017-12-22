@@ -15,16 +15,16 @@ if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
 <div class="text-center ">
 
     <div class="footer" id="footer">
-        <div class="container">
+        <div class="container" style="width: 1170px">
             <div class="row">
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Strona </h3>
                     <ul>
                         <li><a href="#"> Język strony </a></li>
                         <li><a href="#"> Motyw strony </a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Pomocne linki </h3>
                     <ul>
                         <li><a href="#"> Jak kupić na raty </a></li>
@@ -33,7 +33,7 @@ if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
                         <li><a href="#"> Gwarancje </a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Informacje prawne </h3>
                     <ul>
                         <li><a href="#"> Regulamin </a></li>
@@ -42,7 +42,7 @@ if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
                         <li><a href="#"> Materiały do pobrania </a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Sklep </h3>
                     <ul>
                         <li><a href="#"> Kontakt </a></li>
@@ -53,7 +53,7 @@ if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
                         <li><a href="#"> Nasze referencje </a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
+                <div class="col-md-3">
                     <h3 style="font-size: 12pt;"> Newsletter </h3>
                     <ul>
                         <li>
@@ -78,8 +78,8 @@ if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
     </div>
     <!--/.footer-->
 
-    <div class="footer-bottom">
-        <div class="container">
+    <div class="footer-bottom" >
+        <div class="container"style="width: 1170px">
             <p class="pull-left"> Copyright © Footer <?php echo date("Y"); ?>. All right reserved. </p>
             <div class="pull-right">
                 <ul class="nav nav-pills payments">

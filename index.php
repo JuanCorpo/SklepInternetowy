@@ -1,14 +1,16 @@
-﻿<html lang="pl-PL">
+<html lang="pl-PL">
 <?php
 session_start();
-
+echo "<head>";
 include_once("Views/Shared/Includes.php");
+echo "</head>";
 
 echo "<body>";
 include_once("Views/Shared/Menu.php");
 
 include_once("Config/route.php");
 include_once("Config/sql.php");
+
 
 $route = new Route();
 $sql = new SQL();

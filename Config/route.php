@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class Route
 {
@@ -7,10 +7,6 @@ class Route
         $uriGetParam = isset($_GET['uri']) ? '' . $_GET['uri'] : '';
 
         $data = explode('/', $uriGetParam);
-
-        // if(isset($_POST['name']) && $_POST['name'] != ""){
-        //    $data[] = $_POST['name'];
-        //}
 
         if (count($data) <= 1) {
             $this->Redirect("Home", "Index", $sql);
@@ -32,8 +28,9 @@ class Route
         echo "<pre>";
         print_r($data);
         echo "</pre>";
-        throw new Exception("There is no such controller or action or action with given parameters. Check the URL");
-        die();
+        //throw new Exception("There is no such controller or action or action with given parameters. Check the URL");
+        echo"<div style='color:red;text-align: center;'><h1 style='color:red;'>Exception</h1>There is no such controller or action or action with given parameters. Check the URL</div>";
+       // die();
 
         $this->Redirect("Home", "Index", $sql);
         return;

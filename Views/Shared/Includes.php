@@ -1,4 +1,4 @@
-﻿<head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <link href="/Styles/font-awesome.min.css" rel="stylesheet">
@@ -11,8 +11,4 @@
     <script src="/Scripts/bootstrap.js"></script>
     <script src="/Scripts/Custom/CookieAccept.js"></script>
     <script src="/Scripts/Custom/MenuSubcategories.js"></script>
-
-    <?php //<script href="/Scripts/bootstrap.min.js"></script> ?>
-    <?php //<script href="/Scripts/jquery-1.10.2.min.js"></script> ?>
-
 </head>

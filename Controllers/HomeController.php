@@ -7,8 +7,6 @@ include_once("./Code/CustomClasses/Product.php");
 
 class HomeController
 {
-    private $model;
-
     public function Index()
     {
         $model = new HomeModel();
