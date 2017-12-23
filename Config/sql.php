@@ -2,6 +2,8 @@
 
 class SQL
 {
+    private $conn;
+
     private $host;
     private $base;
     private $user;
@@ -9,33 +11,34 @@ class SQL
 
     public function __construct()
     {
-        //$this->host = 'localhost';
-        //$this->user = 'Alan';
-        //$this->pass = 'Alan';
-        //$this->base = 'juancorp';
-
-        $this->host = 'mysql.cba.pl';
-        $this->user = 'AllonerCorp';
-        $this->pass = 'AllonerCorp12';
+        $this->host = 'mysql.cba.pl';//'localhost';//
+        $this->user = 'AllonerCorp';//'Alan';//
+        $this->pass = 'AllonerCorp12';//'Alan';//
         $this->base = 'juancorp';
     }
 
     public function Query($query)
     {
-        $conn = new mysqli($this->host, $this->user, $this->pass, $this->base);
+        $this->Connect();
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        mysqli_query($this->conn,"SET CHARSET utf8");
+        mysqli_query($this->conn,"SET NAMES `utf8` COLLATE `utf8_polish_ci`");
 
-        mysqli_query($conn,"SET CHARSET utf8");
-        mysqli_query($conn,"SET NAMES `utf8` COLLATE `utf8_polish_ci`");
+        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
 
-        $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
-
-        $conn->close();
+        $this->Disconnect();
 
         return $result;
+    }
+
+    public function SqlResultToArray($sqlResult)
+    {
+        $data = array();
+        while ($d = $sqlResult->fetch_assoc()) {
+            $data[] = $d;
+        }
+
+        return $data;
     }
 
     public function GetMenuData()
@@ -50,20 +53,17 @@ class SQL
         return $data;
     }
 
-    public function MenuDataToJSON()
+    private function Connect()
     {
-        $data = $this->GetMenuData();
+        $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->base);
 
-        //initialize array
-        $myArray = array();
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+    }
 
-        //set up the nested associative arrays using literal array notation
-        foreach ($data as $row)
-            $myArray[] = array("id" => $row['CategoryId'], "name" => $row['CategoryName'], "parent" => $row['ParentId']);
-
-        //convert to json
-        $json = json_encode($myArray);
-
-        return $json;
+    private function Disconnect()
+    {
+        $this->conn->close();
     }
 }
