@@ -2,8 +2,9 @@
 function AccountProfileView($model)
 {
     echo "Profil";
-    echo "<a id='DeLogIn'>WyLoguj</a>";
+    echo "<a href='/Account/LogoutPost'>WyLoguj</a>";
 }
+
 ?>
 
 

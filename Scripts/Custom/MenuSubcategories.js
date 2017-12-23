@@ -6,65 +6,65 @@ var eBuff;
 
 $(document).ready(function () {
 
-    $(".MainMenuButton").mouseenter(function (e) {
+    $(document).on("mouseenter", '.MainMenuButton', function(e) {
         onButton = true;
         if (menuActive) {
             ShowModal(e);
-        }else {
+        } else {
             eBuff = e;
-                setTimeout(function () {
-                    if((onButton || onModal) && e == eBuff) {
-                        ShowModal(e);
-                    }
-                }, animationTimeout);
+            setTimeout(function () {
+                if ((onButton || onModal) && e == eBuff) {
+                    ShowModal(e);
+                }
+            }, animationTimeout);
         }
     });
-    $(".MainMenuButton").mouseleave(function () {
+
+    $(document).on("mouseleave", '.MainMenuButton', function() {
         onButton = false;
         HideModal();
     });
 
-
-    $("#MainModalContent").mouseenter(function () {
+    $(document).on("mouseenter", '#MainModalContent', function() {
         onModal = true;
     });
-    $("#MainModalContent").mouseleave(function () {
+
+    $(document).on("mouseleave", '#MainModalContent', function() {
         onModal = false;
         HideModal();
     });
 
-    function ShowModal(e){
+    function ShowModal(e) {
         menuActive = true;
         var mainCategoryId = document.getElementById(e.target.id).getAttribute("category");
         LoadSubcategories(mainCategoryId);
     }
 
     function HideModal() {
-            setTimeout(function () {
-                if (menuActive && (!onButton && !onModal)) {
-                    menuActive = false;
-                    $("#MainContainerModal").hide();
-                }
-            }, animationTimeout);
+        setTimeout(function () {
+            if (menuActive && (!onButton && !onModal)) {
+                menuActive = false;
+                $("#MainContainerModal").hide();
+            }
+        }, animationTimeout);
+    }
+
+    function LoadSubcategories(rootCategoryId) {
+        $.ajax({
+            url: '/Scripts/ajax/menuSubcategories.php',
+            data: {
+                ID: rootCategoryId
+            },
+            type: 'POST',
+
+            error: function () {
+                console.log("ERROR");
+            },
+            success: function (data) {
+                $("#MainModalContent").html(data);
+                $("#MainContainerModal").show();
+            }
+        });
+
     }
 });
-
-function LoadSubcategories(rootCategoryId) {
-
-    $.ajax({
-        url: '/Scripts/ajax/menuSubcategories.php',
-        data: {
-            ID: rootCategoryId
-        },
-        type: 'POST',
-
-        error: function () {
-            console.log("ERROR");
-        },
-        success: function (data) {
-            $("#MainModalContent").html(data);
-            $("#MainContainerModal").show();
-        }
-    });
-
-}

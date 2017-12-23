@@ -1,5 +1,7 @@
 <?php
-if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
+include_once ('./Code/CustomFunctions/Cookie.php');
+
+if (!isCookieEqual('Cookie',true)) {
     ?>
     <div class="alert alert-dismissible alert-warning navbar-fixed-bottom">
         <button type="button" onclick="CookieAccept()" class="close" data-dismiss="alert">&times;</button>
@@ -12,9 +14,9 @@ if (!(isset($_COOKIE['Cookie']) && $_COOKIE['Cookie'] == true)) {
 
 <?php } ?>
 
-<div class="text-center ">
 
     <div class="footer" id="footer">
+        <div class="text-center ">
         <div class="container" style="width: 1170px">
             <div class="row">
                 <div class="col-md-2">
