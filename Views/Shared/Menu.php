@@ -1,4 +1,10 @@
-<nav id="Header" class="navbar navbar-default" style="margin-bottom: 0px;">
+<?php
+if (!isset($_SESSION)) {
+    include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
+    session_start();
+}
+?>
+
     <div class="container" style="width: 1170px">
         <div class="container-fluid">
 
@@ -34,7 +40,17 @@
                                 <div id="UserProfile">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-user"></span>
-                                    <div style="display: inline-block;">Zaloguj się <br/> Załóż konto</div>
+                                    <div style="display: inline-block;">
+                                        <?php
+                                        if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
+                                            $session = unserialize($_SESSION['user']);
+                                            echo $session->FirstName . '<br/>' . $session->SurName;
+                                        } else {
+                                            echo "Zaloguj się <br/> Załóż konto";
+                                        }
+                                        ?>
+
+                                    </div>
                                 </div>
                             </a>
                             <a href="###">
@@ -70,10 +86,5 @@
 
         </div>
     </div>
-</nav>
 
-<div id="MainContainerModal" style="">
-    <div id="MainModalContent" class="container">
 
-    </div>
-</div>
