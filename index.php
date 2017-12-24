@@ -8,7 +8,12 @@ include_once("Config/DatabaseContext.php");;
 //include_once("Views/Shared/Menu.php");
 include_once("Config/route.php");
 include_once("Models/UserModel.php");
-//session_start();
+session_start();
+
+//echo "<h3>Sesion save path & id:</h3>";
+//echo "<pre>";
+//echo session_save_path() . " " . session_id();
+//echo "</pre>";
 
 $route = new Route();
 $context = new DatabaseContext();
