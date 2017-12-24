@@ -21,9 +21,9 @@ class AccountController
     public function Index($model)
     {
         if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
-            $this->Profile($model);
+            return $this->Profile($model);
         } else {
-            $this->Login($model, 0);
+            return $this->Login($model, 0);
         }
     }
 
@@ -71,14 +71,16 @@ class AccountController
                 } else {
                     $model->UserPrivateMail = "";
                     $model->ErrorLogin = "Nie zaakceptowano regulaminu!";
+                    return $this->Login($model, 1);
                 }
             } else {
                 $model->UserPrivateMail = "";
                 $model->ErrorLogin = "Istnieje już konto z podanym adresem email!";
+                return $this->Login($model, 1);
             }
 
         }
-        return $this->Login($model, 1);
+        return $this->Index($model);
     }
 
     public function AddToNewsLetter()
@@ -88,8 +90,7 @@ class AccountController
         }
     }
 
-    public
-    function LoginPost()
+    public function LoginPost()
     {
         $password = sha1($_POST['Password']);
         $model = new UserModel();
@@ -107,14 +108,14 @@ class AccountController
                     setNewCookie("TOKEN", $newToken, 365);
                     $this->context->Users->SaveToken($model->Id, $newToken);
                 }
-
-                return $this->Login($model, 1);
+                return $this->Index($model);
             }
+        }else{
+            $model->UserPrivateMail = "";
+            $model->ErrorLogin = "Dane logowania nie są poprawne.";
+
+            return $this->Index($model);
         }
-
-        $model->UserPrivateMail = "";
-        $model->ErrorLogin = "Dane logowania nie są poprawne.";
-
 
         return $this->Login($model, 1);
     }
