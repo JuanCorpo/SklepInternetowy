@@ -99,7 +99,7 @@ echo "</pre>";
                             $name = $_SESSION['menuData'][$i]['CategoryName'];
                             $Id = $_SESSION['menuData'][$i]['CategoryId'];
 
-                            echo "<li style='margin: 0 20px;'><a class=\"navbar-brand MainMenuButton\" id='MainButton_$Id' category='$Id' href=\"/Categories/Show/$Id\">$name</a></li>";
+                            echo "<li style='margin: 0 20px;'><a class=\"navbar-brand MainMenuButton\" id='MainButton_$Id' category='$Id' href=\"/Products/ListFor/$Id\">$name</a></li>";
                         }
                     }
                     ?>

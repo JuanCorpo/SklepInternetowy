@@ -89,7 +89,7 @@ class Users
             $res = $this->SQL->Query("SELECT * FROM users WHERE UserId=$ID AND ValidationToken='$TOKEN'");
             $res = $this->SQL->SqlResultToArray($res);
 
-            if (count(count($res) == 1)) {
+            if (count($res)==1) {
 
                 $this->UserModel->Id = $res[0]['UserId'];
                 $this->UserModel->UserName = $res[0]['UserName'];

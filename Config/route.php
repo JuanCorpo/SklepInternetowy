@@ -51,8 +51,9 @@ class Route
         $class = new $useController($context);
 
         if ($data != null && count($data) == 3) {
-            $Params = $data[2];
-            $class->$Action($Params);
+            $class->$Action($data[2]);
+        } else if ($data != null && count($data) == 4) {
+            $class->$Action($data[2],$data[3]);
         } else {
             $class->$Action(null);
         }

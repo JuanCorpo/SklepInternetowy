@@ -35,7 +35,7 @@ function ShowForCategory($array, $mainCategoryId, $level, $pevLevel)
                     $fr .= "<b>";
                 }
 
-                $fr .= "<a style='font-size: $size;display: inline-block;' href='/products/show/$row[CategoryId]'>$row[CategoryName]</a>";
+                $fr .= "<a style='font-size: $size;display: inline-block;' href='/Products/ListFor/$row[CategoryId]'>$row[CategoryName]</a>";
 
                 if ($level == $pevLevel) {
                     $fr .= "</b>";

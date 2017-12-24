@@ -114,28 +114,28 @@ class AccountController
                     setNewCookie("TOKEN", $newToken, 365);
                     $this->context->Users->SaveToken($model->Id, $newToken);
                 }
-                return $this->Index($model);
             }
         } else {
             $model->UserPrivateMail = "";
             $model->ErrorLogin = "Dane logowania nie są poprawne.";
 
-            return $this->Index($model);
+            return $this->Login($model, 1);
         }
 
-        return $this->Login($model, 1);
+        header("Location: /");
     }
 
-    public
-    function LogoutPost()
+    public function LogoutPost()
     {
         if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
-            $session = unserialize($_SESSION['user']);
-
             deleteCookie("ID");
             deleteCookie("TOKEN");
-            $this->context->Users->SaveToken($session->Id, "");
+
+            $session = unserialize($_SESSION['user']);
+            $id = $session->Id;
+
             $_SESSION['user'] = null;
+            $this->context->Users->SaveToken($id, "");
         }
 
         $this->Index(null);
