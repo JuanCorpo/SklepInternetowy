@@ -45,11 +45,17 @@ class AccountController
         if (ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
             $model = $this->context->Users->GetUserByEmail($_POST['Email']);
 
-            // TODO Dodać walidacje danych
+            $pass = $_POST['Password'];
 
             if ($model == null) {
                 $model = new UserModel();
                 $email = $_POST['Email'];
+
+                if(strlen($pass) < 7) {
+                    $model->UserPrivateMail = "";
+                    $model->ErrorLogin = "Minimalna liczba znaków to 7";
+                    return $this->Login($model, 1);
+                }
 
                 if (isset($_POST['Policies'])) {
 
@@ -59,9 +65,9 @@ class AccountController
                     $model->EmailConfirmed = false;
                     $model->IsActive = true;
                     $model->IsPasswordChangeRequired = false;
-                    $model->CreationDate = date('d-m-Y H:i:s');
+                    $model->CreationDate = date('Y-m-d H:i:s');
 
-                    $this->context->Users->AddNewUser($model, sha1($_POST['Password']));
+                    $this->context->Users->AddNewUser($model, sha1($pass));
 
                     if (isset($_POST['Newsletter'])) {
                         $this->context->Users->AddToNewsletter($email);
@@ -110,7 +116,7 @@ class AccountController
                 }
                 return $this->Index($model);
             }
-        }else{
+        } else {
             $model->UserPrivateMail = "";
             $model->ErrorLogin = "Dane logowania nie są poprawne.";
 
