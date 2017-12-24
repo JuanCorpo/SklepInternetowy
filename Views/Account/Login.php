@@ -28,7 +28,7 @@ function AccountLoginView($model,$view)
             </ul>
             <div id='myTabContent' class='tab-content'>
                 <br/>
-                <div class='tab-pane fade $login' id='home'>
+                <div class='tab-pane fade active in' id='home'>
                     <form id='loginForm' method='post' action='/Account/LoginPost'>
                         <fieldset>
                             <div class='row'>
@@ -68,7 +68,7 @@ function AccountLoginView($model,$view)
                         </fieldset>
                     </form>
                 </div>
-                <div class='tab-pane fade $register' id='profile'>
+                <div class='tab-pane fade' id='profile'>
                     <form id='registerForm' method='post' action='/Account/RegisterPost'>
                         <fieldset>
                             <div class='row'>

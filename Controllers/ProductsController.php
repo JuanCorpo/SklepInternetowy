@@ -1,6 +1,7 @@
 <?php
 include_once('./Code/CustomFunctions/Cookie.php');
-include_once("./Models/UserModel.php");
+include_once("./Models/ProductModel.php");
+include_once("./ViewModel/ProductListViewModel.php");
 include_once("./Code/Helpers/AreVarsSet.php");
 include_once("./Code/CustomFunctions/Cookie.php");
 include_once("./Config/DatabaseContext.php");
@@ -11,6 +12,7 @@ foreach (glob("./Views/Products/*.php") as $filename) {
 class ProductsController
 {
     private $context;
+    private $model;
 
     public function __construct($sql)
     {
@@ -19,7 +21,17 @@ class ProductsController
 
     public function ListFor($category)
     {
-        return ListFor($category);
+        $this->model = new ProductListViewModel(10,1);
+
+        $arr = $this->context->Products->GetProductsIdFrom($category,0); // Zwraca id kategori dla produktów
+
+        $arr = $this->context->Products->GetProductsFromCategories($arr);
+
+        $this->model->ItemList = $this->model->Populate($arr);
+
+        $this->model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
+
+        return ListFor($this->model);
     }
 
 }

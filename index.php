@@ -39,31 +39,19 @@ $_SESSION['menuData'] = $context->sql->GetMenuData();
 
 echo "</head>";
 echo "<body>";
+    echo "<nav id=\"Header\" class=\"navbar navbar-default\" style=\"margin-bottom: 0px;\">";
+        include_once("Views/Shared/Menu.php");
+    echo "</nav>
+    <div id=\"MainContainerModal\">
+        <div id=\"MainModalContent\" class=\"container\"></div>
+    </div>";
 
-echo "<nav id=\"Header\" class=\"navbar navbar-default\" style=\"margin-bottom: 0px;\">";
-include_once("Views/Shared/Menu.php");
-echo "</nav>
+    echo '<div id="MainContainer" class="panel-body container">';
+        echo $c;
+    echo '</div>';
 
-
-<div id=\"MainContainerModal\">
-    <div id=\"MainModalContent\" class=\"container\"></div>
-</div>";
-
-echo '<div id="MainContainer" class="panel-body container">';
-echo $c;
-echo '</div>';
-
-include_once("Views/Shared/Footer.php");
+    include_once("Views/Shared/Footer.php");
 echo "</body>";
-
-echo "<script>
-/*
-$.ajax({
-  url: \"/Views/Shared/Menu.php\"  
-}).done(function( msg ) {
-    document.getElementById('Header').innerHTML = msg; 
-  });
-       */ </script>";
 ob_end_flush();
 ?>
 </html>

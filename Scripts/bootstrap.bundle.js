@@ -6022,7 +6022,7 @@ var Tab = function () {
     ACTIVE: 'active',
     DISABLED: 'disabled',
     FADE: 'fade',
-    SHOW: 'show'
+    SHOW: 'in'// TODO UWAZAC : było 'show' jak co :/
   };
   var Selector = {
     DROPDOWN: '.dropdown',
