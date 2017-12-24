@@ -119,7 +119,7 @@ class Users
         $q = "
 INSERT INTO users VALUES ('',
 '$UserModel->UserName','$Password',$UserModel->UserRole,TRUE,FALSE,
-'$UserModel->UserPrivateMail','','',FALSE ,'$UserModel->CreationDate',
+'$UserModel->UserPrivateMail','$UserModel->UserPrivateMail','',FALSE ,'$UserModel->CreationDate',
 'https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-1/c43.0.148.148/p148x148/10354686_10150004552801856_220367501106153455_n.jpg?oh=9484fb0f3b0a4c91056f5a9875e81e36&oe=5AFB190F',
 ''
 )";
