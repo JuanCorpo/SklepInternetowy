@@ -1,7 +1,7 @@
 <?php
-include_once ('./Code/CustomFunctions/Cookie.php');
+include_once('./Code/CustomFunctions/Cookie.php');
 
-if (!isCookieEqual('Cookie',true)) {
+if (!isCookieEqual('Cookie', true)) {
     ?>
     <div class="alert alert-dismissible alert-warning navbar-fixed-bottom">
         <button type="button" onclick="CookieAccept()" class="close" data-dismiss="alert">&times;</button>
@@ -15,8 +15,8 @@ if (!isCookieEqual('Cookie',true)) {
 <?php } ?>
 
 
-    <div class="footer" id="footer">
-        <div class="text-center ">
+<div class="footer" id="footer">
+    <div class="text-center ">
         <div class="container" style="width: 1170px">
             <div class="row">
                 <div class="col-md-2">
@@ -60,8 +60,12 @@ if (!isCookieEqual('Cookie',true)) {
                     <ul>
                         <li>
                             <div class="input-append newsletter-box text-center">
-                                <input type="text" class="full text-center" placeholder="Twój adres e-mail...">
-                                <button class="btn  bg-gray" type="button"> Zapisz się do newslettera <i class="fa fa-long-arrow-right"> </i></button>
+                                <form id='newsLetterForm' method='post' action='/Account/AddToNewsLetter'>
+                                    <input type="text" name="Email" class="full text-center"
+                                           placeholder="Twój adres e-mail...">
+                                    <button class="btn  bg-gray" type="submit"> Zapisz się do newslettera <i
+                                                class="fa fa-long-arrow-right"> </i></button>
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -80,8 +84,8 @@ if (!isCookieEqual('Cookie',true)) {
     </div>
     <!--/.footer-->
 
-    <div class="footer-bottom" >
-        <div class="container"style="width: 1170px">
+    <div class="footer-bottom">
+        <div class="container" style="width: 1170px">
             <p class="pull-left"> Copyright © Footer <?php echo date("Y"); ?>. All right reserved. </p>
             <div class="pull-right">
                 <ul class="nav nav-pills payments">

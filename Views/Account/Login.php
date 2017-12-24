@@ -1,9 +1,12 @@
 <?php
-function AccountLoginView($model)
+function AccountLoginView($model,$view)
 {
     echo"<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
     $Email = "";
     $ErrorLogin = "";
+    $login = $view==0?"active in":"";
+    $register = $view!=0?"active in":"";
+
     if($model != null)
     {
         $ErrorLogin= $model->ErrorLogin;
@@ -25,7 +28,7 @@ function AccountLoginView($model)
             </ul>
             <div id='myTabContent' class='tab-content'>
                 <br/>
-                <div class='tab-pane fade active in' id='home'>
+                <div class='tab-pane fade $login' id='home'>
                     <form id='loginForm' method='post' action='/Account/LoginPost'>
                         <fieldset>
                             <div class='row'>
@@ -65,7 +68,7 @@ function AccountLoginView($model)
                         </fieldset>
                     </form>
                 </div>
-                <div class='tab-pane fade' id='profile'>
+                <div class='tab-pane fade $register' id='profile'>
                     <form id='registerForm' method='post' action='/Account/RegisterPost'>
                         <fieldset>
                             <div class='row'>
@@ -92,12 +95,13 @@ function AccountLoginView($model)
                                         </label>
                                     </div>
 
-                                    <div class='checkbox form-check disabled'>
+                                    <div class='checkbox form-check'>
                                         <label class='form-check-label'>
                                             <input class='form-check-input' type='checkbox' name='Policies'>
                                             Akceptuje <a href='/Site/Policies'>regulamin</a> sklepu
                                         </label>
                                     </div>
+                                    <p class=\"text-danger text-center\">$ErrorLogin</p>
                                     <button type='submit' class='btn btn-primary col-md-12'>Zarejestruj</button>
                                 </div>
                             </div>
