@@ -39,7 +39,18 @@ $_SESSION['menuData'] = $context->sql->GetMenuData();
 
 echo "</head>";
 echo "<body>";
+
+
     echo "<nav id=\"Header\" class=\"navbar navbar-default\" style=\"margin-bottom: 0px;\">";
+
+
+if(isset($_SESSION['user']) && $_SESSION['user'] != null){
+    $session = unserialize($_SESSION['user']);
+    if($session->UserRole == 1){
+        include_once "Views/Shared/_AdministrationBar.php";
+    }
+}
+
         include_once("Views/Shared/Menu.php");
     echo "</nav>
     <div id=\"MainContainerModal\">

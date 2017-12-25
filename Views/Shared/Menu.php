@@ -5,28 +5,6 @@ if (!isset($_SESSION)) {
     include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
     session_start();
 }
-/*
-echo "<h3>Session save path & id:</h3>";
-echo "<pre>";
-echo session_save_path() . " " . session_id();
-echo "</pre>";
-
-echo "<h3>Session user:</h3>";
-echo "<pre>";
-print_r($_SESSION['user']);
-echo "</pre>";
-
-echo "<h3>Session userialized user:</h3>";
-$session = unserialize($_SESSION['user']);
-echo "<pre>";
-print_r($session);
-echo "</pre>";
-
-echo "<h3>Session menu:</h3>";
-echo "<pre>";
-print_r($_SESSION['menuData']);
-echo "</pre>";
-*/
 ?>
 
     <div class="container" style="width: 1170px">

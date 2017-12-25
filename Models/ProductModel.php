@@ -8,6 +8,14 @@
 
 class ProductModel
 {
+    public $ProductId;
+    public $CategoryId;
     public $Name;
-    public $Id;
+    public $Price;
+    public $Rating;
+    public $NoOfRatings;
+    public $StockSize;
+    public $ProductEmployeeId;
+
+    public $Parameters = [];
 }

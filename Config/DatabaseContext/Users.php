@@ -3,13 +3,14 @@
 
 class Users
 {
+    private $Context;
     private $SQL;
     private $UserModel;
 
-    public function __construct($sql)
+    public function __construct($context)
     {
-        $this->SQL = $sql;
-
+        $this->Context = $context;
+        $this->SQL = $this->Context->sql;
     }
 
     public function GetUserByEmail($Email)

@@ -1,5 +1,5 @@
 <?php
-function HomeIndexView($controller, $model)
+function HomeIndexView($model)
 {
     ?>
 

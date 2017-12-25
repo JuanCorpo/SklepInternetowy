@@ -3,14 +3,15 @@
 class Products
 {
     private $ProductModel;
+    private $Context;
     private $SQL;
 
     private $productList = [];
 
-    public function __construct($sql)
+    public function __construct($context)
     {
-        $this->SQL = $sql;
-
+        $this->Context = $context;
+        $this->SQL = $this->Context->sql;
     }
 
     public function LoadProductForCategory($CategoryId)
@@ -30,37 +31,24 @@ class Products
         return $data;
     }
 
+    private $result = [];
+
     function ShowForCategory($array, $mainCategoryId, $level)
     {
-        $fr = "";
-
         foreach ($array as $row) {
-            $i = $row['CategoryId'];
-
             if (($level == 0 && $row['CategoryId'] == $mainCategoryId) || $row['ParentId'] == $mainCategoryId) {
-                if ($row['ParentId'] != 0) {
-
-                    $fr .= "<div id='menuBtn_$i' class='menuButton' style='width: 250px;float:left'>";
-
-                    if ($level == 0) {
-                        $fr .= "<b>";
-                    }
-
-                    $fr .= "<a style='display: inline-block;' href='/Products/ListFor/$row[CategoryId]'>$row[CategoryName]</a>";
-
-                    if ($level == 0) {
-                        $fr .= "</b>";
-                    }
-
-                    $fr .= "</div>";
+                if ($row['ParentId'] != 0 && $mainCategoryId != $row['CategoryId']) {
+                    $this->result[] = new ProductModel();
+                    $this->result[count($this->result) - 1]->Name = $row['CategoryName'];
+                    $this->result[count($this->result) - 1]->Id = $row['CategoryId'];
                 }
 
                 if ($row['ParentId'] == $mainCategoryId) {
-                    $fr .= $this->ShowForCategory($array, $row['CategoryId'], $level + 1);
+                    $this->ShowForCategory($array, $row['CategoryId'], $level + 1);
                 }
             }
         }
-        return $fr;
+        return $this->result;
     }
 
     function GetProductsIdFrom($CategoryId, $level)
@@ -90,17 +78,44 @@ class Products
 
             while ($d = $result->fetch_assoc()) {
                 $products[] = new ProductModel();
+                $products[count($products) - 1]->ProductId = $d['ProductId'];
+                $products[count($products) - 1]->CategoryId = $d['CategoryId'];
                 $products[count($products) - 1]->Name = $d['ProductName'];
-                $products[count($products) - 1]->Id = $d['ProductId'];
+                $products[count($products) - 1]->Price = $d['ProductPrice'];
+                $products[count($products) - 1]->Rating = $d['Rating'];
+                $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
+                $products[count($products) - 1]->StockSize = $d['StockStatus'];
+                $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
+
+                $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);
             }
         }
         return $products;
     }
 
-    function GetAllProductsFrom($categoryId)
+    function GetProduct($productId)
     {
-        $ProductList = null;
+        $product = null;
+        $product = new ProductModel();
 
+        $result = $this->SQL->Query("SELECT * FROM products WHERE ProductId=$productId");
+        $result = $this->Context->sql->SqlResultToArray($result);
 
+        if (count($result) == 1) {
+
+            $product->ProductId = $result[0]['ProductId'];
+            $product->CategoryId = $result[0]['CategoryId'];
+            $product->Name = $result[0]['ProductName'];
+            $product->Price = $result[0]['ProductPrice'];
+            $product->Rating = $result[0]['Rating'];
+            $product->NoOfRatings = $result[0]['NumberOfBought'];
+            $product->StockSize = $result[0]['StockStatus'];
+            $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
+
+            $product->Parameters = $this->Context->Parameters->LoadParametersForProduct($result[0]['ProductId']);
+
+        }
+        return $product;
     }
+
 }

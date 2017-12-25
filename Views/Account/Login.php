@@ -1,15 +1,19 @@
 <?php
-function AccountLoginView($model,$view)
+function AccountLoginView($model, $view)
 {
-    echo"<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
-    $Email = "";
+    echo "<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
+    $register  = "active in";
+    $login = "";
     $ErrorLogin = "";
-    $login = $view==0?"active in":"";
-    $register = $view!=0?"active in":"";
+    $Email = "";
 
-    if($model != null)
-    {
-        $ErrorLogin= $model->ErrorLogin;
+    if ($view == 0) {
+        $login = "active in";
+        $register = "";
+    }
+
+    if ($model != null) {
+        $ErrorLogin = $model->ErrorLogin;
         $Email = $model->UserPrivateMail;
     }
 
@@ -19,8 +23,8 @@ function AccountLoginView($model,$view)
 
 
             <ul class='nav nav-tabs'>
-                <li class='nav-item col-md-offset-4' style='font-size: 20px;'>
-                    <a class='nav-link active' data-toggle='tab' href='#home'>Logowanie</a>
+                <li class='nav-item col-md-offset-4 ' style='font-size: 20px;'>
+                    <a class='nav-link' data-toggle='tab' href='#home'>Logowanie</a>
                 </li>
                 <li class='nav-item col-md-offset-1' style='font-size: 20px;'>
                     <a class='nav-link' data-toggle='tab' href='#profile'>Rejestracja</a>
@@ -28,7 +32,7 @@ function AccountLoginView($model,$view)
             </ul>
             <div id='myTabContent' class='tab-content'>
                 <br/>
-                <div class='tab-pane fade active in' id='home'>
+                <div class='tab-pane fade $login' id='home'>
                     <form id='loginForm' method='post' action='/Account/LoginPost'>
                         <fieldset>
                             <div class='row'>
@@ -68,7 +72,7 @@ function AccountLoginView($model,$view)
                         </fieldset>
                     </form>
                 </div>
-                <div class='tab-pane fade' id='profile'>
+                <div class='tab-pane fade $register' id='profile'>
                     <form id='registerForm' method='post' action='/Account/RegisterPost'>
                         <fieldset>
                             <div class='row'>
@@ -120,5 +124,6 @@ function AccountLoginView($model,$view)
 
 
 }
+
 ?>
 

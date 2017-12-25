@@ -21,10 +21,9 @@ class ProductsController
 
     public function ListFor($category)
     {
-        $this->model = new ProductListViewModel(10,1);
+        $this->model = new ProductListViewModel($this->context,10,1);
 
-        $arr = $this->context->Products->GetProductsIdFrom($category,0); // Zwraca id kategori dla produktów
-
+        $arr = $this->context->Products->GetProductsIdFrom($category,0);
         $arr = $this->context->Products->GetProductsFromCategories($arr);
 
         $this->model->ItemList = $this->model->Populate($arr);
@@ -32,6 +31,13 @@ class ProductsController
         $this->model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
 
         return ListFor($this->model);
+    }
+
+    public function Show($productId){
+
+        $this->model = $this->context->Products->GetProduct($productId);
+
+        return ProductsShow($this->model);
     }
 
 }
