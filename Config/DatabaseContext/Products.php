@@ -16,19 +16,8 @@ class Products
 
     public function LoadProductForCategory($CategoryId)
     {
-        $d = $this->GetMenuData();
+        $d = $this->Context->Categories->GetCategories();
         return $this->ShowForCategory($d, $CategoryId, 0);
-    }
-
-    public function GetMenuData()
-    {
-        $result = $this->SQL->Query("SELECT * FROM categories");
-        $data = array();
-        while ($d = $result->fetch_assoc()) {
-            $data[] = $d;
-        }
-
-        return $data;
     }
 
     private $result = [];
@@ -40,7 +29,7 @@ class Products
                 if ($row['ParentId'] != 0 && $mainCategoryId != $row['CategoryId']) {
                     $this->result[] = new ProductModel();
                     $this->result[count($this->result) - 1]->Name = $row['CategoryName'];
-                    $this->result[count($this->result) - 1]->Id = $row['CategoryId'];
+                    $this->result[count($this->result) - 1]->CategoryId = $row['CategoryId'];
                 }
 
                 if ($row['ParentId'] == $mainCategoryId) {
@@ -48,12 +37,13 @@ class Products
                 }
             }
         }
+
         return $this->result;
     }
 
     function GetProductsIdFrom($CategoryId, $level)
     {
-        $array = $this->GetMenuData();
+        $array = $this->Context->Categories->GetCategories();
 
         foreach ($array as $row) {
             if (($level == 0 && $row['CategoryId'] == $CategoryId) || $row['ParentId'] == $CategoryId) {

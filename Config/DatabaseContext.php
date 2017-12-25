@@ -10,6 +10,7 @@ class DatabaseContext
     public $Users;
     public $Products;
     public $Parameters;
+    public $Categories;
 
     public function __construct()
     {
@@ -17,5 +18,6 @@ class DatabaseContext
         $this->Users = new Users($this);
         $this->Products = new Products($this);
         $this->Parameters = new Parameters($this);
+        $this->Categories = new Categories($this);
     }
 }

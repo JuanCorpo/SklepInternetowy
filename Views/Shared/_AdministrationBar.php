@@ -21,9 +21,8 @@
                         <li><a href="#">Lista kategorii</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Dodaj produkt</a></li>
-                        <li><a href="#">Edytuj/usuń produkt</a></li>
-                        <li><a href="#">Dodaj Kategorie</a></li>
-                        <li><a href="#">Edytuj/usuń kategorie</a></li>
+                        <li><a href="#">Edycja produktów</a></li>
+                        <li><a href="/Administration/Categories">Edycja kategorii</a></li>
                     </ul>
                 </li>
 

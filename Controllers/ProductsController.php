@@ -30,14 +30,16 @@ class ProductsController
 
         $this->model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
 
-        return ListFor($this->model);
+         ListFor($this->model);
+        return;
     }
 
     public function Show($productId){
 
         $this->model = $this->context->Products->GetProduct($productId);
 
-        return ProductsShow($this->model);
+         ProductsShow($this->model);
+        return;
     }
 
 }

@@ -17,12 +17,30 @@ function _ProductListForFilters($model)
                     Panel content
                 </div>
                 <div class='panel-body'>
+<p>
+  <label for=\"amount\">Price range:</label>
+  <input type=\"text\" id=\"amount\" readonly style=\"border:0; color:#f6931f; font-weight:bold;\">
+</p>
+ 
+<div id=\"slider-range\"></div>
     
-<input id=\"ex2\" type=\"text\" name='val' class=\"span2\" value=\"\" data-slider-min=\"10\" data-slider-max=\"1000\" data-slider-step=\"5\" data-slider-value=\"[250,450]\"/>
-    
-                </div>
-                <script>$(\"#ex2\").slider({});</script>
-                    
+                </div>"; ?>
+    <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [75, 300],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+                " - $" + $("#slider-range").slider("values", 1));
+        });
+    </script>
+    <?php echo "
                    <input class=\"btn btn-primary\" type='submit' value='Szukaj'/> 
          </form>
     </div>
