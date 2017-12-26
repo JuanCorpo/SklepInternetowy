@@ -24,14 +24,20 @@ class UserModel
     // Error vars
     public $ErrorLogin;
 
-    public function generateRandomToken() {
+    public function generateRandomToken()
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*!@#$%^&*()_=<>{}[]';
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < 150; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-    return $randomString;
+        return $randomString;
+    }
+
+    public function GetFullName()
+    {
+        return $this->FirstName . ' ' . $this->SurName;
     }
 
 }

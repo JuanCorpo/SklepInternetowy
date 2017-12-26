@@ -30,6 +30,20 @@
     font-size: smaller;
 }
 
+.Categories{
+    color: #333333;
+    float:left;
+    cursor:pointer ;
+    background-color: #75caeb;
+    margin: 5px;
+    font-size:10pt;
+    min-width:100px;
+    max-width:200px;
+    border: 1px black solid;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 5px;
+}
+
 
 
 

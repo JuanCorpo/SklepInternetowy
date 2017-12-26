@@ -77,6 +77,8 @@ class Products
                 $products[count($products) - 1]->StockSize = $d['StockStatus'];
                 $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
 
+                $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserById($d['ProductEmployeeId']);
+
                 $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);
             }
         }
@@ -102,10 +104,38 @@ class Products
             $product->StockSize = $result[0]['StockStatus'];
             $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
 
+            $product->AssignedEmployee = $this->Context->Users->GetUserById($result['ProductEmployeeId']);
+
             $product->Parameters = $this->Context->Parameters->LoadParametersForProduct($result[0]['ProductId']);
 
         }
         return $product;
+    }
+
+
+    function GetProducts()
+    {
+        $products = [];
+
+        $result = $this->SQL->Query("SELECT * FROM products");
+
+        while ($d = $result->fetch_assoc()) {
+            $products[] = new ProductModel();
+            $products[count($products) - 1]->ProductId = $d['ProductId'];
+            $products[count($products) - 1]->CategoryId = $d['CategoryId'];
+            $products[count($products) - 1]->Name = $d['ProductName'];
+            $products[count($products) - 1]->Price = $d['ProductPrice'];
+            $products[count($products) - 1]->Rating = $d['Rating'];
+            $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
+            $products[count($products) - 1]->StockSize = $d['StockStatus'];
+            $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
+
+            $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserById($d['ProductEmployeeId']);
+
+            $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);
+
+        }
+        return $products;
     }
 
 }

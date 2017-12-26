@@ -17,5 +17,7 @@ class ProductModel
     public $StockSize;
     public $ProductEmployeeId;
 
+    public $AssignedEmployee;
+
     public $Parameters = [];
 }

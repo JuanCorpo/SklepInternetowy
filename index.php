@@ -43,6 +43,7 @@ $_SESSION['menuData'] = $context->Categories->GetCategories();
 
 echo "</head>";
 echo "<body>";
+echo "<img src='/Content/loader.gif' id='Loader' style='display:none;width: 50px;position: fixed;z-index: 1;top: 50%;left: 50%;'/>";
 echo "<nav id=\"Header\" class=\"navbar navbar-default\" style=\"margin-bottom: 0px;\">";
 
 if (isset($_SESSION['user']) && $_SESSION['user'] != null) {

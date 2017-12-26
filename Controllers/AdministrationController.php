@@ -2,6 +2,7 @@
 foreach (glob("./Views/Administration/*.php") as $filename) {
     include_once $filename;
 }
+include_once("./Code/Helpers/RoleHelper.php");
 
 class AdministrationController
 {
@@ -14,17 +15,15 @@ class AdministrationController
 
     public function Categories()
     {
-        if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
-            $session = unserialize($_SESSION['user']);
-            if ($session->UserRole == 1) {
-                $model = null;
+        if (IsInRole(1)) {
+            $model = null;
 
-                $model = $this->context->Categories->GetCategories();
+            $model = $this->context->Categories->GetCategories();
 
-                AdministrationCategories($model);
-                return;
-            }
+            $_SESSION['context'] = serialize($this->context->Categories);
+            AdministrationCategories($model);
+            return;
+
         }
-        header("Location: /");
     }
 }

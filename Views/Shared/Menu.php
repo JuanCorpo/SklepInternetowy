@@ -24,9 +24,9 @@ if (!isset($_SESSION)) {
                         <div id="SearchBarPanel">
 
                             <div id="SearchBarMenu">
-                                <form method="get" action="/products/search">
+                                <form method="get" action="/Products/ListFor">
                                     <div class="input-group">
-                                        <input placeholder="Szukaj produktu" name="name" type="text"
+                                        <input placeholder="Szukaj produktu" get="name" name="name" type="text"
                                                class="form-control">
 
                                         <span class="input-group-btn">

@@ -1,5 +1,5 @@
 <?php
-include_once "./Code/CustomClasses/Parameter.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/Code/CustomClasses/Parameter.php";
 
 class Parameters
 {

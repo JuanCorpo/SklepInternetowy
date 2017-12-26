@@ -14,7 +14,7 @@ _ProductListForFilters($model);
             <div class='panel-body'>
                 ";
                 foreach ($model->OtherCategories as $item) {
-                    echo '<a class="col-md-3" style="display: inline-block;" href="/Products/ListFor/' . $item->ProductId . '">' . $item->Name . '</a>';
+                    echo '<a class="col-md-3" style="display: inline-block;" href="/Products/ListFor/' . $item->CategoryId . '">' . $item->Name . '</a>';
 
                 }
             echo "

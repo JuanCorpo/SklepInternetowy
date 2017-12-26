@@ -39,6 +39,32 @@ class Users
         return $this->UserModel;
     }
 
+    public function GetUserById($Id)
+    {
+        $this->UserModel = null;
+
+        $res = $this->SQL->Query("SELECT * FROM users WHERE UserId=$Id");
+        $res = $this->SQL->SqlResultToArray($res);
+
+        if (count($res) != 0) {
+            $this->UserModel = new UserModel();
+
+            $this->UserModel->Id = $res[0]['UserId'];
+            $this->UserModel->UserName = $res[0]['UserName'];
+            $this->UserModel->UserRole = $res[0]['UserRole'];
+            $this->UserModel->IsActive = $res[0]['IsActive'];
+            $this->UserModel->IsPasswordChangeRequired = $res[0]['IsPasswordChangeRequired'];
+            $this->UserModel->UserPrivateMail = $res[0]['UserPrivateEmail'];
+            $this->UserModel->FirstName = $res[0]['FirstName'];
+            $this->UserModel->SurName = $res[0]['SurName'];
+            $this->UserModel->EmailConfirmed = $res[0]['EmailConfirmed'];
+            $this->UserModel->CreationDate = $res[0]['CreationDate'];
+            $this->UserModel->Avatar = $res[0]['Avatar'];
+        }
+
+        return $this->UserModel;
+    }
+
     public function ValidateUser($Email, $Password)
     {
         $this->UserModel = new UserModel();
