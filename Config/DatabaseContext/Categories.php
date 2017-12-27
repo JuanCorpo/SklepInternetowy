@@ -11,14 +11,10 @@ class Categories
         $this->SQL = $this->Context->sql;
     }
 
-    public function GetCategories()
+    public function LoadCategories()
     {
-        $result = $this->SQL->Query("SELECT * FROM categories");
-        $data = array();
-        while ($d = $result->fetch_assoc()) {
-            $data[] = $d;
-        }
-        return $data;
+        $sqlResult = $this->SQL->Query("SELECT * FROM categories");
+        return $sqlResult;
     }
 
     public function NewCategoryId()
@@ -29,7 +25,7 @@ class Categories
     public function UpdateCategory($catId, $catName, $catParentId)
     {
         $result = $this->SQL->Query("SELECT * FROM categories WHERE CategoryId=$catId");
-        if (mysqli_num_rows($result) != 0) {
+        if (count($result) != 0) {
             $this->SQL->Query("UPDATE categories SET CategoryName='$catName',ParentId=$catParentId WHERE CategoryId=$catId");
         } else {
             $this->SQL->Query("INSERT INTO categories (CategoryId,CategoryName,ParentId) VALUES ($catId, '$catName',$catParentId)");

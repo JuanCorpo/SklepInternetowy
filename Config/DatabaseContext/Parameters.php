@@ -1,10 +1,8 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/Code/CustomClasses/Parameter.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/Models/ParametersModel.php";
 
 class Parameters
 {
-
-    private $Parameter = [];
     private $Context;
     private $SQL;
 
@@ -16,20 +14,39 @@ class Parameters
 
     public function LoadParametersForProduct($productId)
     {
-        $this->Parameter = [];
+        $Parameter = [];
         $result = $this->SQL->Query("SELECT * FROM parameters WHERE ProductId=$productId");
 
-        while ($d = $result->fetch_assoc()) {
-            $this->Parameter[] = new Parameter();
-            $this->Parameter[count($this->Parameter)-1]->ProductId = $d['ProductId'];
-            $this->Parameter[count($this->Parameter)-1]->CategoryId = $d['CategoryId'];
-            $this->Parameter[count($this->Parameter)-1]->ParameterId = $d['ParameterId'];
-            $this->Parameter[count($this->Parameter)-1]->ParameterValue = $d['ParameterName'];
-            $this->Parameter[count($this->Parameter)-1]->ParameterValue = $d['ParameterValue'];
-            $this->Parameter[count($this->Parameter)-1]->Suffix = $d['Suffix'];
-            $this->Parameter[count($this->Parameter)-1]->Prefix = $d['Prefix'];
+        foreach ($result as $d) {
+            $Parameter[] = new ParametersModel();
+            $Parameter[count($Parameter) - 1]->ProductId = $d['ProductId'];
+            $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
+            $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
+            $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterName'];
+            $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
+            $Parameter[count($Parameter) - 1]->Suffix = $d['Suffix'];
+            $Parameter[count($Parameter) - 1]->Prefix = $d['Prefix'];
         }
 
-        return $this->Parameter;
+        return $Parameter;
+    }
+
+    public function LoadParametersForCategory($categoryId)
+    {
+        $Parameter = [];
+        $result = $this->SQL->Query("SELECT * FROM parameters WHERE CategoryId=$categoryId");
+
+        while ($d = $result->fetch_assoc()) {
+            $Parameter[] = new Parameter();
+            $Parameter[count($Parameter) - 1]->ProductId = $d['ProductId'];
+            $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
+            $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
+            $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterName'];
+            $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
+            $Parameter[count($Parameter) - 1]->Suffix = $d['Suffix'];
+            $Parameter[count($Parameter) - 1]->Prefix = $d['Prefix'];
+        }
+
+        return $Parameter;
     }
 }

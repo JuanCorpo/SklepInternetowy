@@ -2,11 +2,8 @@
 
 class Products
 {
-    private $ProductModel;
     private $Context;
     private $SQL;
-
-    private $productList = [];
 
     public function __construct($context)
     {
@@ -14,15 +11,57 @@ class Products
         $this->SQL = $this->Context->sql;
     }
 
-    public function LoadProductForCategory($CategoryId)
+    public function GetProduct($productId)
     {
-        $d = $this->Context->Categories->GetCategories();
-        return $this->ShowForCategory($d, $CategoryId, 0);
+        $product = null;
+
+        $result = $this->SQL->Query("SELECT * FROM products WHERE ProductId=$productId");
+
+        if (count($result) == 1) {
+            $product = new ProductModel();
+
+            $product->ProductId = $result[0]['ProductId'];
+            $product->CategoryId = $result[0]['CategoryId'];
+            $product->Name = $result[0]['ProductName'];
+            $product->Price = $result[0]['ProductPrice'];
+            $product->Rating = $result[0]['Rating'];
+            $product->NoOfRatings = $result[0]['NumberOfBought'];
+            $product->StockSize = $result[0]['StockStatus'];
+            $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
+
+            $product->AssignedEmployee = $this->Context->Users->GetUserBy($result[0]['ProductEmployeeId'],null);
+            $product->Parameters = $this->Context->Parameters->LoadParametersForProduct($result[0]['ProductId']);
+        }
+        return $product;
+    }
+
+    function GetProducts()
+    {
+        $products = [];
+
+        $result = $this->SQL->Query("SELECT * FROM products");
+
+        foreach ($result as $d) {
+            $products[] = new ProductModel();
+            $products[count($products) - 1]->ProductId = $d['ProductId'];
+            $products[count($products) - 1]->CategoryId = $d['CategoryId'];
+            $products[count($products) - 1]->Name = $d['ProductName'];
+            $products[count($products) - 1]->Price = $d['ProductPrice'];
+            $products[count($products) - 1]->Rating = $d['Rating'];
+            $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
+            $products[count($products) - 1]->StockSize = $d['StockStatus'];
+            $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
+
+            $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserBy($d['ProductEmployeeId'],null);
+            $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);
+
+        }
+        return $products;
     }
 
     private $result = [];
 
-    function ShowForCategory($array, $mainCategoryId, $level)
+    private function ShowForCategory($array, $mainCategoryId, $level)
     {
         foreach ($array as $row) {
             if (($level == 0 && $row['CategoryId'] == $mainCategoryId) || $row['ParentId'] == $mainCategoryId) {
@@ -41,15 +80,22 @@ class Products
         return $this->result;
     }
 
-    function GetProductsIdFrom($CategoryId, $level)
+    public function LoadProductForCategory($CategoryId)
     {
-        $array = $this->Context->Categories->GetCategories();
+        $categories = $this->Context->Categories->LoadCategories();
+        return $this->ShowForCategory($categories, $CategoryId, 0);
+    }
+
+    private $productList = [];
+
+    public function GetProductsIdFrom($CategoryId, $level)
+    {
+        $array = $this->Context->Categories->LoadCategories();
 
         foreach ($array as $row) {
             if (($level == 0 && $row['CategoryId'] == $CategoryId) || $row['ParentId'] == $CategoryId) {
 
                 $this->productList[] = $row['CategoryId'];
-
 
                 if ($row['ParentId'] == $CategoryId) {
                     $this->GetProductsIdFrom($row['CategoryId'], $level + 1);
@@ -66,76 +112,10 @@ class Products
 
             $result = $this->SQL->Query("SELECT * FROM products WHERE CategoryId=$id");
 
-            while ($d = $result->fetch_assoc()) {
-                $products[] = new ProductModel();
-                $products[count($products) - 1]->ProductId = $d['ProductId'];
-                $products[count($products) - 1]->CategoryId = $d['CategoryId'];
-                $products[count($products) - 1]->Name = $d['ProductName'];
-                $products[count($products) - 1]->Price = $d['ProductPrice'];
-                $products[count($products) - 1]->Rating = $d['Rating'];
-                $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
-                $products[count($products) - 1]->StockSize = $d['StockStatus'];
-                $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
-
-                $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserById($d['ProductEmployeeId']);
-
-                $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);
+            foreach ($result as $item) {
+                $products[] = $this->GetProduct($item['ProductId']);
             }
         }
         return $products;
     }
-
-    function GetProduct($productId)
-    {
-        $product = null;
-        $product = new ProductModel();
-
-        $result = $this->SQL->Query("SELECT * FROM products WHERE ProductId=$productId");
-        $result = $this->Context->sql->SqlResultToArray($result);
-
-        if (count($result) == 1) {
-
-            $product->ProductId = $result[0]['ProductId'];
-            $product->CategoryId = $result[0]['CategoryId'];
-            $product->Name = $result[0]['ProductName'];
-            $product->Price = $result[0]['ProductPrice'];
-            $product->Rating = $result[0]['Rating'];
-            $product->NoOfRatings = $result[0]['NumberOfBought'];
-            $product->StockSize = $result[0]['StockStatus'];
-            $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
-
-            $product->AssignedEmployee = $this->Context->Users->GetUserById($result['ProductEmployeeId']);
-
-            $product->Parameters = $this->Context->Parameters->LoadParametersForProduct($result[0]['ProductId']);
-
-        }
-        return $product;
-    }
-
-
-    function GetProducts()
-    {
-        $products = [];
-
-        $result = $this->SQL->Query("SELECT * FROM products");
-
-        while ($d = $result->fetch_assoc()) {
-            $products[] = new ProductModel();
-            $products[count($products) - 1]->ProductId = $d['ProductId'];
-            $products[count($products) - 1]->CategoryId = $d['CategoryId'];
-            $products[count($products) - 1]->Name = $d['ProductName'];
-            $products[count($products) - 1]->Price = $d['ProductPrice'];
-            $products[count($products) - 1]->Rating = $d['Rating'];
-            $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
-            $products[count($products) - 1]->StockSize = $d['StockStatus'];
-            $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
-
-            $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserById($d['ProductEmployeeId']);
-
-            $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);
-
-        }
-        return $products;
-    }
-
 }

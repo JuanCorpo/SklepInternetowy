@@ -1,8 +1,7 @@
 <?php
-include_once('./Code/CustomFunctions/Cookie.php');
+include_once('./Code/Helpers/Cookie.php');
 include_once("./Models/UserModel.php");
-include_once("./Code/Helpers/AreVarsSet.php");
-include_once("./Code/CustomFunctions/Cookie.php");
+include_once("./Code/Helpers/VariablesHelper.php");
 include_once("./Config/DatabaseContext.php");
 foreach (glob("./Views/Account/*.php") as $filename) {
     include_once $filename;
@@ -13,14 +12,14 @@ class AccountController
 {
     private $context;
 
-    public function __construct($sql)
+    public function __construct($context)
     {
-        $this->context = $sql;
+        $this->context = $context;
     }
 
     public function Index($model)
     {
-        if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
+        if (VariablesHelper::IsUserActive()) {
             $this->Profile($model);
             return;
         } else {
@@ -43,15 +42,14 @@ class AccountController
 
     public function RegisterPost()
     {
-        $model = new UserModel();
+        $model = null;
 
-
-        if (ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
-            $model = $this->context->Users->GetUserByEmail($_POST['Email']);
+        if (VariablesHelper::ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
+            $model = $this->context->Users->GetUserBy($_POST['Email'], null);
 
             $pass = $_POST['Password'];
 
-            if ($model == null) {
+            if (count($model) == 0) {
                 $model = new UserModel();
                 $email = $_POST['Email'];
 
@@ -59,11 +57,10 @@ class AccountController
                     $model->UserPrivateMail = "";
                     $model->ErrorLogin = "Minimalna liczba znaków to 7";
                     $this->Login($model, 1);
-                    return ;
+                    return;
                 }
 
-                if (isset($_POST['Policies'])) {
-
+                if (VariablesHelper::IsPostSet('Policies')) {
                     $model->UserName = explode("@", $email)[0];
                     $model->UserPrivateMail = $email;
                     $model->UserRole = 0;
@@ -74,57 +71,53 @@ class AccountController
 
                     $this->context->Users->AddNewUser($model, sha1($pass));
 
-                    if (isset($_POST['Newsletter'])) {
+                    if (VariablesHelper::IsPostSet('Newsletter')) {
                         $this->context->Users->AddToNewsletter($email);
                     }
-
-
                 } else {
                     $model->UserPrivateMail = "";
                     $model->ErrorLogin = "Nie zaakceptowano regulaminu!";
                     $this->Login($model, 1);
-                    return ;
+                    return;
                 }
             } else {
                 $model->UserPrivateMail = "";
                 $model->ErrorLogin = "Istnieje już konto z podanym adresem email!";
                 $this->Login($model, 1);
-                return ;
+                return;
             }
 
         }
         $model->UserPrivateMail = "";
         $model->ErrorLogin = "Niepodano prawidłowych danych!";
         $this->Login($model, 1);
-        return ;
-
-        $this->Index($model);
-        return ;
+        return;
     }
 
     public function AddToNewsLetter()
     {
-        if (isset($_POST['Email'])) {
+        if (VariablesHelper::IsPostSet('Email')) {
             $this->context->Users->AddToNewsletter($_POST['Email']);
         }
+        header("Location: /");
     }
 
     public function LoginPost()
     {
         $password = sha1($_POST['Password']);
-        $model = new UserModel();
+        $model = null;
 
-        if (ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
+        if (VariablesHelper::ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
             $model = $this->context->Users->ValidateUser($_POST['Email'], $password);
 
-            if ($model->Id != null) {
+            if ($model != null) {
                 $_SESSION['user'] = new UserModel();
                 $_SESSION['user'] = serialize($model);
 
-                if (isset($_POST['RememberMe'])) {
-                    setNewCookie('ID', $model->Id, 365);
+                if (VariablesHelper::IsPostSet('RememberMe')) {
+                    Cookie::CreateCookie('ID', $model->Id, 365);
                     $newToken = $model->generateRandomToken();
-                    setNewCookie("TOKEN", $newToken, 365);
+                    Cookie::CreateCookie("TOKEN", $newToken, 365);
                     $this->context->Users->SaveToken($model->Id, $newToken);
                 }
                 header("Location: /");
@@ -141,17 +134,14 @@ class AccountController
 
     public function LogoutPost()
     {
-        if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
-            deleteCookie("ID");
-            deleteCookie("TOKEN");
+        if (VariablesHelper::IsUserActive()) {
+            Cookie::DeleteCookie("ID");
+            Cookie::DeleteCookie("TOKEN");
 
-            $session = unserialize($_SESSION['user']);
-            $id = $session->Id;
-
+            $user = unserialize($_SESSION['user']);
+            $this->context->Users->SaveToken($user->Id, "");
             $_SESSION['user'] = null;
-            $this->context->Users->SaveToken($id, "");
         }
-
         $this->Index(null);
     }
 

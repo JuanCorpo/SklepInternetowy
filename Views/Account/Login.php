@@ -113,17 +113,9 @@ function AccountLoginView($model, $view)
                     </form>
                 </div>
             </div>
-
-
         </div>
     </div>
-
-
 ";
-
-
-
 }
 
-?>
 

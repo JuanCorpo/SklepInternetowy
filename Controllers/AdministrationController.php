@@ -8,17 +8,17 @@ class AdministrationController
 {
     private $context;
 
-    public function __construct($sql)
+    public function __construct($context)
     {
-        $this->context = $sql;
+        $this->context = $context;
     }
 
     public function Categories()
     {
-        if (IsInRole(1)) {
+        if (RoleHelper::IsInRole(1)) {
             $model = null;
 
-            $model = $this->context->Categories->GetCategories();
+            $model = $this->context->Categories->LoadCategories();
 
             $_SESSION['context'] = serialize($this->context->Categories);
             AdministrationCategories($model);

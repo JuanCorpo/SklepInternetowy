@@ -1,7 +1,7 @@
 <?php
-include_once('./Code/CustomFunctions/Cookie.php');
+include_once('./Code/Helpers/Cookie.php');
 
-if (!isCookieEqual('Cookie', true)) {
+if (!Cookie::IsCookieEqual('Cookie', true)) {
     ?>
     <div class="alert alert-dismissible alert-warning navbar-fixed-bottom">
         <button type="button" onclick="CookieAccept()" class="close" data-dismiss="alert">&times;</button>

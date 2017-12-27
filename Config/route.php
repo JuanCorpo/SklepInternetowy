@@ -2,56 +2,60 @@
 
 class Route
 {
-    public function submit($context)
+    private $databaseContext;
+
+    public function submit($databaseContext)
     {
+        $this->databaseContext = $databaseContext;
         $uriGetParam = isset($_GET['uri']) ? '' . $_GET['uri'] : '';
 
-        $data = explode('/', $uriGetParam);
+        $params = explode('/', $uriGetParam);
 
-        if (count($data) <= 1) {
-            $this->RedirectTo("Home", "Index", null, $context);
+        if (count($params) < 2) {
+            $this->RedirectTo("Home", "Index", null);
             return;
-        } else if (count($data) >= 2) // For "ControllerName/ActionName" pattern
+        }
+        else if (count($params) >= 2) // For "ControllerName/.../.../..." pattern
         {
-            $Controller = $data[0];
-            $Action = $data[1];
+            $Controller = $params[0];
+            $Action = $params[1];
 
             foreach (glob("./Controllers/*.php") as $filename) {
                 if (strpos($filename, $Controller . 'Controller') !== false) {
-                    $this->RedirectTo($Controller, $Action, $data, $context);
+                    $this->RedirectTo($Controller, $Action, $params);
                     return;
                 }
             }
         }
 
-        // TODO try catch 404 no action/View
-        echo "<pre>";
-        print_r($data);
+        echo "<div style='color:red;text-align: center;'><h1 style='color:red;'>Exception</h1>There is no such controller or action. Pl0x check the URL</div><pre>";
+        print_r($params);
         echo "</pre>";
-        echo "<div style='color:red;text-align: center;'><h1 style='color:red;'>Exception</h1>There is no such controller or action or action with given parameters. Check the URL</div>";
 
-        $this->RedirectTo($Controller, $Action, null, $context);
+        $this->RedirectTo("Home", "Index", null);
         return;
     }
 
-    private function RedirectTo($Controller, $Action, $data, $context)
+    private function RedirectTo($Controller, $Action, $args)
     {
         $useController = $Controller . 'Controller';
 
         include_once("./Controllers/$useController.php");
 
         $useController = $Controller . 'Controller';
-        $class = new $useController($context);
+        $class = new $useController($this->databaseContext);
 
-        if ($data != null && count($data) == 3) {// Controller/Action/Par1/Par2/....
-            $class->$Action($data[2]);
-        } else if ($data != null && count($data) == 4) {
-            $class->$Action($data[2],$data[3]);
-        } else {
+
+        if ($args != null) {
+            if (count($args) == 3) {// Controller/Action/Par1
+                $class->$Action($args[2]);
+            } else if (count($args) == 4) {// Controller/Action/Par1/Par2
+                $class->$Action($args[2], $args[3]);
+            } else {
+                $class->$Action(null);
+            }
+        }else {
             $class->$Action(null);
         }
-
     }
-
-
 }

@@ -76,5 +76,11 @@ function HomeIndexView($model)
     </div>
     </div>
 
+
+
+
+
+
+
 <?php
 }

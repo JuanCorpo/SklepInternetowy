@@ -6,6 +6,7 @@ foreach (glob("./Config/DatabaseContext/*.php") as $filename) {
 
 class DatabaseContext
 {
+    // Database tables
     public $sql;
     public $Users;
     public $Products;

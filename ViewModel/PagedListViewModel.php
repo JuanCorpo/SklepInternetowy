@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Alan
- * Date: 24.12.2017
- * Time: 21:47
- */
 
 abstract class PagedListViewModel
 {

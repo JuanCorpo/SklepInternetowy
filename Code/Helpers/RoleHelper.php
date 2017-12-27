@@ -1,11 +1,24 @@
 <?php
-function IsInRole($roleId){
-    if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
-        $session = unserialize($_SESSION['user']);
-        if ($session->UserRole == $roleId) {
 
-            return true;
+class RoleHelper
+{
+    public static function IsInRole($roleId)
+    {
+        $userSession = VariablesHelper::GetSessionValue('user');
+        if ($userSession != null) {
+            $user = unserialize($userSession);
+            return $user->UserRole == $roleId;
         }
+        return false;
     }
-    header("Location: /");
+
+    public static function IsInClaim($claimId)
+    {
+        $userSession = VariablesHelper::GetSessionValue('user');
+        if ($userSession != null) {
+            $user = unserialize($userSession);
+            return in_array($claimId, $user->UserClaims);
+        }
+        return false;
+    }
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Alan
- * Date: 24.12.2017
- * Time: 20:49
- */
 
 class ProductModel
 {
@@ -20,4 +14,9 @@ class ProductModel
     public $AssignedEmployee;
 
     public $Parameters = [];
+
+    public function GetRating()
+    {
+        return $this->NoOfRatings == 0 ? 0 : $this->Rating / $this->NoOfRatings;
+    }
 }

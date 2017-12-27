@@ -2,68 +2,53 @@
 
 class SQL
 {
-    private $conn;
+    private $connection;
 
-    private $host;
-    private $base;
-    private $user;
-    private $pass;
+    private $Host;
+    private $Database;
+    private $Username;
+    private $Password;
 
     public function __construct()
     {
-        $this->host = 'mysql.cba.pl';//'localhost';//
-        $this->user = 'AllonerCorp';//'Alan';//
-        $this->pass = 'AllonerCorp12';//'Alan';//
-        $this->base = 'juancorp';
+        $this->Host = 'localhost';//'mysql.cba.pl';//
+        $this->Username = 'Alan';//'AllonerCorp';//
+        $this->Password = 'Alan';//'AllonerCorp12';//
+        $this->Database = 'juancorp';
     }
 
     public function Query($query)
     {
         $this->Connect();
 
-        mysqli_query($this->conn,"SET CHARSET utf8");
-        mysqli_query($this->conn,"SET NAMES `utf8` COLLATE `utf8_polish_ci`");
+        mysqli_query($this->connection,"SET CHARSET utf8");
+        mysqli_query($this->connection,"SET NAMES `utf8` COLLATE `utf8_polish_ci`");
 
-        $result = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
+        $sqlResult = mysqli_query($this->connection, $query) or die(mysqli_error($this->connection));
 
         $this->Disconnect();
 
-        return $result;
-    }
+        $resultArray = array();
 
-    public function SqlResultToArray($sqlResult)
-    {
-        $data = array();
-        while ($d = $sqlResult->fetch_assoc()) {
-            $data[] = $d;
+        if($sqlResult !="1") {
+            while ($row = $sqlResult->fetch_assoc()) {
+                $resultArray[] = $row;
+            }
         }
-
-        return $data;
-    }
-
-    public function GetMenuData()
-    {
-        $result = $this->Query("SELECT * FROM categories");
-
-        $data = array();
-        while ($d = $result->fetch_assoc()) {
-            $data[] = $d;
-        }
-
-        return $data;
+        return $resultArray;
     }
 
     private function Connect()
     {
-        $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->base);
+        $this->connection = new mysqli($this->Host, $this->Username, $this->Password, $this->Database);
 
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+        if ($this->connection->connect_error) {
+            die("Connection failed: " . $this->connection->connect_error);
         }
     }
 
     private function Disconnect()
     {
-        $this->conn->close();
+        $this->connection->close();
     }
 }

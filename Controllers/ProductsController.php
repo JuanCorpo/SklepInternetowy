@@ -1,10 +1,9 @@
 <?php
-include_once('./Code/CustomFunctions/Cookie.php');
 include_once("./Models/ProductModel.php");
 include_once("./ViewModel/ProductListViewModel.php");
-include_once("./Code/Helpers/AreVarsSet.php");
+include_once("./Code/Helpers/VariablesHelper.php");
 include_once("./Code/Helpers/RoleHelper.php");
-include_once("./Code/CustomFunctions/Cookie.php");
+include_once("./Code/Helpers/Cookie.php");
 include_once("./Config/DatabaseContext.php");
 foreach (glob("./Views/Products/*.php") as $filename) {
     include_once $filename;
@@ -13,48 +12,48 @@ foreach (glob("./Views/Products/*.php") as $filename) {
 class ProductsController
 {
     private $context;
-    private $model;
 
-    public function __construct($sql)
+    public function __construct($context)
     {
-        $this->context = $sql;
+        $this->context = $context;
     }
 
     public function ListFor($category)
     {
-        $this->model = new ProductListViewModel($this->context, 10, 1);
+        $model = null;
 
-        $arr = $this->context->Products->GetProductsIdFrom($category, 0);
-        $arr = $this->context->Products->GetProductsFromCategories($arr);
+        $model = new ProductListViewModel($this->context, 10, 1);
 
-        $this->model->ItemList = $this->model->Populate($arr);
+        $productsCategoryIds = $this->context->Products->GetProductsIdFrom($category, 0);
+        $productsIds = $this->context->Products->GetProductsFromCategories($productsCategoryIds);
 
-        $this->model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
+        $model->Populate($productsIds);
 
-        ListFor($this->model);
+        $model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
+
+        ListFor($model);
         return;
     }
 
     public function ListAll()
     {
-        if (IsInRole(1)) {
-            $this->model = new ProductListViewModel($this->context, 10, 1);
+        $model = null;
+        if (RoleHelper::IsInRole(1)) {
+            $model = new ProductListViewModel($this->context, 10, 1);
 
-            $arr = $this->context->Products->GetProducts();
+            $allProducts = $this->context->Products->GetProducts();
 
-            $this->model->ItemList = $this->model->Populate($arr);
-            ListAll($this->model);
+            $model->Populate($allProducts);
+            ListAll($model);
             return;
-
         }
     }
 
     public function Show($productId)
     {
+        $product = $this->context->Products->GetProduct($productId);
 
-        $this->model = $this->context->Products->GetProduct($productId);
-
-        ProductsShow($this->model);
+        ProductsShow($product);
         return;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-class Parameter
+class ParametersModel
 {
     public $ProductId;
     public $CategoryId;
@@ -9,4 +9,9 @@ class Parameter
     public $ParameterValue;
     public $Prefix;
     public $Suffix;
+
+    public function GetFullValue()
+    {
+        return $this->Prefix.' ' . $this->ParameterValue . ' ' .$this->Suffix;
+    }
 }
