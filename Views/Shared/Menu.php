@@ -85,9 +85,5 @@ if (!VariablesHelper::IsSessionActive()) {
     </div>
 </div>
 
-</nav>
-<div id="MainContainerModal">
-    <div id="MainModalContent" class="container"></div>
-</div>
 
 

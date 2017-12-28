@@ -36,6 +36,10 @@ if (RoleHelper::IsInRole(1)) {
 
 include_once("Views/Shared/Menu.php");
 echo "</nav>";
+echo "
+<div id=\"MainContainerModal\">
+    <div id=\"MainModalContent\" class=\"container\"></div>
+</div>";
 
 echo '<div id="MainContainer" class="panel-body container">';
 echo $mainContent;
