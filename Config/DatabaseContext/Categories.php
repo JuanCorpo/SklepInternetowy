@@ -19,7 +19,7 @@ class Categories
 
     public function NewCategoryId()
     {
-        return (mysqli_num_rows($this->SQL->Query("SELECT * FROM categories")) + 1);
+        return (count($this->SQL->Query("SELECT * FROM categories")) + 1);
     }
 
     public function UpdateCategory($catId, $catName, $catParentId)

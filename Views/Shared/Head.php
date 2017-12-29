@@ -14,7 +14,6 @@
     <script src="/Scripts/bootstrap.bundle.js"></script>
     <script src="/Scripts/Custom/CookieAccept.js"></script>
     <script src="/Scripts/ajax/MenuSubcategories.js"></script>
-    <script src="/Scripts/ajax/UpdateCategories.js"></script>
 </head>
 ';
 ?>

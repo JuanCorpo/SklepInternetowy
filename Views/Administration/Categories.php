@@ -1,6 +1,7 @@
 <?php
 function AdministrationCategories($model)
 {
+    echo "<script src=\"/Scripts/ajax/UpdateCategories.js\"></script>";
     echo "<div style='display:inline;'>
 <h2 style='display:inline;'>Edycja kategorii</h2>
 
@@ -21,7 +22,7 @@ function AdministrationCategories($model)
 
     echo "<div categoryid='0' id='root' class=\"CategoryDroppable col-md-12 root Cat_0\" style='min-width:100px;min-height:100px;'>";
 
-    echo InitCategories($model, 0, 0, 0);
+    echo InitCategories($model, 0, 0);
 
     echo "</div>";
 
