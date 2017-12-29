@@ -70,9 +70,7 @@ $(function () {
 
     $("#root").on("click",".CategoryDraggable",function(event){
         event.stopPropagation();
-        console.log(this);
         selectedCategoryId = $(this).attr("categoryid");
-        console.log($(this).attr("categoryid"));
 
         $("#EditCategoryName").val($(this).attr("categoryname"));
         $("#EditCategoryName").prop('disabled', false);
@@ -80,7 +78,7 @@ $(function () {
         $("#DelNewCategory").prop('disabled', false);
     });
 
-    $('html').on("click","html",function(){
+    $('html').click(function(e){
         if (!$(e.target).hasClass('CategoryDraggable') && !$(e.target).hasClass('EditElement')) {
             selectedCategoryId = -1;
 
@@ -105,7 +103,7 @@ $(function () {
             var jsonString = JSON.stringify(array);
 
             $.ajax({
-                url: '/Scripts/ajax/updateCategories.php',
+                url: '/Scripts/ajax/UpdateCategories.php',
                 data: {data: jsonString},
                 type: 'POST',
 
@@ -113,7 +111,7 @@ $(function () {
                     console.log("ERROR");
                 },
                 success: function (data) {
-                    $("#MainContainer").html(data);
+                    //$("#MainContainer").html(data);
                 }
             });
             $("#WaitLoader").hide();
