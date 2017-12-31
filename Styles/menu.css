@@ -5,10 +5,12 @@
 }
 
 #Header.navbar.navbar-default{
-    background: url("/Content/mbg.jpg");
+    /*background: url("/Content/mbg.jpg");*/
+    background: #EDEFF1;
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
+    margin-bottom: 0px;
 }
 
 #TopMenuContainer {
@@ -24,7 +26,7 @@
 #BANNER {
     width: 100%;
     height: 100%;
-    background: url("/Content/banner.png");
+    background: url("/Content/banner2.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;

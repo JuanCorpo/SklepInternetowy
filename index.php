@@ -1,51 +1,52 @@
-<html lang="pl-PL">
 <?php
-
-ob_start();
-echo "<head>";
-include_once("Views/Shared/Includes.php");
-include_once("Config/DatabaseContext.php");;
-//include_once("Views/Shared/Menu.php");
+include_once("Config/DatabaseContext.php");
 include_once("Config/route.php");
 include_once("Models/UserModel.php");
-//session_start();
+include_once("Code/Helpers/VariablesHelper.php");
+include_once("Code/Helpers/RoleHelper.php");
+
+session_start();
+echo "<html lang=\"pl-PL\">";
+include_once("Views/Shared/Head.php");
 
 $route = new Route();
-$context = new DatabaseContext();
+$databaseContext = new DatabaseContext();
 
-if (!isset($_SESSION['user']) || $_SESSION['user'] == null) {
-    $context->Users->RememberMeToken();
+ob_start();
+$route->submit($databaseContext);
+$mainContent = ob_get_contents();
+ob_clean();
+
+ob_start();
+
+if (!VariablesHelper::IsUserActive()) {
+    $databaseContext->Users->CheckRememberMeToken();
 }
-$_SESSION['menuData'] = $context->sql->GetMenuData();
+$_SESSION['menuData'] = $databaseContext->Categories->LoadCategories();
 
-echo "</head>";
+
 echo "<body>";
+echo "
+<img src='/Content/loader.gif' id='WaitLoader'/>
+<nav id=\"Header\" class=\"navbar navbar-default\">";
 
-echo "<nav id=\"Header\" class=\"navbar navbar-default\" style=\"margin-bottom: 0px;\">";
+if (RoleHelper::IsInRole(1)) {
+    include_once "Views/Shared/_AdministrationBar.php";
+}
 
-echo "</nav>
+include_once("Views/Shared/Menu.php");
+echo "</nav>";
+echo "
 <div id=\"MainContainerModal\">
     <div id=\"MainModalContent\" class=\"container\"></div>
 </div>";
 
 echo '<div id="MainContainer" class="panel-body container">';
-$route->submit($context);
+echo $mainContent;
 echo '</div>';
-
-//echo MainMenu();
-
 
 include_once("Views/Shared/Footer.php");
 echo "</body>";
+echo '</html>';
 
-echo "<script>
-
-$.ajax({
-  url: \"/Views/Shared/Menu.php\"  
-}).done(function( msg ) {
-    document.getElementById('Header').innerHTML = msg; 
-  });
-        </script>";
 ob_end_flush();
-?>
-</html>

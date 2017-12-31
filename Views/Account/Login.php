@@ -1,12 +1,19 @@
 <?php
-function AccountLoginView($model)
+function AccountLoginView($model, $view)
 {
-    echo"<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
-    $Email = "";
+    echo "<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
+    $register  = "active in";
+    $login = "";
     $ErrorLogin = "";
-    if($model != null)
-    {
-        $ErrorLogin= $model->ErrorLogin;
+    $Email = "";
+
+    if ($view == 0) {
+        $login = "active in";
+        $register = "";
+    }
+
+    if ($model != null) {
+        $ErrorLogin = $model->ErrorLogin;
         $Email = $model->UserPrivateMail;
     }
 
@@ -16,8 +23,8 @@ function AccountLoginView($model)
 
 
             <ul class='nav nav-tabs'>
-                <li class='nav-item col-md-offset-4' style='font-size: 20px;'>
-                    <a class='nav-link active' data-toggle='tab' href='#home'>Logowanie</a>
+                <li class='nav-item col-md-offset-4 ' style='font-size: 20px;'>
+                    <a class='nav-link' data-toggle='tab' href='#home'>Logowanie</a>
                 </li>
                 <li class='nav-item col-md-offset-1' style='font-size: 20px;'>
                     <a class='nav-link' data-toggle='tab' href='#profile'>Rejestracja</a>
@@ -25,7 +32,7 @@ function AccountLoginView($model)
             </ul>
             <div id='myTabContent' class='tab-content'>
                 <br/>
-                <div class='tab-pane fade active in' id='home'>
+                <div class='tab-pane fade $login' id='home'>
                     <form id='loginForm' method='post' action='/Account/LoginPost'>
                         <fieldset>
                             <div class='row'>
@@ -65,7 +72,7 @@ function AccountLoginView($model)
                         </fieldset>
                     </form>
                 </div>
-                <div class='tab-pane fade' id='profile'>
+                <div class='tab-pane fade $register' id='profile'>
                     <form id='registerForm' method='post' action='/Account/RegisterPost'>
                         <fieldset>
                             <div class='row'>
@@ -92,12 +99,13 @@ function AccountLoginView($model)
                                         </label>
                                     </div>
 
-                                    <div class='checkbox form-check disabled'>
+                                    <div class='checkbox form-check'>
                                         <label class='form-check-label'>
                                             <input class='form-check-input' type='checkbox' name='Policies'>
                                             Akceptuje <a href='/Site/Policies'>regulamin</a> sklepu
                                         </label>
                                     </div>
+                                    <p class=\"text-danger text-center\">$ErrorLogin</p>
                                     <button type='submit' class='btn btn-primary col-md-12'>Zarejestruj</button>
                                 </div>
                             </div>
@@ -105,16 +113,9 @@ function AccountLoginView($model)
                     </form>
                 </div>
             </div>
-
-
         </div>
     </div>
-
-
 ";
-
-
-
 }
-?>
+
 

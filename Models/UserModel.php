@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Alan
- * Date: 22.12.2017
- * Time: 19:53
- */
 
 class UserModel
 {
@@ -21,17 +15,22 @@ class UserModel
     public $Avatar;
     public $ValidationToken;
 
-    // Error vars
     public $ErrorLogin;
 
-    public function generateRandomToken() {
+    public function generateRandomToken()
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*!@#$%^&*()_=<>{}[]';
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < 150; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-    return $randomString;
+        return $randomString;
+    }
+
+    public function GetFullName()
+    {
+        return $this->FirstName . ' ' . $this->SurName;
     }
 
 }
