@@ -17,8 +17,10 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Produkty i kategorie <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/Products/ListAll">Produkty</a></li>
+                        <li><a href="/Administration/ListAll">Produkty</a></li>
                         <li><a href="/Administration/Categories">Kategorie</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Administration/AddProduct">Dodaj produkt</a></li>
                     </ul>
                 </li>
 

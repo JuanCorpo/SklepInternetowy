@@ -35,20 +35,6 @@ class ProductsController
         return;
     }
 
-    public function ListAll()
-    {
-        $model = null;
-        if (RoleHelper::IsInRole(1)) {
-            $model = new ProductListViewModel($this->context, 10, 1);
-
-            $allProducts = $this->context->Products->GetProducts();
-
-            $model->Populate($allProducts);
-            ListAll($model);
-            return;
-        }
-    }
-
     public function Show($productId)
     {
         $product = $this->context->Products->GetProduct($productId);
