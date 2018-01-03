@@ -42,5 +42,4 @@ class ProductsController
         ProductsShow($product);
         return;
     }
-
 }

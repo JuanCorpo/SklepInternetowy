@@ -12,26 +12,32 @@ class Users
         $this->SQL = $this->Context->sql;
     }
 
-    public function GetUsersAll()
+    public function GetUsersAll($cond = null)
     {
         $Users = [];
 
-        $sqlResult = $this->SQL->Query("SELECT * FROM users");
+        $query = "SELECT * FROM users";
 
+        if($cond != null){
+            $query .= " WHERE " . $cond;
+        }
+
+        $sqlResult = $this->SQL->Query($query);
         foreach ($sqlResult as $item) {
+
             $Users[] = new UserModel();
 
-            $Users[count($Users)]->Id = $item[0]['UserId'];
-            $Users[count($Users)]->UserName = $item[0]['UserName'];
-            $Users[count($Users)]->UserRole = $item[0]['UserRole'];
-            $Users[count($Users)]->IsActive = $item[0]['IsActive'];
-            $Users[count($Users)]->IsPasswordChangeRequired = $item[0]['IsPasswordChangeRequired'];
-            $Users[count($Users)]->UserPrivateMail = $item[0]['UserPrivateEmail'];
-            $Users[count($Users)]->FirstName = $item[0]['FirstName'];
-            $Users[count($Users)]->SurName = $item[0]['SurName'];
-            $Users[count($Users)]->EmailConfirmed = $item[0]['EmailConfirmed'];
-            $Users[count($Users)]->CreationDate = $item[0]['CreationDate'];
-            $Users[count($Users)]->Avatar = $item[0]['Avatar'];
+            $Users[count($Users)-1]->Id = $item['UserId'];
+            $Users[count($Users)-1]->UserName = $item['UserName'];
+            $Users[count($Users)-1]->UserRole = $item['UserRole'];
+            $Users[count($Users)-1]->IsActive = $item['IsActive'];
+            $Users[count($Users)-1]->IsPasswordChangeRequired = $item['IsPasswordChangeRequired'];
+            $Users[count($Users)-1]->UserPrivateMail = $item['UserPrivateEmail'];
+            $Users[count($Users)-1]->FirstName = $item['FirstName'];
+            $Users[count($Users)-1]->SurName = $item['SurName'];
+            $Users[count($Users)-1]->EmailConfirmed = $item['EmailConfirmed'];
+            $Users[count($Users)-1]->CreationDate = $item['CreationDate'];
+            $Users[count($Users)-1]->Avatar = $item['Avatar'];
         }
 
         return $Users;
@@ -134,5 +140,11 @@ class Users
         $q = "INSERT INTO users VALUES ('','$UserModel->UserName','$Password',$UserModel->UserRole,TRUE,FALSE,'$UserModel->UserPrivateMail','$UserModel->UserName','',FALSE ,'$UserModel->CreationDate',
 'https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-1/c43.0.148.148/p148x148/10354686_10150004552801856_220367501106153455_n.jpg?oh=9484fb0f3b0a4c91056f5a9875e81e36&oe=5AFB190F','')";
         $this->SQL->Query($q);
+    }
+
+    public function GetEmployeesList()
+    {
+        return $this->GetUsersAll("UserRole = 2");
+      // return $this->SQL->Query("SELECT * FROM users WHERE UserRole=2");
     }
 }

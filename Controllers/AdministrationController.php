@@ -50,24 +50,28 @@ class AdministrationController
     {
         if (RoleHelper::IsInRole(1)) {
             $model = new ProductModel();
+            $Employees = $this->context->Users->GetEmployeesList();
+//            echo "<pre>";
+//            print_r($Employees);
+//            die();
 
             // Dodanie produktu
-            if(VariablesHelper::IsAnyPostActive()){
+            if (VariablesHelper::IsAnyPostActive()) {
+
 
                 // Wypełnić model danymi z POST i context->add
 
-                echo"POST";
+                echo "POST";
                 die();
 
-            }else{ // Tworzenie nowego
+            } else { // Tworzenie nowego
 
                 // Pobrać liste pracowników, liste kategorii
 
             }
 
-            AddProduct($model);
+            AddProduct($model, $Employees);
             return;
         }
     }
-
 }
