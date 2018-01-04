@@ -22,10 +22,8 @@ class Parameters
             $Parameter[count($Parameter) - 1]->ProductId = $d['ProductId'];
             $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
             $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
-            $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterName'];
             $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
-            $Parameter[count($Parameter) - 1]->Suffix = $d['Suffix'];
-            $Parameter[count($Parameter) - 1]->Prefix = $d['Prefix'];
+            // TODO dodać wczytywanie parametersTypes (context, model)
         }
 
         return $Parameter;
@@ -41,10 +39,8 @@ class Parameters
             $Parameter[count($Parameter) - 1]->ProductId = $d['ProductId'];
             $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
             $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
-            $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterName'];
             $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
-            $Parameter[count($Parameter) - 1]->Suffix = $d['Suffix'];
-            $Parameter[count($Parameter) - 1]->Prefix = $d['Prefix'];
+            // TODO dodać wczytywanie parametersTypes (context, model)
         }
 
         return $Parameter;

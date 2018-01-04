@@ -28,6 +28,7 @@ class Products
             $product->NoOfRatings = $result[0]['NumberOfBought'];
             $product->StockSize = $result[0]['StockStatus'];
             $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
+            $product->Description = $result[0]['Description'];
 
             $product->AssignedEmployee = $this->Context->Users->GetUserBy($result[0]['ProductEmployeeId'],null);
             $product->Parameters = $this->Context->Parameters->LoadParametersForProduct($result[0]['ProductId']);
@@ -51,6 +52,7 @@ class Products
             $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
             $products[count($products) - 1]->StockSize = $d['StockStatus'];
             $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
+            $products[count($products) - 1]->Description = $d['Description'];
 
             $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserBy($d['ProductEmployeeId'],null);
             $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($d['ProductId']);

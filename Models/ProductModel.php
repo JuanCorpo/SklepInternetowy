@@ -9,6 +9,7 @@ class ProductModel
     public $Rating;
     public $NoOfRatings;
     public $StockSize;
+    public $Description;
     public $ProductEmployeeId;
 
     public $AssignedEmployee;
