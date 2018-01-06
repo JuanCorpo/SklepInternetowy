@@ -74,4 +74,47 @@ class AdministrationController
             return;
         }
     }
+
+    public function EmailQueue()
+    {
+        if (RoleHelper::IsInRole(1)) {
+            $model = null;
+
+            $model = $this->context->EmailQueues->GetEmails();
+
+            EmailQueue($model);
+            return;
+        }
+    }
+
+    public function EmailTemplates()
+    {
+        $model = null;
+
+        if (RoleHelper::IsInRole(1)) {
+            $model = $this->context->EmailTemplates->GetTemplates();
+
+            EmailTemplates($model);
+            return;
+        }
+    }
+
+    public function EditEmailTemplate($id)
+    {
+
+        if (RoleHelper::IsInRole(1)) {
+            if (VariablesHelper::ArePostSet(array(0 => 'id', 1 => 'subject', 2 => 'body')))
+            {
+                $id = VariablesHelper::GetPostValue('id');
+                $subject = VariablesHelper::GetPostValue('subject');
+                $body = VariablesHelper::GetPostValue('body');
+
+                $this->context->EmailTemplates->Update($id,$subject,$body);
+            }
+
+            $model = $this->context->EmailTemplates->GetTemplate($id, null);
+            EditEmailTemplateView($model);
+            return;
+        }
+    }
 }

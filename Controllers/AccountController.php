@@ -2,6 +2,7 @@
 include_once('./Code/Helpers/Cookie.php');
 include_once("./Models/UserModel.php");
 include_once("./Code/Helpers/VariablesHelper.php");
+include_once("./Code/CustomClasses/MailSender.php");
 include_once("./Config/DatabaseContext.php");
 foreach (glob("./Views/Account/*.php") as $filename) {
     include_once $filename;
@@ -65,15 +66,25 @@ class AccountController
                     $model->UserPrivateMail = $email;
                     $model->UserRole = 0;
                     $model->EmailConfirmed = false;
-                    $model->IsActive = true;
+                    $model->IsActive = false;
                     $model->IsPasswordChangeRequired = false;
                     $model->CreationDate = date('Y-m-d H:i:s');
 
                     $this->context->Users->AddNewUser($model, sha1($pass));
 
+                    $newToken = $model->generateEmailToken();
+                    $this->context->Users->SaveEmailConfirmToken($model->UserPrivateMail, $newToken);
+
+                    $actual_link = "http://$_SERVER[HTTP_HOST]" . "/Account/Confirm/" . $newToken;
+                    MailSender::SendEmailConfirmInfo($this->context, $email, Array($model->UserName, $actual_link, $model->UserPrivateMail));
+
                     if (VariablesHelper::IsPostSet('Newsletter')) {
                         $this->context->Users->AddToNewsletter($email);
+                        MailSender::SendNewsletterInfo($this->context, $email);
                     }
+                    $model->ErrorLogin = "Wysłano link z potwierdzeniam adresu email!";
+                    $this->Login($model, 1);
+                    return;
                 } else {
                     $model->UserPrivateMail = "";
                     $model->ErrorLogin = "Nie zaakceptowano regulaminu!";
@@ -98,34 +109,56 @@ class AccountController
     {
         if (VariablesHelper::IsPostSet('Email')) {
             $this->context->Users->AddToNewsletter($_POST['Email']);
+            MailSender::SendNewsletterInfo($this->context, $_POST['Email']);
         }
         header("Location: /");
     }
 
     public function LoginPost()
     {
-        $password = sha1($_POST['Password']);
         $model = null;
 
         if (VariablesHelper::ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
+            $password = sha1($_POST['Password']);
             $model = $this->context->Users->ValidateUser($_POST['Email'], $password);
 
             if ($model != null) {
-                $_SESSION['user'] = new UserModel();
-                $_SESSION['user'] = serialize($model);
 
-                if (VariablesHelper::IsPostSet('RememberMe')) {
-                    Cookie::CreateCookie('ID', $model->Id, 365);
-                    $newToken = $model->generateRandomToken();
-                    Cookie::CreateCookie("TOKEN", $newToken, 365);
-                    $this->context->Users->SaveToken($model->Id, $newToken);
+                if (VariablesHelper::ArePostSet(array(0 => 'emailToken', 1 => 'confirmedToken'))) {
+                    $token = $_POST['emailToken'];
+                    $confirmed = $_POST['confirmedToken'];
+
+                    if($model->EmailConfirmToken === $token && $confirmed === $model->EmailConfirmed) {
+                        $model->EmailConfirmed = true;
+                        $model->EmailConfirmToken = "";
+                        $model = $this->context->Users->SaveModel($model);
+                    }
                 }
-                header("Location: /");
+
+                if ($model->EmailConfirmed) {
+                    $_SESSION['user'] = new UserModel();
+                    $_SESSION['user'] = serialize($model);
+
+                    if (VariablesHelper::IsPostSet('RememberMe')) {
+                        Cookie::CreateCookie('ID', $model->Id, 365);
+                        $newToken = $model->generateRandomToken();
+                        Cookie::CreateCookie("TOKEN", $newToken, 365);
+                        $this->context->Users->SaveToken($model->Id, $newToken);
+                    }
+                    header("Location: /");
+                }
+            } else {
+                $model = new UserModel();
+                $model->UserPrivateMail = "";
+                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.";
+
+                $this->Login($model, 0);
+                return;
             }
         }
-
+        $model = new UserModel();
         $model->UserPrivateMail = "";
-        $model->ErrorLogin = "Dane logowania nie są poprawne.";
+        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.";
 
         $this->Login($model, 0);
         return;
@@ -145,5 +178,13 @@ class AccountController
         $this->Index(null);
     }
 
+    public function Confirm($token)
+    {
+        $model = new UserModel();
+        $model->EmailConfirmToken = $token;
+        $model->EmailConfirmed = 0;
 
+        AccountLoginView($model, 0);
+        return;
+    }
 }

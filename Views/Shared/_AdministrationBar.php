@@ -28,19 +28,18 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Użytkowicy <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Lista użytkowników</a></li>
-                        <li><a href="#">Lista pracowników</a></li>
+                        <li><a href="/Administration/UsersList">Lista użytkowników</a></li>
+                        <li><a href="/Administration/EmployeeList">Lista pracowników</a></li>
                     </ul>
                 </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administracja <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Grupy</a></li>
-                        <li><a href="#">Ustawienia</a></li>
-                        <li><a href="#">Szablony email</a></li>
-                        <li><a href="#">kolejka email</a></li>
-                        <li><a href="#">Kategorie przedmiotów</a></li>
+                        <li><a href="/Administration/Grups">Grupy</a></li>
+                        <li><a href="/Administration/Settings">Ustawienia</a></li>
+                        <li><a href="/Administration/EmailTemplates">Szablony email</a></li>
+                        <li><a href="/Administration/EmailQueue">Kolejka email</a></li>
                     </ul>
                 </li>
 

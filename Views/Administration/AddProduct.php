@@ -8,10 +8,10 @@ function AddProduct($model, $Employees)
         <div style='display:inline;'>
             <h2 style='display:inline;'>Dodaj produkt</h2>
 
+
             <div class='navbar-right'>
                 <button class="btn btn-warning" type="submit"><span class="glyphicon glyphicon-plus"></span> Dodaj</button>
             </div>
-
         </div>
         <hr>
         <div class='row'>

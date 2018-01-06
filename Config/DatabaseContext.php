@@ -12,6 +12,8 @@ class DatabaseContext
     public $Products;
     public $Parameters;
     public $Categories;
+    public $EmailQueues;
+    public $EmailTemplates;
 
     public function __construct()
     {
@@ -20,5 +22,9 @@ class DatabaseContext
         $this->Products = new Products($this);
         $this->Parameters = new Parameters($this);
         $this->Categories = new Categories($this);
+        $this->EmailQueues = new EmailQueues($this);
+        $this->EmailTemplates = new EmailTemplates($this);
     }
+
+
 }

@@ -1,8 +1,9 @@
 <?php
 function AccountLoginView($model, $view)
 {
-    echo "<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
-    $register  = "active in";
+    if ($model === null)
+        echo "<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
+    $register = "active in";
     $login = "";
     $ErrorLogin = "";
     $Email = "";
@@ -33,7 +34,12 @@ function AccountLoginView($model, $view)
             <div id='myTabContent' class='tab-content'>
                 <br/>
                 <div class='tab-pane fade $login' id='home'>
-                    <form id='loginForm' method='post' action='/Account/LoginPost'>
+                    <form id='loginForm' method='post' action='/Account/LoginPost'>";
+    if ($model !== null) {
+        echo "<input type='hidden' name='emailToken' value='" . $model->EmailConfirmToken . "' />
+              <input type='hidden' name='confirmedToken' value='" . $model->EmailConfirmed . "' />";
+    }
+    echo "
                         <fieldset>
                             <div class='row'>
                                 <div class='form-group col-md-4 col-md-offset-4'>
