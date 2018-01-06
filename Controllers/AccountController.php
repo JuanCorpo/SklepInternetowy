@@ -107,8 +107,7 @@ class AccountController
         return;
     }
 
-    public
-    function AddToNewsLetter()
+    public function AddToNewsLetter()
     {
         if (VariablesHelper::IsPostSet('Email')) {
             $this->context->Users->AddToNewsletter($_POST['Email']);
@@ -117,8 +116,7 @@ class AccountController
         header("Location: /");
     }
 
-    public
-    function LoginPost()
+    public function LoginPost()
     {
         if (VariablesHelper::ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
             $model = new UserModel();
@@ -171,8 +169,7 @@ class AccountController
 
     }
 
-    public
-    function LogoutPost()
+    public function LogoutPost()
     {
         if (VariablesHelper::IsUserActive()) {
             Cookie::DeleteCookie("ID");
@@ -185,8 +182,7 @@ class AccountController
         $this->Index(null);
     }
 
-    public
-    function Confirm($token)
+    public function Confirm($token)
     {
         $model = new UserModel();
         $model->EmailConfirmToken = $token;
@@ -198,4 +194,97 @@ class AccountController
         AccountLoginView($model, 0);
         return;
     }
+
+/// Konto
+
+    public function ChangePassword()
+    {
+
+        ChangePassword();
+        return;
+    }
+
+    public function BasicInfo()
+    {
+
+        BasicInfo();
+        return;
+    }
+
+    public function ChangeEmail()
+    {
+
+        ChangeEmail();
+        return;
+    }
+
+    public function AddressBook()
+    {
+
+        AddressBook();
+        return;
+    }
+
+    public function Messages()
+    {
+
+        Messages();
+        return;
+    }
+
+    /// Zamówienia
+
+    public function ActiveOrders()
+    {
+
+        ActiveOrders();
+        return;
+    }
+
+    public function OldOrder()
+    {
+
+        OldOrder();
+        return;
+    }
+
+    public function Rate()
+    {
+
+        Rate();
+        return;
+    }
+
+    public function Baskets()
+    {
+
+        Baskets();
+        return;
+    }
+
+
+    /// Pytania
+
+    public function Ask()
+    {
+
+        Ask();
+        return;
+    }
+
+    public function AskAboutOrder()
+    {
+
+        AskAboutOrder();
+        return;
+    }
+
+    public function MyQuestions()
+    {
+
+        MyQuestions();
+        return;
+    }
+
+
 }
