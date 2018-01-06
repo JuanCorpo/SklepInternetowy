@@ -29,30 +29,30 @@ if (!Cookie::IsCookieEqual('Cookie', true)) {
                 <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Pomocne linki </h3>
                     <ul>
-                        <li><a href="#"> Jak kupić na raty </a></li>
-                        <li><a href="#"> Reklamacje, zwroty, serwis </a></li>
-                        <li><a href="#"> Częste pytania </a></li>
-                        <li><a href="#"> Gwarancje </a></li>
+                        <li><a href="/Site/Installment"> Jak kupić na raty </a></li>
+                        <li><a href="/Site/Complaint"> Reklamacje, zwroty, serwis </a></li>
+                        <li><a href="/Site/FAQ"> Częste pytania </a></li>
+                        <li><a href="/Site/Warranty"> Gwarancje </a></li>
                     </ul>
                 </div>
                 <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Informacje prawne </h3>
                     <ul>
-                        <li><a href="#"> Regulamin </a></li>
-                        <li><a href="#"> Polityka prywatności i cookies </a></li>
-                        <li><a href="#"> Bezpieczeństwo danych osobowych </a></li>
-                        <li><a href="#"> Materiały do pobrania </a></li>
+                        <li><a href="/Site/Terms"> Regulamin </a></li>
+                        <li><a href="/Site/Cookies"> Polityka prywatności i cookies </a></li>
+                        <li><a href="/Site/Security"> Bezpieczeństwo danych osobowych </a></li>
+                        <li><a href="/Site/Downloads"> Materiały do pobrania </a></li>
                     </ul>
                 </div>
                 <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Sklep </h3>
                     <ul>
-                        <li><a href="#"> Kontakt </a></li>
-                        <li><a href="#"> O nas </a></li>
-                        <li><a href="#"> Kariera </a></li>
-                        <li><a href="#"> Dane firmy </a></li>
-                        <li><a href="#"> Współpraca handlowa </a></li>
-                        <li><a href="#"> Nasze referencje </a></li>
+                        <li><a href="/Site/Contact"> Kontakt </a></li>
+                        <li><a href="/Site/About"> O nas </a></li>
+                        <li><a href="/Site/Career"> Kariera </a></li>
+                        <li><a href="/Site/Corpo"> Dane firmy </a></li>
+                        <li><a href="/Site/TradeCooperation"> Współpraca handlowa </a></li>
+                        <li><a href="/Site/Reference"> Nasze referencje </a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
