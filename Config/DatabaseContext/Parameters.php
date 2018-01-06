@@ -23,7 +23,6 @@ class Parameters
             $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
             $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
             $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
-            // TODO dodać wczytywanie parametersTypes (context, model)
         }
 
         return $Parameter;

@@ -51,6 +51,8 @@ class AdministrationController
         if (RoleHelper::IsInRole(1)) {
             $model = new ProductModel();
             $Employees = $this->context->Users->GetEmployeesList();
+            $Categories = $this->context->Categories->GetCategories();
+            $ParametersTypes = $this->context->ParametersTypes->GetParametersTypes();
 //            echo "<pre>";
 //            print_r($Employees);
 //            die();
@@ -69,8 +71,7 @@ class AdministrationController
                 // Pobrać liste pracowników, liste kategorii
 
             }
-
-            AddProduct($model, $Employees);
+            AddProduct($model, $Categories, $Employees, $ParametersTypes);
             return;
         }
     }
