@@ -51,13 +51,13 @@ class Users
         $query = "SELECT * FROM users";
 
         if (strpos($emailOrId, '@') !== false) {
-            $query . " WHERE UserPrivateEmail='$emailOrId''";
+            $query .= " WHERE UserPrivateEmail='$emailOrId'";
         } else {
-            $query . " WHERE UserId= $emailOrId";
+            $query .= " WHERE UserId= $emailOrId";
         }
 
         if ($userToken != null) {
-            $query . " AND ValidationToken= '$userToken''";
+            $query .= " AND ValidationToken= '$userToken''";
         }
 
         $sqlResult = $this->SQL->Query($query);
@@ -78,7 +78,6 @@ class Users
             $Users->Avatar = $sqlResult[0]['Avatar'];
             $Users->EmailConfirmToken = $sqlResult[0]['EmailConfirmToken'];
         }
-
         return $Users;
     }
 
@@ -168,6 +167,16 @@ class Users
         $this->SQL->Query($q);
 
         return $model;
+    }
+
+    public function IsEmailTaken($Email)
+    {
+        $res = $this->SQL->Query("SELECT * FROM users WHERE UserPrivateEmail='$Email'");
+
+        if (count($res) == 0) {
+            return false;
+        }
+        return true;
     }
 
     public function GetEmployeesList()

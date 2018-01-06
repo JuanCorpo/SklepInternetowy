@@ -50,7 +50,7 @@ class AccountController
 
             $pass = $_POST['Password'];
 
-            if (count($model) == 0) {
+            if (count($model) === 0) {
                 $model = new UserModel();
                 $email = $_POST['Email'];
 
@@ -91,7 +91,9 @@ class AccountController
                     $this->Login($model, 1);
                     return;
                 }
+
             } else {
+                $model = new UserModel();
                 $model->UserPrivateMail = "";
                 $model->ErrorLogin = "Istnieje już konto z podanym adresem email!";
                 $this->Login($model, 1);
@@ -105,7 +107,8 @@ class AccountController
         return;
     }
 
-    public function AddToNewsLetter()
+    public
+    function AddToNewsLetter()
     {
         if (VariablesHelper::IsPostSet('Email')) {
             $this->context->Users->AddToNewsletter($_POST['Email']);
@@ -114,28 +117,28 @@ class AccountController
         header("Location: /");
     }
 
-    public function LoginPost()
+    public
+    function LoginPost()
     {
-        $model = null;
-
         if (VariablesHelper::ArePostSet(array(0 => 'Email', 1 => 'Password'))) {
+            $model = new UserModel();
             $password = sha1($_POST['Password']);
             $model = $this->context->Users->ValidateUser($_POST['Email'], $password);
 
-            if ($model != null) {
+            if (VariablesHelper::ArePostSet(array(0 => 'emailToken', 1 => 'confirmedToken'))) {
+                $token = $_POST['emailToken'];
+                $confirmed = $_POST['confirmedToken'];
 
-                if (VariablesHelper::ArePostSet(array(0 => 'emailToken', 1 => 'confirmedToken'))) {
-                    $token = $_POST['emailToken'];
-                    $confirmed = $_POST['confirmedToken'];
-
-                    if($model->EmailConfirmToken === $token && $confirmed === $model->EmailConfirmed) {
-                        $model->EmailConfirmed = true;
-                        $model->EmailConfirmToken = "";
-                        $model = $this->context->Users->SaveModel($model);
+                if ($model !== null) {
+                    if ($model->EmailConfirmToken === $token && $confirmed === $model->EmailConfirmed) {
                     }
+                } else {
+                    header("Location: /Account/Confirm/" . $token . "?error");
                 }
+            }
 
-                if ($model->EmailConfirmed) {
+            if ($model != null) {
+                if ($model->EmailConfirmed || VariablesHelper::IsPostSet('emailToken')) {
                     $_SESSION['user'] = new UserModel();
                     $_SESSION['user'] = serialize($model);
 
@@ -145,12 +148,15 @@ class AccountController
                         Cookie::CreateCookie("TOKEN", $newToken, 365);
                         $this->context->Users->SaveToken($model->Id, $newToken);
                     }
+                    $model->EmailConfirmed = true;
+                    $model->EmailConfirmToken = "";
+                    $model = $this->context->Users->SaveModel($model);
                     header("Location: /");
                 }
             } else {
                 $model = new UserModel();
                 $model->UserPrivateMail = "";
-                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.";
+                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.1";
 
                 $this->Login($model, 0);
                 return;
@@ -158,14 +164,15 @@ class AccountController
         }
         $model = new UserModel();
         $model->UserPrivateMail = "";
-        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.";
+        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.2";
 
         $this->Login($model, 0);
         return;
 
     }
 
-    public function LogoutPost()
+    public
+    function LogoutPost()
     {
         if (VariablesHelper::IsUserActive()) {
             Cookie::DeleteCookie("ID");
@@ -178,11 +185,15 @@ class AccountController
         $this->Index(null);
     }
 
-    public function Confirm($token)
+    public
+    function Confirm($token)
     {
         $model = new UserModel();
         $model->EmailConfirmToken = $token;
         $model->EmailConfirmed = 0;
+
+        if (VariablesHelper::IsGetSet('error'))
+            $model->ErrorLogin = "Dane logowania nie są poprawne.";
 
         AccountLoginView($model, 0);
         return;

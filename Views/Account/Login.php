@@ -1,8 +1,9 @@
 <?php
 function AccountLoginView($model, $view)
 {
-    if ($model === null)
+    if ($model !==null && !(strlen($model->EmailConfirmToken)>1)) {
         echo "<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
+    }
     $register = "active in";
     $login = "";
     $ErrorLogin = "";
