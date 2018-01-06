@@ -62,8 +62,8 @@ class AdministrationController
 
 
                 // Wypełnić model danymi z POST i context->add
-
-                echo "POST";
+                print_r($_POST);
+                //echo "POST";
                 die();
 
             } else { // Tworzenie nowego
