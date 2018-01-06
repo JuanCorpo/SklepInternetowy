@@ -95,12 +95,12 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                 </td>
                 <td>
                     <div class='form-group col-md-12'>
-                        <input type='text' class='form-control' id='Value' name='Value'>
+                        <input type='text' class='form-control' id='Value'>
                     </div>
                 </td>
                 <td>
                     <div class='form-group col-md-12'>
-                        <input type='text' class='form-control' id='ParamType' name='ParamType' disabled=''>
+                        <input type='text' class='form-control' id='ParamType' disabled=''>
                     </div>
                 </td>
                 <td>
@@ -116,7 +116,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         <div class='row'>
             <div class="form-group row col-md-12">
                 <label for="EmployeerSelect">Opis produktu</label>
-                <textarea class="ckeditor" name="body"></textarea>
+                <textarea class="ckeditor" name="desc"></textarea>
             </div>
         </div>
         <input type="hidden" value="0" name="ParamSize" id="ParamSize">
