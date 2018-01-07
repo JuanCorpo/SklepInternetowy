@@ -40,7 +40,7 @@ _ProductListForFilters($model);
                         Ilość parametrów: ' . count($item->Parameters).'<br>';
 
                         foreach($item->Parameters as $param){
-                            echo 'Nazwa: '.$param->ParameterName.'<br>';
+                            echo 'Nazwa: '.$param->ParameterType->ParameterName.'<br>';
                             echo 'Wartość: '.$param->ParameterValue.'<br>';
                         }
 

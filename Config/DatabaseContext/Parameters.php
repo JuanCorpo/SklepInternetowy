@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/Models/ParametersModel.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/ParametersModel.php";
 
 class Parameters
 {
@@ -16,6 +16,7 @@ class Parameters
     {
         $Parameter = [];
         $result = $this->SQL->Query("SELECT * FROM parameters WHERE ProductId=$productId");
+        $ParameterTypeQuery = $this->Context->ParametersTypes->GetParametersTypes();
 
         foreach ($result as $d) {
             $Parameter[] = new ParametersModel();
@@ -23,8 +24,12 @@ class Parameters
             $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
             $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
             $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
-        }
 
+            foreach ($ParameterTypeQuery as $item) {
+                if ($item->ParameterId == $d['ParameterId'])
+                    $Parameter[count($Parameter) - 1]->ParameterType = $item;
+            }
+        }
         return $Parameter;
     }
 
@@ -32,15 +37,20 @@ class Parameters
     {
         $Parameter = [];
         $result = $this->SQL->Query("SELECT * FROM parameters WHERE CategoryId=$categoryId");
+        $ParameterTypeQuery = $this->Context->ParametersTypes->GetParametersTypes();
 
-        while ($d = $result->fetch_assoc()) {
-            $Parameter[] = new Parameter();
+        foreach ($result as $d) {
+            $Parameter[] = new ParametersModel();
             $Parameter[count($Parameter) - 1]->ProductId = $d['ProductId'];
             $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
             $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
             $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
-        }
 
+            foreach ($ParameterTypeQuery as $item) {
+                if ($item->ParameterId == $d['ParameterId'])
+                    $Parameter[count($Parameter) - 1]->ParameterType = $item;
+            }
+        }
         return $Parameter;
     }
 
