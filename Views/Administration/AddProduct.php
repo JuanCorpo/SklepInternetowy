@@ -4,19 +4,18 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
 {
 
     ?>
+    <!--Formularz dodawania produktu -->
     <form class="form-horizontal" method='post' action='/Administration/AddProduct'>
+        <!-- Przycisk dodawania -->
         <div style='display:inline;'>
             <h2 style='display:inline;'>Dodaj produkt</h2>
-
-
             <div class='navbar-right'>
                 <button class="btn btn-warning" type="submit"><span class="glyphicon glyphicon-plus"></span> Dodaj
                 </button>
             </div>
         </div>
         <hr>
-
-
+        <!-- Pole nazwy produktu -->
         <div class='row'>
             <div class='form-group col-md-4 col-md-offset-4'>
                 <label for='ProductName'>Nazwa Produktu</label>
@@ -24,22 +23,19 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                        placeholder='Wpisz nazwę produktu'>
             </div>
         </div>
-
-
+        <!-- Pole kategorii produktu -->
         <div class='row'>
             <div class="form-group row col-md-4">
                 <label for="CategorySelect">Wybierz kategorię produktu</label>
                 <select class="form-control" id="CategorySelect" name="CategorySelect">
                     <?php
-
                     foreach ($Categories as $item)
                         echo '<option value= ' . ($item->CategoryId) . '>' . $item->CategoryName . '</option>'
                     ?>
                 </select>
             </div>
         </div>
-
-
+        <!-- Pole ceny produktu -->
         <div class='row'>
             <div class='form-group col-md-4 col-md-offset-4'>
                 <label for='ProductPrice'>Cena produktu</label>
@@ -47,8 +43,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                        placeholder='Wpisz cenę produktu'>
             </div>
         </div>
-
-
+        <!-- Pole stanu magazynowego produktu -->
         <div class='row'>
             <div class='form-group col-md-4 col-md-offset-4'>
                 <label for='StockSize'>Stan magazynowy</label>
@@ -56,8 +51,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                        placeholder='Wpisz stan magazynowy produktu'>
             </div>
         </div>
-
-
+        <!-- Pole opiekuna produktu -->
         <div class='row'>
             <div class="form-group row col-md-4">
                 <label for="EmployeerSelect">Wybierz opiekuna produktu</label>
@@ -69,8 +63,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                 </select>
             </div>
         </div>
-
-
+        <!-- Tabela dodawania parametrów -->
         <table class="table table-striped" id="ParametersTable">
             <thead>
             <tr>
@@ -111,8 +104,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
             </tr>
             </tbody>
         </table>
-
-
+        <!-- CKE editor -->
         <div class='row'>
             <div class="form-group row col-md-12">
                 <label for="EmployeerSelect">Opis produktu</label>
@@ -121,68 +113,65 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         </div>
         <input type="hidden" value="0" name="ParamSize" id="ParamSize">
     </form>
-
-
+    <!-- Początek skryptów -->
     <script>
         var ParamSize = 0;
         $(document).ready(function () {
-            //called when key is pressed in textbox
+            // Zabezpieczenie przed wpisywaniem liter do pola ceny produktu
             $("#ProductPrice").keypress(function (e) {
-                //if the letter is not digit then display error and don't type anything
                 if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) return false;
             });
-            //called when key is pressed in textbox
+            // Zabezpieczenie przed wpisywaniem liter do pola stanu magazynowego produktu
             $("#StockSize").keypress(function (e) {
-                //if the letter is not digit then display error and don't type anything
                 if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) return false;
             });
-
+            // Dodawanie nowego parametru do tabeli
             $("#ParamTypeSelect").change(function () {
                 var Param = ($(this).find(":selected").attr("ParamType"));
                 $("#ParamType").val(Param);
             });
-
+            // Reakcja na przycisk dodawania
             $("#Add").click(function () {
                 console.log($("#ParamTypeSelect").find(":selected").val());
                 if ($("#ParamTypeSelect").find(":selected").val() != -1 && $("#Value").val().length > 0) {
-                    //     $("#ParametersTable").insertRow(0);
                     var table = document.getElementById("ParametersTable");
 
-// Create an empty <tr> element and add it to the 1st position of the table:
                     var row = table.insertRow(2);
                     row.id = ParamSize++;
                     $("#ParamSize").val(ParamSize);
-
-
-// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
 
                     var cell1 = row.insertCell(0);
                     var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2);
                     var cell4 = row.insertCell(3);
-// Add some text to the new cells:
+
                     var Id = $("#ParamTypeSelect").find(":selected").val();
                     var Val = $("#Value").val();
 
                     cell1.innerHTML = ($("#ParamTypeSelect").find(":selected").text());
                     cell2.innerHTML = ($("#Value").val());
                     cell3.innerHTML = ($("#ParamType").val());
-                    cell4.innerHTML = "<div><a onclick='DeleteRow(this.id)' class='btn btn-danger' id='"+(ParamSize -1)+"'><span class='glyphicon glyphicon-minus'></span>Usuń</a> " +
+                    cell4.innerHTML = "<div><a onclick='DeleteRow(this.id)' class='btn btn-danger' id='" + (ParamSize - 1) + "'><span class='glyphicon glyphicon-minus'></span>Usuń</a> " +
                         "<input type=\"hidden\" value=\"" + Id + "\" name=\"ParamId_" + ParamSize + "\" id=\"ParamId_" + ParamSize + "\">" +
                         "<input type=\"hidden\" value=\"" + Val + "\" name=\"ParamVal_" + ParamSize + "\" id=\"ParamVal_" + ParamSize + "\">" +
                         "</div>";
+
+                    $("#ParamTypeSelect").val(-1);
+                    $("#ParamType").val("");
+                    $("#Value").val("");
+
                 } else
                     alert("Wprowadź prawidłowe parametry");
             });
         });
 
-        function DeleteRow(rowid)
-        {
+        // Usuwanie parametru z tabeli
+        function DeleteRow(rowid) {
             var row = document.getElementById(rowid);
             var table = row.parentNode;
-            while ( table && table.tagName != 'TABLE' )
+            while (table && table.tagName != 'TABLE')
                 table = table.parentNode;
-            if ( !table )
+            if (!table)
                 return;
             table.deleteRow(row.rowIndex);
         }

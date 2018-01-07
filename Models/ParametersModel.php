@@ -2,7 +2,6 @@
 
 class ParametersModel
 {
-    // TODO dopisać poprawki z parametermodel do database context
     public $ProductId;
     public $CategoryId;
     public $ParameterId;
