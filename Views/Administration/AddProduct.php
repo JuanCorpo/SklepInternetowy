@@ -29,7 +29,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         <div class='row'>
             <div class="form-group row col-md-4">
                 <label for="CategorySelect">Wybierz kategorię produktu</label>
-                <select class="form-control" id="CategorySelect">
+                <select class="form-control" id="CategorySelect" name="CategorySelect">
                     <?php
 
                     foreach ($Categories as $item)
@@ -61,7 +61,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         <div class='row'>
             <div class="form-group row col-md-4">
                 <label for="EmployeerSelect">Wybierz opiekuna produktu</label>
-                <select class="form-control" id="EmployeerSelect">
+                <select class="form-control" id="EmployeerSelect" name="EmployeerSelect">
                     <?php
                     foreach ($Employees as $item)
                         echo '<option value= ' . ($item->Id) . '>' . $item->GetFullName() . '</option>'

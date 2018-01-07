@@ -53,30 +53,53 @@ class AdministrationController
             $Employees = $this->context->Users->GetEmployeesList();
             $Categories = $this->context->Categories->GetCategories();
             $ParametersTypes = $this->context->ParametersTypes->GetParametersTypes();
-//            echo "<pre>";
-//            print_r($Employees);
-//            die();
 
-            // Dodanie produktu
+            // Warunek przesłania danych w formularzu
             if (VariablesHelper::IsAnyPostActive()) {
 
+                // Wypełnienie danymi z formularza
+                $model->CategoryId = VariablesHelper::GetPostValue("CategorySelect");
+                $model->Name = VariablesHelper::GetPostValue("ProductName");
+                $model->Price = VariablesHelper::GetPostValue("ProductPrice");
+                $model->StockSize = VariablesHelper::GetPostValue("StockSize");
+                $model->Description = VariablesHelper::GetPostValue("desc");
+                $model->ProductEmployeeId = VariablesHelper::GetPostValue("EmployeerSelect");
 
-                // Wypełnić model danymi z POST i context->add
-                print_r($_POST);
-                //echo "POST";
-                die();
 
-            } else { // Tworzenie nowego
+                // Wypełnienie domyślnymi wartościami bez formularza
+                $model->NoOfRatings = 0;
+                $model->Rating = 0;
 
-                // Pobrać liste pracowników, liste kategorii
+                // Dodanie produktu do tabeli produkty, i zwrócenie ID produktu
+                $ProductIdToParametersTable = $this->context->Products->Addproduct($model);
 
+                // Wypełnienie modelu parametrów
+                for ($i = 0; $i <= VariablesHelper::GetPostValue("ParamSize"); $i++) {
+                    if (VariablesHelper::IsPostSet("ParamId_" . $i)) {
+                        $ParamId = VariablesHelper::GetPostValue("ParamId_" . $i);
+                        $ParamVal = VariablesHelper::GetPostValue("ParamVal_" . $i);
+
+                        $model->Parameters[] = new ParametersModel();
+                        $model->Parameters[count($model->Parameters) - 1]->CategoryId = $model->CategoryId;
+                        $model->Parameters[count($model->Parameters) - 1]->ParameterId = $ParamId;
+                        $model->Parameters[count($model->Parameters) - 1]->ParameterValue = $ParamVal;
+                        $model->Parameters[count($model->Parameters) - 1]->ProductId = $ProductIdToParametersTable;
+                    }
+                }
+
+                // Przesłanie modelu parametrów do bazy danych
+                foreach ($model->Parameters as $item) {
+                    $this->context->Parameters->AddParameter($item);
+                }
             }
+            // Przekierowanie do widoku
             AddProduct($model, $Categories, $Employees, $ParametersTypes);
             return;
         }
     }
 
-    public function EmailQueue()
+    public
+    function EmailQueue()
     {
         if (RoleHelper::IsInRole(1)) {
             $model = null;
@@ -88,7 +111,8 @@ class AdministrationController
         }
     }
 
-    public function EmailTemplates()
+    public
+    function EmailTemplates()
     {
         $model = null;
 
@@ -100,17 +124,17 @@ class AdministrationController
         }
     }
 
-    public function EditEmailTemplate($id)
+    public
+    function EditEmailTemplate($id)
     {
 
         if (RoleHelper::IsInRole(1)) {
-            if (VariablesHelper::ArePostSet(array(0 => 'id', 1 => 'subject', 2 => 'body')))
-            {
+            if (VariablesHelper::ArePostSet(array(0 => 'id', 1 => 'subject', 2 => 'body'))) {
                 $id = VariablesHelper::GetPostValue('id');
                 $subject = VariablesHelper::GetPostValue('subject');
                 $body = VariablesHelper::GetPostValue('body');
 
-                $this->context->EmailTemplates->Update($id,$subject,$body);
+                $this->context->EmailTemplates->Update($id, $subject, $body);
             }
 
             $model = $this->context->EmailTemplates->GetTemplate($id, null);

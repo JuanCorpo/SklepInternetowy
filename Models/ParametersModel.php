@@ -2,16 +2,15 @@
 
 class ParametersModel
 {
+    // TODO dopisać poprawki z parametermodel do database context
     public $ProductId;
     public $CategoryId;
     public $ParameterId;
-    public $ParameterName;
     public $ParameterValue;
-    public $Prefix;
-    public $Suffix;
+    public $ParameterType;
 
     public function GetFullValue()
     {
-        return $this->Prefix.' ' . $this->ParameterValue . ' ' .$this->Suffix;
+        return $this->ParameterType->Prefix.' ' . $this->ParameterValue . ' ' .$this->ParameterType->Suffix;
     }
 }

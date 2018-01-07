@@ -25,7 +25,7 @@ class Products
             $product->Name = $result[0]['ProductName'];
             $product->Price = $result[0]['ProductPrice'];
             $product->Rating = $result[0]['Rating'];
-            $product->NoOfRatings = $result[0]['NumberOfBought'];
+            $product->NoOfRatings = $result[0]['NumberOfRatings'];
             $product->StockSize = $result[0]['StockStatus'];
             $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
             $product->Description = $result[0]['Description'];
@@ -48,8 +48,9 @@ class Products
             $products[count($products) - 1]->CategoryId = $d['CategoryId'];
             $products[count($products) - 1]->Name = $d['ProductName'];
             $products[count($products) - 1]->Price = $d['ProductPrice'];
+            $products[count($products) - 1]->ImageDirectory = $d['ImageDirectory'];
             $products[count($products) - 1]->Rating = $d['Rating'];
-            $products[count($products) - 1]->NoOfRatings = $d['NumberOfBought'];
+            $products[count($products) - 1]->NoOfRatings = $d['NumberOfRatings'];
             $products[count($products) - 1]->StockSize = $d['StockStatus'];
             $products[count($products) - 1]->ProductEmployeeId = $d['ProductEmployeeId'];
             $products[count($products) - 1]->Description = $d['Description'];
@@ -119,5 +120,12 @@ class Products
             }
         }
         return $products;
+    }
+
+    public function AddProduct($ProductModel)
+    {
+        $this->SQL->Query("INSERT INTO products VALUES ('', $ProductModel->CategoryId, '$ProductModel->Name', $ProductModel->Price, '$ProductModel->ImageDirectory', $ProductModel->Rating, $ProductModel->NoOfRatings, $ProductModel->StockSize, '$ProductModel->Description', $ProductModel->ProductEmployeeId)");
+        $result = $this->SQL->Query("SELECT ProductId FROM products ORDER BY ProductId DESC LIMIT 1");
+        return $result[0]['ProductId'];
     }
 }

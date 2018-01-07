@@ -39,9 +39,16 @@ class Parameters
             $Parameter[count($Parameter) - 1]->CategoryId = $d['CategoryId'];
             $Parameter[count($Parameter) - 1]->ParameterId = $d['ParameterId'];
             $Parameter[count($Parameter) - 1]->ParameterValue = $d['ParameterValue'];
-            // TODO dodać wczytywanie parametersTypes (context, model)
         }
 
         return $Parameter;
+    }
+
+    public function AddParameter($ParameterModel)
+    {
+
+        $result = $this->SQL->Query("INSERT INTO parameters VALUES ('', $ParameterModel->ProductId, $ParameterModel->CategoryId, $ParameterModel->ParameterId, '$ParameterModel->ParameterValue')");
+        $result = $this->SQL->Query("SELECT Id FROM parameters ORDER BY Id DESC LIMIT 1");
+        return $result[0]['Id'];
     }
 }
