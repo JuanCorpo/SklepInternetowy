@@ -2,7 +2,8 @@
 
 function SidePanel()
 {
-    echo "
+    if (VariablesHelper::IsUserActive()) {
+        echo "
         <div class='col-md-3'>
 
         <div class=\"panel panel-primary\">
@@ -73,6 +74,11 @@ function SidePanel()
                         Zapisane koszyki
                     </li>
                 </a>
+                <a href=\"/Account/Baskets\">
+                    <li class=\"list-group-item\">
+                        Aktualny koszyk
+                    </li>
+                </a>
             </ul>
         </div>
 
@@ -101,4 +107,5 @@ function SidePanel()
         </div>
 
     </div>";
+    }
 }

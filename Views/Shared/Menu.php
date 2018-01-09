@@ -55,7 +55,7 @@ if (!VariablesHelper::IsSessionActive()) {
                                 </div>
                             </div>
                         </a>
-                        <a href="###">
+                        <a href="/Account/Basket">
                             <div id="UserCart">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-shopping-cart"></span>

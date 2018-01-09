@@ -8,7 +8,6 @@ foreach (glob("./Views/Account/*.php") as $filename) {
     include_once $filename;
 }
 
-
 class AccountController
 {
     private $context;
@@ -179,7 +178,7 @@ class AccountController
             $this->context->Users->SaveToken($user->Id, "");
             $_SESSION['user'] = null;
         }
-        $this->Index(null);
+        header("Location: /");
     }
 
     public function Confirm($token)
@@ -199,91 +198,139 @@ class AccountController
 
     public function ChangePassword()
     {
-
-        ChangePassword();
-        return;
+        if (VariablesHelper::IsUserActive()) {
+            ChangePassword();
+            return;
+        }
+        header("Location: /");
     }
 
     public function BasicInfo()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        BasicInfo();
-        return;
+            BasicInfo();
+            return;
+        }
+        header("Location: /");
     }
 
     public function ChangeEmail()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        ChangeEmail();
-        return;
+            ChangeEmail();
+            return;
+        }
+        header("Location: /");
     }
 
     public function AddressBook()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        AddressBook();
-        return;
+            AddressBook();
+            return;
+        }
+        header("Location: /");
     }
 
     public function Messages()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        Messages();
-        return;
+            Messages();
+            return;
+        }
+        header("Location: /");
     }
 
     /// Zamówienia
 
     public function ActiveOrders()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        ActiveOrders();
-        return;
+            ActiveOrders();
+            return;
+        }
+        header("Location: /");
     }
 
     public function OldOrder()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        OldOrder();
-        return;
+            OldOrder();
+            return;
+        }
+        header("Location: /");
     }
 
     public function Rate()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        Rate();
-        return;
+            Rate();
+            return;
+        }
+        header("Location: /");
     }
 
     public function Baskets()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        Baskets();
-        return;
+            $user = $user = unserialize(VariablesHelper::GetActiveUser());
+            $model = $this->context->Baskets->GetUserBaskets($user->Id);
+
+            Baskets($model);
+            return;
+        }
+        header("Location: /");
     }
 
+    public function Basket($basketId)
+    {
+        // any dla dodawania
+        //dla kupowania
+        if (VariablesHelper::IsUserActive()) {
+            $model = $this->context->Baskets->GetBasket($basketId);
+
+            Basket($model);
+            return;
+        }
+        header("Location: /");
+    }
 
     /// Pytania
 
     public function Ask()
     {
+// any user
 
         Ask();
         return;
     }
 
-    public function AskAboutOrder()
+    public function AskAboutOrder($id)
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        AskAboutOrder();
-        return;
+            AskAboutOrder();
+            return;
+        }
+        header("Location: /");
     }
 
     public function MyQuestions()
     {
+        if (VariablesHelper::IsUserActive()) {
 
-        MyQuestions();
-        return;
+            MyQuestions();
+            return;
+        }
+        header("Location: /");
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/ProductModel.php";
 
 class Products
 {
@@ -26,6 +27,7 @@ class Products
             $product->Price = $result[0]['ProductPrice'];
             $product->Rating = $result[0]['Rating'];
             $product->NoOfRatings = $result[0]['NumberOfRatings'];
+            $product->ImageDirectory = $result[0]['ImageDirectory'];
             $product->StockSize = $result[0]['StockStatus'];
             $product->ProductEmployeeId = $result[0]['ProductEmployeeId'];
             $product->Description = $result[0]['Description'];
