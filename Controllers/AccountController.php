@@ -279,28 +279,45 @@ class AccountController
 
     public function Baskets()
     {
+        $model = null;
         if (VariablesHelper::IsUserActive()) {
 
             $user = $user = unserialize(VariablesHelper::GetActiveUser());
             $model = $this->context->Baskets->GetUserBaskets($user->Id);
 
-            Baskets($model);
-            return;
+
         }
-        header("Location: /");
+        Baskets($model);
+        return;
     }
 
-    public function Basket($basketId)
+    public function Basket()
     {
-        // any dla dodawania
-        //dla kupowania
+        $model = null;
         if (VariablesHelper::IsUserActive()) {
-            $model = $this->context->Baskets->GetBasket($basketId);
+            $user = unserialize($_SESSION['user']);
+            //$model = $this->context->Baskets->GetBasket($user->Id);
 
-            Basket($model);
-            return;
+
+        }else{
+
         }
-        header("Location: /");
+        $basket = unserialize(Cookie::GetCookieValue('basket'));
+
+        $model = [];
+
+        foreach ($basket as $item) {
+            $product = $this->context->Products->GetProduct($item->ProductId);
+            $model[] = new BasketModel();
+            $model[count($model)-1]->Product = $product;
+            $model[count($model)-1]->Count = $item->Count;
+        }
+        $_SESSION['context'] = serialize($this->context->Products);
+
+        Basket($model);
+        return;
+
+
     }
 
     /// Pytania

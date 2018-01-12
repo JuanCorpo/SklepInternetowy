@@ -2,9 +2,10 @@
 
 function SidePanel()
 {
+    echo "<div class='col-md-3'>";
     if (VariablesHelper::IsUserActive()) {
         echo "
-        <div class='col-md-3'>
+        
 
         <div class=\"panel panel-primary\">
             <a href=\"/Account/Index\"><div class=\"panel-heading\">Moje konto</div></a>
@@ -106,6 +107,9 @@ function SidePanel()
             </ul>
         </div>
 
-    </div>";
+    ";
+    }else{
+        echo "REKLAMA";
     }
+    echo "</div>";
 }

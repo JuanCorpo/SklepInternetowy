@@ -15,7 +15,6 @@ class Baskets
     public function GetBasket($basketId)
     {
         $basket = null;
-
         $result = $this->SQL->Query("SELECT * FROM baskets WHERE BasketId=$basketId");
 
         $basket = new BasketModel();

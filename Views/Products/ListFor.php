@@ -85,6 +85,6 @@ function ListFor($model)
     </div>
 
     <script src="/Scripts/Custom/Stars.js"></script>
-    <script src="/Scripts/Custom/addToBasket.js"></script>
+    <script src="/Scripts/ajax/Basket.js"></script>
     <?php
 }
