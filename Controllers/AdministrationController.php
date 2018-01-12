@@ -57,6 +57,14 @@ class AdministrationController
             // Warunek przesłania danych w formularzu
             if (VariablesHelper::IsAnyPostActive()) {
 
+
+                $Picture_dir = "Content/Pictures/";
+                $Target_file = $Picture_dir . basename($_FILES["ImageUpload"]["name"]);
+                $ImageFileType = pathinfo($Target_file, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["ImageUpload"]["tmp_name"], $Target_file);
+
+
+
                 // Wypełnienie danymi z formularza
                 $model->CategoryId = VariablesHelper::GetPostValue("CategorySelect");
                 $model->Name = VariablesHelper::GetPostValue("ProductName");
@@ -64,6 +72,7 @@ class AdministrationController
                 $model->StockSize = VariablesHelper::GetPostValue("StockSize");
                 $model->Description = VariablesHelper::GetPostValue("desc");
                 $model->ProductEmployeeId = VariablesHelper::GetPostValue("EmployeerSelect");
+                $model->ImageDirectory =  "/".$Target_file;
 
 
                 // Wypełnienie domyślnymi wartościami bez formularza

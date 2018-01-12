@@ -5,7 +5,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
 
     ?>
     <!--Formularz dodawania produktu -->
-    <form class="form-horizontal" method='post' action='/Administration/AddProduct'>
+    <form class="form-horizontal" method='post' action='/Administration/AddProduct' enctype="multipart/form-data">
         <!-- Przycisk dodawania -->
         <div style='display:inline;'>
             <h2 style='display:inline;'>Dodaj produkt</h2>
@@ -15,9 +15,10 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
             </div>
         </div>
         <hr>
+        <div class='form-group col-md-4'>
         <!-- Pole nazwy produktu -->
         <div class='row'>
-            <div class='form-group col-md-4 col-md-offset-4'>
+            <div class='form-group col-md-12'>
                 <label for='ProductName'>Nazwa Produktu</label>
                 <input type='text' class='form-control' id='ProductName' name='ProductName'
                        placeholder='Wpisz nazwę produktu'>
@@ -25,7 +26,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         </div>
         <!-- Pole kategorii produktu -->
         <div class='row'>
-            <div class="form-group row col-md-4">
+            <div class="form-group row col-md-12">
                 <label for="CategorySelect">Wybierz kategorię produktu</label>
                 <select class="form-control" id="CategorySelect" name="CategorySelect">
                     <?php
@@ -37,7 +38,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         </div>
         <!-- Pole ceny produktu -->
         <div class='row'>
-            <div class='form-group col-md-4 col-md-offset-4'>
+            <div class='form-group col-md-12'>
                 <label for='ProductPrice'>Cena produktu</label>
                 <input type='text' class='form-control' id='ProductPrice' name='ProductPrice'
                        placeholder='Wpisz cenę produktu'>
@@ -45,7 +46,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         </div>
         <!-- Pole stanu magazynowego produktu -->
         <div class='row'>
-            <div class='form-group col-md-4 col-md-offset-4'>
+            <div class='form-group col-md-12'>
                 <label for='StockSize'>Stan magazynowy</label>
                 <input type='text' class='form-control' id='StockSize' name='StockSize'
                        placeholder='Wpisz stan magazynowy produktu'>
@@ -53,7 +54,7 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         </div>
         <!-- Pole opiekuna produktu -->
         <div class='row'>
-            <div class="form-group row col-md-4">
+            <div class="form-group row col-md-12">
                 <label for="EmployeerSelect">Wybierz opiekuna produktu</label>
                 <select class="form-control" id="EmployeerSelect" name="EmployeerSelect">
                     <?php
@@ -63,6 +64,14 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                 </select>
             </div>
         </div>
+        </div>
+
+            <div  class='form-group col-md-8'>
+                <img class='profile-pic'  src='' />
+                <br>
+                <div class="upload-button btn btn-warning">Załaduj Obrazek</div>
+                <input class="file-upload" style="display: none" type="file" accept="image/*" name="ImageUpload"/>
+                </div>
         <!-- Tabela dodawania parametrów -->
         <table class="table table-striped" id="ParametersTable">
             <thead>
@@ -175,6 +184,33 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                 return;
             table.deleteRow(row.rowIndex);
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+
+            var readURL = function(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            $(".file-upload").on('change', function(){
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function() {
+                $(".file-upload").click();
+            });
+        });
     </script>
     <?php
 }
