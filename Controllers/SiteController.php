@@ -16,90 +16,116 @@ class SiteController
         $this->context = $context;
     }
 
+    public function SaveSiteInfo()
+    {
+        if (VariablesHelper::IsAnyPostActive()) {
+            $Type = VariablesHelper::GetPostValue('type');
+            $Text = VariablesHelper::GetPostValue('content');
+
+            $this->context->SiteInfos->SaveSiteInfo($Type, $Text);
+
+            header("Location: /Site/$Type");
+            return;
+        }
+        header("Location: /");
+    }
+
     public function Installment()
     {
-        Installment();
+        $text = $this->context->SiteInfos->GetSite(1);
+        SiteInfoView($text, 'Installment');
         return;
     }
 
     public function Complaint()
     {
-        Complaint();
+        $text = $this->context->SiteInfos->GetSite(2);
+        SiteInfoView($text, 'Complaint');
         return;
     }
 
     public function FAQ()
     {
-        FAQ();
+        $text = $this->context->SiteInfos->GetSite(3);
+        SiteInfoView($text, 'FAQ');
         return;
     }
 
     public function Warranty()
     {
-        Warranty();
+        $text = $this->context->SiteInfos->GetSite(4);
+        SiteInfoView($text, 'Warranty');
         return;
     }
 
     public function Terms()
     {
-        Terms();
+        $text = $this->context->SiteInfos->GetSite(5);
+        SiteInfoView($text, 'Terms');
         return;
     }
 
     public function Cookies()
     {
-        Cookies();
+        $text = $this->context->SiteInfos->GetSite(6);
+        SiteInfoView($text, 'Cookies');
         return;
     }
 
     public function Security()
     {
-        Security();
+        $text = $this->context->SiteInfos->GetSite(7);
+        SiteInfoView($text, 'Security');
         return;
     }
 
     public function Downloads()
     {
-        Downloads();
+        $text = $this->context->SiteInfos->GetSite(8);
+        SiteInfoView($text, 'Downloads');
         return;
     }
 
 
-
-
     public function Contact()
     {
-        Contact();
+        $text = $this->context->SiteInfos->GetSite(9);
+        SiteInfoView($text, 'Contact');
         return;
     }
 
     public function About()
     {
-        About();
+        $text = $this->context->SiteInfos->GetSite(10);
+        SiteInfoView($text, 'About');
         return;
     }
 
     public function Career()
     {
-        Career();
+        $text = $this->context->SiteInfos->GetSite(11);
+        SiteInfoView($text, 'Career');
         return;
     }
 
     public function Corpo()
     {
-        Corpo();
+        $text = $this->context->SiteInfos->GetSite(12);
+        SiteInfoView($text, 'Corpo');
         return;
     }
 
     public function TradeCooperation()
     {
-        TradeCooperation();
+        $text = $this->context->SiteInfos->GetSite(13);
+        SiteInfoView($text, 'TradeCooperation');
         return;
     }
 
     public function Reference()
     {
-        Reference();
+        $text = $this->context->SiteInfos->GetSite(14);
+        SiteInfoView($text, 'Reference');
         return;
     }
 

@@ -141,7 +141,6 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
             });
             // Reakcja na przycisk dodawania
             $("#Add").click(function () {
-                console.log($("#ParamTypeSelect").find(":selected").val());
                 if ($("#ParamTypeSelect").find(":selected").val() != -1 && $("#Value").val().length > 0) {
                     var table = document.getElementById("ParametersTable");
 
@@ -188,8 +187,6 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
 
     <script>
         $(document).ready(function() {
-
-
             var readURL = function(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
@@ -197,12 +194,9 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
                     reader.onload = function (e) {
                         $('.profile-pic').attr('src', e.target.result);
                     }
-
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-
-
             $(".file-upload").on('change', function(){
                 readURL(this);
             });

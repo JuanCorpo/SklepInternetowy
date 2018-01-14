@@ -64,7 +64,6 @@ class AdministrationController
                 move_uploaded_file($_FILES["ImageUpload"]["tmp_name"], $Target_file);
 
 
-
                 // Wypełnienie danymi z formularza
                 $model->CategoryId = VariablesHelper::GetPostValue("CategorySelect");
                 $model->Name = VariablesHelper::GetPostValue("ProductName");
@@ -72,7 +71,7 @@ class AdministrationController
                 $model->StockSize = VariablesHelper::GetPostValue("StockSize");
                 $model->Description = VariablesHelper::GetPostValue("desc");
                 $model->ProductEmployeeId = VariablesHelper::GetPostValue("EmployeerSelect");
-                $model->ImageDirectory =  "/".$Target_file;
+                $model->ImageDirectory = "/" . $Target_file;
 
 
                 // Wypełnienie domyślnymi wartościami bez formularza
@@ -120,8 +119,7 @@ class AdministrationController
         }
     }
 
-    public
-    function EmailTemplates()
+    public function EmailTemplates()
     {
         $model = null;
 
@@ -133,8 +131,7 @@ class AdministrationController
         }
     }
 
-    public
-    function EditEmailTemplate($id)
+    public function EditEmailTemplate($id)
     {
 
         if (RoleHelper::IsInRole(1)) {
@@ -150,5 +147,11 @@ class AdministrationController
             EditEmailTemplateView($model);
             return;
         }
+    }
+
+    public function Settings(){
+
+        Settings();
+        return;
     }
 }
