@@ -5,6 +5,13 @@ class VariablesHelper
     public static function IsSessionActive(){
         return isset($_SESSION);
     }
+
+    public static function IsAnyPostActive(){
+        if ( !empty($_POST) || count($_POST) != 0){
+            return true;
+        }
+        return false;
+    }
     // Sprawdzenie czy zmienne istnieją
     public static function IsPostSet($postName)
     {

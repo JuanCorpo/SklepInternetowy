@@ -14,6 +14,7 @@
     <script src="/Scripts/bootstrap.bundle.js"></script>
     <script src="/Scripts/Custom/CookieAccept.js"></script>
     <script src="/Scripts/ajax/MenuSubcategories.js"></script>
+    <script src="/Code/CustomClasses/ckeditor/ckeditor.js"></script>
 </head>
 ';
 ?>

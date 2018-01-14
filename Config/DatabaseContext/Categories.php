@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/CategoriesModel.php";
 
 class Categories
 {
@@ -30,5 +31,21 @@ class Categories
         } else {
             $this->SQL->Query("INSERT INTO categories (CategoryId,CategoryName,ParentId) VALUES ($catId, '$catName',$catParentId)");
         }
+    }
+
+    public function GetCategories()
+    {
+        $Categories = [];
+        $query = "SELECT * FROM categories";
+        $sqlResult = $this->SQL->Query($query);
+
+        foreach ($sqlResult as $item) {
+
+            $Categories[] = new CategoriesModel();
+            $Categories[count($Categories) - 1]->CategoryId = $item['CategoryId'];
+            $Categories[count($Categories) - 1]->CategoryName = $item['CategoryName'];
+            $Categories[count($Categories) - 1]->ParentId = $item['ParentId'];
+        }
+        return $Categories;
     }
 }

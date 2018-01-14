@@ -6,9 +6,11 @@ class ProductModel
     public $CategoryId;
     public $Name;
     public $Price;
+    public $ImageDirectory;
     public $Rating;
     public $NoOfRatings;
     public $StockSize;
+    public $Description;
     public $ProductEmployeeId;
 
     public $AssignedEmployee;

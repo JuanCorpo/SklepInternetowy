@@ -1,4 +1,6 @@
-
+#Header{
+    min-width: 1170px;
+}
 #MenuMainCategories {
     width: 100%;
     clear: both;
