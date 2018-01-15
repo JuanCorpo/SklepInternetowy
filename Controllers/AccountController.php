@@ -311,14 +311,17 @@ class AccountController
     public function Basket()
     {
         $model = null;
+        $userAddresses = null;
+
         if (VariablesHelper::IsUserActive()) {
             $user = unserialize($_SESSION['user']);
             //$model = $this->context->Baskets->GetBasket($user->Id);
         }
         $model = Cookie::GetBasketsProducts($this->context);
-        $_SESSION['context'] = serialize($this->context->Products);
+        $_SESSION['context'] = serialize($this->context);
 
-        Basket($model);
+
+        Basket($model,$userAddresses);
         return;
 
 

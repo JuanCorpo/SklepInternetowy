@@ -82,4 +82,17 @@ class Baskets
         return $basket;
     }
 
+    public function AddBasket($products)
+    {
+        $Id = $this->SQL->Query("SELECT * FROM baskets ORDER BY BasketId DESC")[0]['BasketId']+1;
+
+        foreach($products as $item) {
+            $pid = $item->Product->ProductId;
+            $user = unserialize($_SESSION['user']);
+            $date = date('Y-m-d H:i:s');
+
+            $q = "INSERT INTO baskets VALUES ('',$Id,$pid,$item->Count,'',$user->Id,'$date')";
+            $this->SQL->Query($q);
+        }
+    }
 }
