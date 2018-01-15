@@ -153,7 +153,7 @@ class AccountController
             } else {
                 $model = new UserModel();
                 $model->UserPrivateMail = "";
-                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.1";
+                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email";
 
                 $this->Login($model, 0);
                 return;
@@ -161,7 +161,7 @@ class AccountController
         }
         $model = new UserModel();
         $model->UserPrivateMail = "";
-        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.2";
+        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email";
 
         $this->Login($model, 0);
         return;
@@ -198,8 +198,25 @@ class AccountController
 
     public function ChangePassword()
     {
+        $model = null;
         if (VariablesHelper::IsUserActive()) {
-            ChangePassword();
+            $model = unserialize( $_SESSION['user']);
+            if (VariablesHelper::IsAnyPostActive()) {
+                $OldPassword = VariablesHelper::GetPostValue('OldPassword');
+                $NewPassword = VariablesHelper::GetPostValue('NewPassword');
+                $NewPasswordConfirm =  VariablesHelper::GetPostValue('NewPasswordConfirm');
+                $Email = VariablesHelper::GetPostValue('Email');
+                $User = $this->context->Users->ValidateUser($Email, sha1($OldPassword));
+                if ($User != null && $NewPassword == $NewPasswordConfirm) {
+                    $this->context->Users->ChangePasswordInDataBase($User->UserPrivateMail, sha1($NewPassword));
+                    $model->ErrorLogin = "Hasło zostało zmienione!";
+                    $model->ErrorCode = 1;
+                } else {
+                    $model->ErrorLogin = "Podane dane są nieprawidłowe!";
+                    $model->ErrorCode = 2;
+                }
+            }
+            ChangePassword($model);
             return;
         }
         header("Location: /");
@@ -336,6 +353,4 @@ class AccountController
         }
         header("Location: /");
     }
-
-
 }

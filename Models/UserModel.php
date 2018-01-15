@@ -17,6 +17,7 @@ class UserModel
     public $EmailConfirmToken;
 
     public $ErrorLogin;
+    public $ErrorCode;
 
     public function generateRandomToken()
     {

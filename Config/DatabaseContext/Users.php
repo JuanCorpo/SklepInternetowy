@@ -184,4 +184,9 @@ class Users
         return $this->GetUsersAll("UserRole = 2");
         // return $this->SQL->Query("SELECT * FROM users WHERE UserRole=2");
     }
+
+    public function ChangePasswordInDataBase($UserMail, $NewPassword)
+    {
+        $this->SQL->Query("UPDATE users SET UserPassword = '$NewPassword' WHERE UserPrivateEmail='$UserMail'");
+    }
 }

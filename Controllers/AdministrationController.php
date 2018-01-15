@@ -150,7 +150,7 @@ class AdministrationController
     }
 
     public function Settings(){
-
+        // TODO popeawić czytelność
         Settings();
         return;
     }
