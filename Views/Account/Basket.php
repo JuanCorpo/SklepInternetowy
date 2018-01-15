@@ -4,7 +4,12 @@ function Basket($model)
     SidePanel();
     echo "<div id=\"ProfileMainContent\" class='col-md-9'>";
 
-
+    if (count($model) == 0) {
+        echo '<div class="cs-empty" colspan="100%" style="text-align:center">
+                            Brak danych
+                        </div>';
+    }
+    else {
     echo '
 <form action="#" method="post">
 <div class="col-md-12" id="BasketProductList">
@@ -22,9 +27,11 @@ function Basket($model)
 
     $i = 1;
     $suma = 0.0;
-    foreach ($model as $item) {
-        $suma+= ($item->Product->Price*$item->Count);
-        echo '<tr >
+
+
+        foreach ($model as $item) {
+            $suma += ($item->Product->Price * $item->Count);
+            echo '<tr >
                   <td> ' . $i++ . '</td>
                   <td><a href="/Products/Show/' . $item->Product->ProductId . '">' . $item->Product->Name . '</a></td>
                   <td>' . $item->Product->Price . 'zł</td>
@@ -38,16 +45,18 @@ function Basket($model)
                  
                 </tr>';
 
-    }
+        }
+
+
     echo '<tr ><td></td>   <td></td>    <td>' . $suma . 'zł</td>  <td></td>  <td></td></tr>';
     echo '</table> ';
-    if (count($model) == 0) {
-        echo '<div class="cs-empty" colspan="100%" style="text-align:center">
-                            Brak danych
-                        </div>';
+
+
+
+    echo '</div>';
     }
 
-    echo '</div>
+echo '
 <div class="col-md-12">
 
 <div class="col-md-4">Sposób płatności</div>

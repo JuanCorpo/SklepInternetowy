@@ -34,13 +34,29 @@ class Cookie
     {
         $price = 0.0;
         $basket = unserialize(Cookie::GetCookieValue('basket'));
-
-        foreach ($basket as $item) {
-            $product = $context->Products->GetProduct($item->ProductId);
-            $price += $product->Price;
+        if (Cookie::isCookieSet('basket')) {
+            foreach ($basket as $item) {
+                $product = $context->Products->GetProduct($item->ProductId);
+                $price += $product->Price;
+            }
         }
 
         return $price;
     }
+    public static function GetBasketsProducts($context)
+    {
+        $basket = unserialize(Cookie::GetCookieValue('basket'));
 
+        $model = [];
+
+        if (Cookie::isCookieSet('basket')) {
+            foreach ($basket as $item) {
+                $product = $context->Products->GetProduct($item->ProductId);
+                $model[] = new BasketModel();
+                $model[count($model) - 1]->Product = $product;
+                $model[count($model) - 1]->Count = $item->Count;
+            }
+            return $model;
+        }
+    }
 }

@@ -298,16 +298,7 @@ class AccountController
             $user = unserialize($_SESSION['user']);
             //$model = $this->context->Baskets->GetBasket($user->Id);
         }
-        $basket = unserialize(Cookie::GetCookieValue('basket'));
-
-        $model = [];
-
-        foreach ($basket as $item) {
-            $product = $this->context->Products->GetProduct($item->ProductId);
-            $model[] = new BasketModel();
-            $model[count($model)-1]->Product = $product;
-            $model[count($model)-1]->Count = $item->Count;
-        }
+        $model = Cookie::GetBasketsProducts($this->context);
         $_SESSION['context'] = serialize($this->context->Products);
 
         Basket($model);
