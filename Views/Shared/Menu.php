@@ -59,7 +59,13 @@ if (!VariablesHelper::IsSessionActive()) {
                             <div id="UserCart">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-shopping-cart"></span>
-                                <div style="display: inline-block;">Koszyk<br/>0,00zł</div>
+                                <div style="display: inline-block;">Koszyk<br/>
+                                    <?php
+
+                                    echo $_SESSION['basketPrice'] .'zł';
+
+                                    ?>
+                                </div>
                             </div>
                         </a>
                     </div>

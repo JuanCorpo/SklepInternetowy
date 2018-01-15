@@ -297,10 +297,6 @@ class AccountController
         if (VariablesHelper::IsUserActive()) {
             $user = unserialize($_SESSION['user']);
             //$model = $this->context->Baskets->GetBasket($user->Id);
-
-
-        }else{
-
         }
         $basket = unserialize(Cookie::GetCookieValue('basket'));
 

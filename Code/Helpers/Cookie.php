@@ -30,4 +30,17 @@ class Cookie
         return (Cookie::isCookieSet($cookieName) && Cookie::getCookieValue($cookieName) == $cookieValue);
     }
 
+    public static function GetBasketValue($context)
+    {
+        $price = 0.0;
+        $basket = unserialize(Cookie::GetCookieValue('basket'));
+
+        foreach ($basket as $item) {
+            $product = $context->Products->GetProduct($item->ProductId);
+            $price += $product->Price;
+        }
+
+        return $price;
+    }
+
 }

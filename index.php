@@ -34,6 +34,7 @@ if (RoleHelper::IsInRole(1)) {
     include_once "Views/Shared/_AdministrationBar.php";
 }
 
+$_SESSION['basketPrice'] = Cookie::GetBasketValue($databaseContext);
 include_once("Views/Shared/Menu.php");
 echo "</nav>";
 echo "
