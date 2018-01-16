@@ -24,6 +24,12 @@ class ProductsController
 
         $model = new ProductListViewModel($this->context, 10, 1);
 
+        if( VariablesHelper::GetGetValue('filters') == true){
+            $name = VariablesHelper::GetGetValue('name');
+            $priceMin = VariablesHelper::GetGetValue('priceMin');
+            $priceMax = VariablesHelper::GetGetValue('priceMax');
+        }
+
         $productsCategoryIds = $this->context->Products->GetProductsIdFrom($category, 0);
         $productsIds = $this->context->Products->GetProductsFromCategories($productsCategoryIds);
 
@@ -38,6 +44,7 @@ class ProductsController
     public function Show($productId)
     {
         $product = $this->context->Products->GetProduct($productId);
+
 
         ProductsShow($product);
         return;

@@ -1,5 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/Models/ParametersTypesModel.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/ParametersTypesModel.php";
+
 class ParametersTypes
 {
     private $Context;
@@ -26,5 +27,15 @@ class ParametersTypes
         }
 
         return $ParametersTypes;
+    }
+
+    public function AddParameterType($parameterModel)
+    {
+        $name = $parameterModel->ParameterName;
+        $ValueType = $parameterModel->ValueType;
+        $prefix = $parameterModel->Prefix;
+        $suffix = $parameterModel->Suffix;
+
+        $this->SQL->Query("INSERT INTO parameterstypes VALUES ('','$name','$ValueType','','$suffix')");
     }
 }

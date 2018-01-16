@@ -155,6 +155,26 @@ class AdministrationController
         return;
     }
 
+    public function ParametersTypes()
+    {
+        $model = null;
+        if(VariablesHelper::IsAnyPostActive()){
+
+            $model = new ParametersTypesModel();
+            $model->ParameterName = VariablesHelper::GetPostValue('Name');
+            $model->Prefix = VariablesHelper::GetPostValue('prefix');
+            $model->Suffix = VariablesHelper::GetPostValue('Suffix');
+            $model->ValueType = VariablesHelper::GetPostValue('ValueType');
+
+            $this->context->ParametersTypes->AddParameterType($model);
+            header("Location: /Administration/ParametersTypes/");
+        }
+
+        $model = $this->context->ParametersTypes->GetParametersTypes();
+        ParametersTypes($model);
+        return;
+    }
+
     public function EditProduct($ProductId) {
         if (RoleHelper::IsInRole(1)) {
 

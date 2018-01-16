@@ -21,7 +21,7 @@
                         <li><a href="/Administration/Categories">Kategorie</a></li>
                         <li class="divider"></li>
                         <li><a href="/Administration/AddProduct">Dodaj produkt</a></li>
-                        <li><a href="/Administration/AddParameterType">Dodaj rodzaj parametru</a></li>
+                        <li><a href="/Administration/ParametersTypes">Rodzaj parametrów</a></li>
                     </ul>
                 </li>
 

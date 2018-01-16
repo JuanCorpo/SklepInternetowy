@@ -24,6 +24,7 @@ if (!VariablesHelper::IsSessionActive()) {
 
                         <div id="SearchBarMenu">
                             <form method="get" action="/Products/ListFor">
+                                <input type="hidden" name="filters" value="true"/>
                                 <div class="input-group">
                                     <input placeholder="Szukaj produktu" get="name" name="name" type="text"
                                            class="form-control">
