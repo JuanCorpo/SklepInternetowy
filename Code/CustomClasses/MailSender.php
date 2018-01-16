@@ -82,4 +82,25 @@ class MailSender
         MailSender::Send($context,1,$sendTo, $emailTemplate->Subject ,$body);
     }
 
+    public static function SendOrderPlacedInfo($context, $sendTo)
+    {
+        $emailTemplate = $context->EmailTemplates->GetTemplate(null,2);
+
+        $user = unserialize($_SESSION['user']);
+        $body = $emailTemplate->Body;
+        $body = str_replace("{0}",$user->FirstName,$body);
+        $body = str_replace("{1}",$user->SurName,$body);
+
+        $str = '<br>';
+        $products = Cookie::GetBasketsProducts($context);
+
+        foreach($products as $item)
+        {
+            $str .= $item->Product->Name.'<br>';
+        }
+        $body = str_replace("{2}",$str,$body);
+
+        MailSender::Send($context,2,$sendTo, $emailTemplate->Subject ,$body);
+    }
+
 }

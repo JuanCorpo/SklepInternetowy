@@ -1,7 +1,6 @@
 <?php
 include_once('./Code/Helpers/Cookie.php');
 include_once("./Models/UserModel.php");
-include_once("./Models/AddressesModel.php");
 include_once("./Code/Helpers/VariablesHelper.php");
 include_once("./Code/CustomClasses/MailSender.php");
 include_once("./Config/DatabaseContext.php");
@@ -356,6 +355,26 @@ class AccountController
             MyQuestions();
             return;
         }
+        header("Location: /");
+    }
+    public function PlaceOrder()
+    {
+        $products = Cookie::GetBasketsProducts($this->context);
+        $id = $this->context->Baskets->AddBasket($products);
+        $user = unserialize( $_SESSION['user']);
+
+        $order = new OrderModel();
+
+        $order->OrderStatusId = 0;
+        $order->Price = Cookie::GetBasketValue($this->context);
+        $order->Date = date('Y-m-d H:i:s');
+        $order->BasketId = $id;
+        $order->UserId =$user->Id;
+        $order->StatusId = 0;
+
+        $this->context->Orders->AddOrder($order);
+        MailSender::SendOrderPlacedInfo($this->context, $user->UserPrivateMail);
+
         header("Location: /");
     }
 

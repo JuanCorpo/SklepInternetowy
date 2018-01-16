@@ -9,6 +9,7 @@ class DatabaseContext
     // Database tables
     public $sql;
     public $Users;
+    public $Orders;
     public $Baskets;
     public $Products;
     public $SiteInfos;
@@ -23,6 +24,7 @@ class DatabaseContext
     {
         $this->sql = new SQL();
         $this->Users = new Users($this);
+        $this->Orders = new Orders($this);
         $this->Baskets = new Baskets($this);
         $this->Products = new Products($this);
         $this->SiteInfos = new SiteInfos($this);

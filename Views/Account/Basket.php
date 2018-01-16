@@ -4,7 +4,7 @@ function Basket($model,$userAddresses)
     SidePanel();
     echo '<div id=\"ProfileMainContent\" class="col-md-9">
 
-<form action="#" method="post">
+<form action="/Account/PlaceOrder" method="post">
     <div class="col-md-12" id="BasketProductList">';
 
     if (count($model) == 0) {
@@ -89,7 +89,7 @@ function Basket($model,$userAddresses)
         </div>
         
         <div class="col-md-4">
-        <a href="#" class="btn btn-warning col-md-12">Zamów</a>
+        <input type="submit" value="Zamów" class="btn btn-warning col-md-12"/>
             </div>
 
 </div>  

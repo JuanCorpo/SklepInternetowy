@@ -94,5 +94,6 @@ class Baskets
             $q = "INSERT INTO baskets VALUES ('',$Id,$pid,$item->Count,'',$user->Id,'$date')";
             $this->SQL->Query($q);
         }
+        return $Id;
     }
 }
