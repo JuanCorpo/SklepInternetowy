@@ -56,9 +56,13 @@ class Parameters
 
     public function AddParameter($ParameterModel)
     {
-
         $result = $this->SQL->Query("INSERT INTO parameters VALUES ('', $ParameterModel->ProductId, $ParameterModel->CategoryId, $ParameterModel->ParameterId, '$ParameterModel->ParameterValue')");
         $result = $this->SQL->Query("SELECT Id FROM parameters ORDER BY Id DESC LIMIT 1");
         return $result[0]['Id'];
+    }
+
+    public function DeleteParameters($ProductId)
+    {
+        $result = $this->SQL->Query("DELETE FROM parameters WHERE ProductId=$ProductId");
     }
 }

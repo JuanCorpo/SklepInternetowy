@@ -130,4 +130,20 @@ class Products
         $result = $this->SQL->Query("SELECT ProductId FROM products ORDER BY ProductId DESC LIMIT 1");
         return $result[0]['ProductId'];
     }
+
+    public function UpdateProduct($ProductModel)
+    {
+        $ProductId = $ProductModel->ProductId;
+        $query = "UPDATE products SET 
+        CategoryId = $ProductModel->CategoryId,
+        ProductName = '$ProductModel->Name',
+        ProductPrice = $ProductModel->Price,
+        ImageDirectory = '$ProductModel->ImageDirectory',
+        StockStatus = $ProductModel->StockSize,
+        Description = '$ProductModel->Description',
+        ProductEmployeeId = $ProductModel->ProductEmployeeId WHERE ProductId = $ProductId";
+
+
+        $this->SQL->Query($query);
+    }
 }
