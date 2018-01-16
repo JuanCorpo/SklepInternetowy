@@ -1,6 +1,7 @@
 <?php
 include_once('./Code/Helpers/Cookie.php');
 include_once("./Models/UserModel.php");
+include_once("./Models/AddressesModel.php");
 include_once("./Code/Helpers/VariablesHelper.php");
 include_once("./Code/CustomClasses/MailSender.php");
 include_once("./Config/DatabaseContext.php");
@@ -246,7 +247,8 @@ class AccountController
     {
         if (VariablesHelper::IsUserActive()) {
 
-            AddressBook();
+            $AddressesModel = $this->context->Addresses->GetUserAddresses( unserialize($_SESSION['user'])->Id);
+            AddressBook($AddressesModel);
             return;
         }
         header("Location: /");
@@ -356,4 +358,29 @@ class AccountController
         }
         header("Location: /");
     }
+
+    public function AddAddress() {
+        $AddressModel = null;
+        if (VariablesHelper::IsUserActive()) {
+
+            if (VariablesHelper::IsAnyPostActive()) {
+                $AddressModel = new AddressesModel();
+                $AddressModel->UserId = unserialize($_SESSION['user'])->Id;
+                $AddressModel->Country = VariablesHelper::GetPostValue('Country');
+                $AddressModel->City = VariablesHelper::GetPostValue('City');
+                $AddressModel->Street = VariablesHelper::GetPostValue('Street');
+                $AddressModel->HouseNumber = VariablesHelper::GetPostValue('HouseNumber');
+                $AddressModel->PostalCode = VariablesHelper::GetPostValue('PostalCode');
+                $AddressModel->PhoneNumber = VariablesHelper::GetPostValue('PhoneNumber');
+                $AddressModel->Vovoidship = VariablesHelper::GetPostValue('Vovoidship');
+
+                $this->context->Addresses->AddAddress($AddressModel);
+
+                header('location:/Account/AddressBook');
+
+            }
+            }
+        AddAddress();
+    }
+
 }

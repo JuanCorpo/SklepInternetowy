@@ -17,6 +17,7 @@ class DatabaseContext
     public $EmailQueues;
     public $EmailTemplates;
     public $ParametersTypes;
+    public $Addresses;
 
     public function __construct()
     {
@@ -30,6 +31,7 @@ class DatabaseContext
         $this->EmailQueues = new EmailQueues($this);
         $this->EmailTemplates = new EmailTemplates($this);
         $this->ParametersTypes = new ParametersTypes($this);
+        $this->Addresses = new Addresses($this);
     }
 
 
