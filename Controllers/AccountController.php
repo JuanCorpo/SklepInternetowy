@@ -37,6 +37,7 @@ class AccountController
 
     public function Profile($model)
     {
+        $model = unserialize( $_SESSION['user']);
         AccountProfileView($model);
         return;
     }
@@ -408,4 +409,54 @@ class AccountController
                 header('location: /Account/AddressBook');
     }
 
+    public function ChangeUserMail()
+    {
+        $UserModel = null;
+        if (VariablesHelper::IsUserActive()) {
+            $UserModel = unserialize( $_SESSION['user']);
+            if (VariablesHelper::IsAnyPostActive()) {
+                $UserId = $UserModel->Id;
+                $OldMail = VariablesHelper::GetPostValue('OldMail');
+                $NewMail = VariablesHelper::GetPostValue('NewMail');
+                $NewMailConfirm =  VariablesHelper::GetPostValue('NewMailConfirm');
+                if ($UserModel->UserPrivateMail == $OldMail && $NewMail == $NewMailConfirm) {
+                    $this->context->Users->ChangeMailInDataBase($UserId, $NewMail);
+                    $UserModel->ErrorLogin = "Mail został zmieniony!";
+                    $UserModel->ErrorCode = 1;
+                    $UserModel->UserPrivateMail = $NewMail;
+                    $_SESSION['user'] = serialize($UserModel);
+                } else {
+                    $UserModel->ErrorLogin = "Podane dane są nieprawidłowe!";
+                    $UserModel->ErrorCode = 2;
+                }
+            }
+            ChangeEmail($UserModel);
+            return;
+        }
+        header("Location: /");
+    }
+
+    public function ChangeBasicInfo()
+    {
+        $UserModel = null;
+        if (VariablesHelper::IsUserActive()) {
+            $UserModel = unserialize( $_SESSION['user']);
+            if (VariablesHelper::IsAnyPostActive()) {
+                $UserId = $UserModel->Id;
+                $UserName = VariablesHelper::GetPostValue('UserName');
+                $FirstName = VariablesHelper::GetPostValue('FirstName');
+                $SurName = VariablesHelper::GetPostValue('SurName');
+                    $this->context->Users->ChangeBasicInfoInDataBase($UserId, $UserName, $FirstName, $SurName);
+                    $UserModel->ErrorLogin = "Dane zostały zmienione!";
+                    $UserModel->ErrorCode = 1;
+                    $UserModel->UserName = $UserName;
+                $UserModel->FirstName = $FirstName;
+                $UserModel->SurName = $SurName;
+                    $_SESSION['user'] = serialize($UserModel);
+            }
+            BasicInfo($UserModel);
+            return;
+        }
+        header("Location: /");
+    }
 }

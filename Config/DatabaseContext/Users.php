@@ -190,4 +190,14 @@ class Users
     {
         $this->SQL->Query("UPDATE users SET UserPassword = '$NewPassword' WHERE UserPrivateEmail='$UserMail'");
     }
+
+    public function ChangeMailInDataBase($UserId, $NewMail)
+    {
+        $this->SQL->Query("UPDATE users SET UserPrivateEmail = '$NewMail' WHERE UserId=$UserId");
+    }
+
+    public function ChangeBasicInfoInDataBase($UserId, $UserName, $FirstName, $SurName)
+    {
+        $this->SQL->Query("UPDATE users SET UserName = '$UserName', FirstName = '$FirstName', SurName = '$SurName' WHERE UserId=$UserId");
+    }
 }

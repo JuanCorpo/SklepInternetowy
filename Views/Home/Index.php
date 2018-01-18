@@ -23,9 +23,9 @@ function HomeIndexView($model, $ProductsTableModel, $BestProductModel)
 
         <h2 style="padding-left: 10px">Produkt roku</h2>
         <div class="col-md-3">
-            <div class="panel panel-default" style="width: 400px; height: 400px">
+            <div class="panel panel-default">
                 <a href="/Products/show/<?php echo $BestProductModel->ProductId; ?>"> <div class="panel-heading" style="font-size: 40px"><?php echo $BestProductModel->Name; ?></div></a>
-                <a href="/Products/show/<?php echo $BestProductModel->ProductId; ?>"><div class="panel-body">  <img style="height: 200px; width: 300px" src="<?php echo $BestProductModel->ImageDirectory; ?>"/></a>
+                <a href="/Products/show/<?php echo $BestProductModel->ProductId; ?>"><div class="panel-body">  <img style="height: 150px; width: 200px" src="<?php echo $BestProductModel->ImageDirectory; ?>"/></a>
                 <br>
                 <div style="font-size: 40px"><?php echo $BestProductModel->Price."zł"; ?></div>
             </div>

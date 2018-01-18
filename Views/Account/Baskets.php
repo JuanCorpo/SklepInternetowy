@@ -5,7 +5,10 @@ function Baskets($model)
     SidePanel();
     echo "<div id=\"ProfileMainContent\" class='col-md-9'>
 
-lista zapasynach / kupionych  koszyków
+<div class='col-md-8'>
+<h2 style='display:inline;'>Zapisane koszyki</h2>
+    <hr>
+    </div>
 
 ";
 
