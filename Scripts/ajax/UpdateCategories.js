@@ -102,7 +102,7 @@ $(function () {
             var jsonString = JSON.stringify(array);
 
             $.ajax({
-                url: 'Scripts/ajax/UpdateCategories.php',
+                url: '/Scripts/ajax/UpdateCategories.php',
                 data: {data: jsonString},
                 type: 'POST',
 

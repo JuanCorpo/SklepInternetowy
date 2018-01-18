@@ -1,11 +1,11 @@
 <?php
-include_once("Models/ProductModel.php");
-include_once("ViewModel/ProductListViewModel.php");
-include_once("Code/Helpers/VariablesHelper.php");
-include_once("Code/Helpers/RoleHelper.php");
-include_once("Code/Helpers/Cookie.php");
-include_once("Config/DatabaseContext.php");
-foreach (glob("Views//Products/*.php") as $filename) {
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/ProductModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/ViewModel/ProductListViewModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/RoleHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Products/*.php") as $filename) {
     include_once $filename;
 }
 

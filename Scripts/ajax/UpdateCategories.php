@@ -1,11 +1,11 @@
 <?php
 
-include_once("/Config/DatabaseContext.php");
-include_once("/Code/Helpers/VariablesHelper.php");
-include_once("/Models/UserModel.php");
-include_once("/Models/CategoriesModel.php");
-include_once("/Models/BasketModel.php");
-foreach (glob("Config/DatabaseContext/*.php") as $filename) {
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Config/DatabaseContext.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Models/UserModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Models/CategoriesModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Models/BasketModel.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] ."/Config/DatabaseContext/*.php") as $filename) {
     include_once $filename;
 }
 session_start();

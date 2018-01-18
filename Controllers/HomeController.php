@@ -1,6 +1,6 @@
 <?php
-include_once("Models/HomeModel.php");
-foreach (glob("Views/Home/*.php") as $filename) {
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/HomeModel.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Home/*.php") as $filename) {
     include_once $filename;
 }
 
