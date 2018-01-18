@@ -19,6 +19,7 @@ class Addresses
         if (count($result) != 0) {
             $address = new AddressesModel();
 
+            $address->AddressId = $result[0]['AddressId'];
             $address->UserId = $result[0]['UserId'];
             $address->Country = $result[0]['Country'];
             $address->City = $result[0]['City'];
@@ -40,6 +41,7 @@ class Addresses
 
             $Addresses[] = new AddressesModel();
 
+            $Addresses[count($Addresses) - 1]->AddressId = $item['AddressId'];
             $Addresses[count($Addresses) - 1]->UserId = $item['UserId'];
             $Addresses[count($Addresses) - 1]->Country = $item['Country'];
             $Addresses[count($Addresses) - 1]->City = $item['City'];
@@ -66,6 +68,13 @@ class Addresses
         $Vovoidship = $AddressModel->Vovoidship;
 
         $query = "INSERT INTO addresses VALUES ('',$UserID, '$Country', '$City', '$Street', '$HouseNumber', '$PostalCode', '$PhoneNumber', '$Vovoidship' )";
+        $this->SQL->Query($query);
+    }
+
+    public function  DeleteAddress($AddressId)
+    {
+
+        $query = "DELETE FROM addresses WHERE AddressId = $AddressId";
         $this->SQL->Query($query);
     }
 }

@@ -401,4 +401,11 @@ class AccountController
         AddAddress();
     }
 
+    public function DeleteAddress($AddressId) {
+
+                $this->context->Addresses->DeleteAddress($AddressId);
+
+                header('location: ../../Account/AddressBook/');
+    }
+
 }

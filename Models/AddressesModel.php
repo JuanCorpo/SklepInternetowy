@@ -2,6 +2,7 @@
 
 class AddressesModel
 {
+    public $AddressId;
     public $UserId;
     public $Country;
     public $City;
