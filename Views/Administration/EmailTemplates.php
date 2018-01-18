@@ -19,7 +19,7 @@ function EmailTemplates($model)
             <td>$i</td>    
             <td>".$item->Subject."</td>   
             <td>".$item->Body."</td>  
-            <td><a href='../../Administration/EditEmailTemplate/".$item->Id."' class='glyphicon glyphicon glyphicon-edit' style='color: black;text-decoration: none;'></a></td>
+            <td><a href='/Administration/EditEmailTemplate/".$item->Id."' class='glyphicon glyphicon glyphicon-edit' style='color: black;text-decoration: none;'></a></td>
         </tr>";
         $i++;
     }

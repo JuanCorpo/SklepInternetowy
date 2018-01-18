@@ -10,7 +10,7 @@ function ProductsShow($model)
     <div class="col-md-12">
     <a style='display:inline;'> <h1 style='display:inline;'> <?php echo $model->Name; ?> </h1> </a>
         <?php if (RoleHelper::IsInRole(1)) { ?>
-    <?php echo '<a href="../../Administration/EditProduct/'.$model->ProductId.'" <button class="btn btn-warning navbar-right"><span class="glyphicon glyphicon-pencil"></span> Edytuj produkt </button></a>';
+    <?php echo '<a href="/Administration/EditProduct/'.$model->ProductId.'" <button class="btn btn-warning navbar-right"><span class="glyphicon glyphicon-pencil"></span> Edytuj produkt </button></a>';
          } ?>
         <hr>
     </div>

@@ -8,7 +8,7 @@ function EditProduct($ProductModel, $Employees, $Categories, $ParametersTypes)
 
     <!--Formularz dodawania produktu -->
     <div class="col-md-12">
-        <form class="form-horizontal" method='post' action='../../Administration/EditProduct/<?php echo $ProductModel->ProductId; ?>' enctype="multipart/form-data">
+        <form class="form-horizontal" method='post' action='/Administration/EditProduct/<?php echo $ProductModel->ProductId; ?>' enctype="multipart/form-data">
             <div style='display:inline;'>
                 <h2 style='display:inline;'>Edytuj produkt</h2>
                 <div class='navbar-right'>
@@ -74,7 +74,7 @@ function EditProduct($ProductModel, $Employees, $Categories, $ParametersTypes)
             </div>
             <!-- Zdjęcie produktu -->
             <div  class='form-group col-md-8'>
-                <img src="../../<?php echo $ProductModel->ImageDirectory; ?>"  class='profile-pic'  src='' />
+                <img src="<?php echo $ProductModel->ImageDirectory; ?>"  class='profile-pic'  src='' />
                 <br>
                 <div class="upload-button btn btn-warning">Załaduj Obrazek</div>
                 <input class="file-upload" style="display: none" type="file" accept="image/*" name="ImageUpload"/>

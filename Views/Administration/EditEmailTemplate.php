@@ -4,7 +4,7 @@ function EditEmailTemplateView($model)
 {
 
 echo "
-<form method='post' action='../../Administration/EditEmailTemplate/$model->Id'>
+<form method='post' action='Administration/EditEmailTemplate/$model->Id'>
     <div style='display:inline;'>
             <h2 style='display:inline;'>Edycja szablonu</h2>
             <div class='navbar-right'>

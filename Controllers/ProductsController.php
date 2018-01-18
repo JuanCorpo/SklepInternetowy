@@ -5,7 +5,7 @@ include_once("Code/Helpers/VariablesHelper.php");
 include_once("Code/Helpers/RoleHelper.php");
 include_once("Code/Helpers/Cookie.php");
 include_once("Config/DatabaseContext.php");
-foreach (glob("Views/Products/*.php") as $filename) {
+foreach (glob("Views//Products/*.php") as $filename) {
     include_once $filename;
 }
 

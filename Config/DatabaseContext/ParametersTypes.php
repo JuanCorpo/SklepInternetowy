@@ -1,5 +1,6 @@
 <?php
-include_once "Models/ParametersTypesModel.php";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/ParametersTypesModel.php";
 
 class ParametersTypes
 {

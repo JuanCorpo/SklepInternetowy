@@ -12,8 +12,7 @@ class Route
         $params = explode('/', $uriGetParam);
 
         if (count($params) < 2) {
-            header("Location: Home/Index/");
-            //$this->RedirectTo("Home", "Index", null);
+            $this->RedirectTo("Home", "Index", null);
             return;
         }
         else if (count($params) >= 2) // For "ControllerName/.../.../..." pattern
@@ -33,8 +32,7 @@ class Route
         print_r($params);
         echo "</pre>";
 
-       // $this->RedirectTo("Home", "Index", null);
-        header("Location: Home/Index/");
+        $this->RedirectTo("Home", "Index", null);
         return;
     }
 

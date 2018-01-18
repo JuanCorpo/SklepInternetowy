@@ -18,10 +18,10 @@ echo"
 
 foreach($model as $item) {
     echo"<tr >
-            <td > <a href='../../Account/Basket/".$item->BasketId."'>".sprintf("%08d", $item->BasketId)."</a> </td >
+            <td > <a href='/Account/Basket/".$item->BasketId."'>".sprintf("%08d", $item->BasketId)."</a> </td >
             <td > $item->CreationDate </td >
             <td > VAR </td >
-            <td > <a href='../../Account/AskAboutOrder/".$item->BasketId."'>Zapytaj</a> </td >
+            <td > <a href='/Account/AskAboutOrder/".$item->BasketId."'>Zapytaj</a> </td >
         </tr >";
 }
         

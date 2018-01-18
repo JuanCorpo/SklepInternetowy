@@ -1,6 +1,9 @@
 <?php
+
+set_include_path(__DIR__);
+
 include_once("sql.php");
-foreach (glob("./Config/DatabaseContext/*.php") as $filename) {
+foreach (glob("Config/DatabaseContext/*.php") as $filename) {
     include_once $filename;
 }
 

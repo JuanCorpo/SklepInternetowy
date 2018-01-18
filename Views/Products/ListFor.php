@@ -14,7 +14,7 @@ function ListFor($model)
             <div class='panel-body'>
                 ";
         foreach ($model->OtherCategories as $item) {
-            echo '<a class="col-md-3" style="display: inline-block;" href="../../Products/ListFor/' . $item->CategoryId . '">' . $item->Name . '</a>';
+            echo '<a class="col-md-3" style="display: inline-block;" href="/Products/ListFor/' . $item->CategoryId . '">' . $item->Name . '</a>';
 
         }
         echo "
@@ -30,7 +30,7 @@ function ListFor($model)
         foreach ($model->ItemList as $item) {
             echo '
                 <div class="panel panel-primary col-md-12">
-                    <a href="../../Products/Show/' . $item->ProductId . '">
+                    <a href="/Products/Show/' . $item->ProductId . '">
                         <div class="panel-heading">
                             <h3 class="panel-title">Item id:  ' . $item->Name . ' </h3>
                             <small>ID produktu: ' . $item->ProductId . '</small>
@@ -41,8 +41,8 @@ function ListFor($model)
                     
                     <div class="col-md-3">
                         <div style="display: grid;">
-                            <a href="../../Products/Show/' . $item->ProductId . '">
-                                <img class=" col-md-10"  src="../../' . $item->ImageDirectory . '"/>
+                            <a href="/Products/Show/' . $item->ProductId . '">
+                                <img class=" col-md-10"  src="' . $item->ImageDirectory . '"/>
                             </a>
                         </div>
                         <div style="text-align: center;">
@@ -84,7 +84,7 @@ function ListFor($model)
 
     </div>
 
-    <script src="../../Scripts/Custom/Stars.js"></script>
-    <script src="../../Scripts/ajax/Basket.js"></script>
+    <script src="/Scripts/Custom/Stars.js"></script>
+    <script src="/Scripts/ajax/Basket.js"></script>
     ';
 }

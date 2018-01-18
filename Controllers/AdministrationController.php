@@ -1,13 +1,13 @@
 <?php
-foreach (glob("Views/Administration/*.php") as $filename) {
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Administration/*.php") as $filename) {
     include_once $filename;
 }
-include_once("Code/Helpers/RoleHelper.php");
-include_once("ViewModel/ProductListViewModel.php");
-include_once("Models/ProductModel.php");
-include_once("Code/Helpers/VariablesHelper.php");
-include_once("Code/Helpers/Cookie.php");
-include_once("Config/DatabaseContext.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/RoleHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/ViewModel/ProductListViewModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/ProductModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
 
 class AdministrationController
 {
@@ -25,7 +25,7 @@ class AdministrationController
 
             $model = $this->context->Categories->LoadCategories();
 
-            $_SESSION['context'] = serialize($this->context->Categories);
+            $_SESSION['context'] = serialize($this->context);
             AdministrationCategories($model);
             return;
 
@@ -167,7 +167,7 @@ class AdministrationController
             $model->ValueType = VariablesHelper::GetPostValue('ValueType');
 
             $this->context->ParametersTypes->AddParameterType($model);
-            header("Location: ../../Administration/ParametersTypes/");
+            header("Location: Administration/ParametersTypes");
         }
 
         $model = $this->context->ParametersTypes->GetParametersTypes();
@@ -216,7 +216,7 @@ class AdministrationController
                 foreach ($ProductModel->Parameters as $item) {
                     $this->context->Parameters->AddParameter($item);
                 }
-                header("Location: ../../Products/Show/$ProductId");
+                header("Location: /Products/Show/$ProductId");
             }
             $ProductModel = $this->context->Products->GetProduct($ProductId);
             $Employees = $this->context->Users->GetEmployeesList();

@@ -1,11 +1,11 @@
 <?php
-include_once('Code/Helpers/Cookie.php');
-include_once("Models/UserModel.php");
-include_once("Models/AddressesModel.php");
-include_once("Code/Helpers/VariablesHelper.php");
-include_once("Code/CustomClasses/MailSender.php");
-include_once("Config/DatabaseContext.php");
-foreach (glob("Views/Account/*.php") as $filename) {
+include_once($_SERVER['DOCUMENT_ROOT'] . '/Code/Helpers/Cookie.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/AddressesModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/CustomClasses/MailSender.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Account/*.php") as $filename) {
     include_once $filename;
 }
 
@@ -75,7 +75,7 @@ class AccountController
                     $newToken = $model->generateEmailToken();
                     $this->context->Users->SaveEmailConfirmToken($model->UserPrivateMail, $newToken);
 
-                    $actual_link = "http://$_SERVER[HTTP_HOST]".DIR . "/Account/Confirm/" . $newToken;
+                    $actual_link = "http://$_SERVER[HTTP_HOST]".DIR . "//Account/Confirm/" . $newToken;
                     MailSender::SendEmailConfirmInfo($this->context, $email, Array($model->UserName, $actual_link, $model->UserPrivateMail));
 
                     if (VariablesHelper::IsPostSet('Newsletter')) {
@@ -113,7 +113,7 @@ class AccountController
             $this->context->Users->AddToNewsletter($_POST['Email']);
             MailSender::SendNewsletterInfo($this->context, $_POST['Email']);
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function LoginPost()
@@ -131,7 +131,7 @@ class AccountController
                     if ($model->EmailConfirmToken === $token && $confirmed === $model->EmailConfirmed) {
                     }
                 } else {
-                    header("Location: ../../Account/Confirm/" . $token . "/?error");
+                    header("Location: /Account/Confirm/" . $token . "/?error");
                 }
             }
 
@@ -149,7 +149,7 @@ class AccountController
                     $model->EmailConfirmed = true;
                     $model->EmailConfirmToken = "";
                     $model = $this->context->Users->SaveModel($model);
-                    header("Location: ../../");
+                    header("Location: /");
                 }
             } else {
                 $model = new UserModel();
@@ -179,7 +179,7 @@ class AccountController
             $this->context->Users->SaveToken($user->Id, "");
             $_SESSION['user'] = null;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function Confirm($token)
@@ -220,7 +220,7 @@ class AccountController
             ChangePassword($model);
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function BasicInfo()
@@ -230,7 +230,7 @@ class AccountController
             BasicInfo();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function ChangeEmail()
@@ -240,7 +240,7 @@ class AccountController
             ChangeEmail();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function AddressBook()
@@ -251,7 +251,7 @@ class AccountController
             AddressBook($AddressesModel);
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function Messages()
@@ -261,7 +261,7 @@ class AccountController
             Messages();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     /// Zamówienia
@@ -273,7 +273,7 @@ class AccountController
             ActiveOrders();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function OldOrder()
@@ -283,7 +283,7 @@ class AccountController
             OldOrder();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function Rate()
@@ -293,7 +293,7 @@ class AccountController
             Rate();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function Baskets()
@@ -344,7 +344,7 @@ class AccountController
             AskAboutOrder();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function MyQuestions()
@@ -354,7 +354,7 @@ class AccountController
             MyQuestions();
             return;
         }
-        header("Location: ../../");
+        header("Location: /");
     }
     public function PlaceOrder()
     {
@@ -374,7 +374,7 @@ class AccountController
         $this->context->Orders->AddOrder($order);
         MailSender::SendOrderPlacedInfo($this->context, $user->UserPrivateMail);
 
-        header("Location: ../../");
+        header("Location: /");
     }
 
     public function AddAddress() {
@@ -394,7 +394,7 @@ class AccountController
 
                 $this->context->Addresses->AddAddress($AddressModel);
 
-                header('location: ../../Account/AddressBook/');
+                header('location: /Account/AddressBook');
 
             }
             }
@@ -405,7 +405,7 @@ class AccountController
 
                 $this->context->Addresses->DeleteAddress($AddressId);
 
-                header('location: ../../Account/AddressBook/');
+                header('location: /Account/AddressBook');
     }
 
 }

@@ -24,7 +24,7 @@ class SiteController
 
             $this->context->SiteInfos->SaveSiteInfo($Type, $Text);
 
-            header("Location: ../../Site/$Type/");
+            header("Location: Site/$Type/");
             return;
         }
         header("Location: ../");

@@ -8,7 +8,7 @@ function ChangePassword($model)
     <div class="col-md-8">
         <h2 style='display:inline;'>Zmień hasło</h2>
     <hr>
-    <?php echo'<form class="form-horizontal" method="post" action="../../Account/ChangePassword/">';?>
+    <?php echo'<form class="form-horizontal" method="post" action="/Account/ChangePassword/">';?>
         <!-- Pole nazwy produktu -->
         <div class='row'>
             <div class='form-group col-md-6'>

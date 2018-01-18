@@ -1,7 +1,7 @@
 <?php
 function AdministrationCategories($model)
 {
-    echo "<script src=\"../../Scripts/ajax/UpdateCategories.js\"></script>";
+    echo "<script src=\"Scripts/ajax/UpdateCategories.js\"></script>";
     echo "<div style='display:inline;'>
 <h2 style='display:inline;'>Edycja kategorii</h2>
 

@@ -1,7 +1,7 @@
 <?php
 
 if (!VariablesHelper::IsSessionActive()) {
-    include_once("../../Models/UserModel.php");
+    include_once($_SERVER['DOCUMENT_ROOT'] . "Models/UserModel.php");
     session_start();
 }
 ?>
@@ -11,7 +11,7 @@ if (!VariablesHelper::IsSessionActive()) {
 
         <div id="TopMenuContainer">
             <div id="MainLogo">
-                <?php echo '<a href="../../">';?>
+                <?php echo '<a href="/">';?>
                     <div id="BANNER"></div>
                 </a>
             </div>
@@ -23,7 +23,7 @@ if (!VariablesHelper::IsSessionActive()) {
                     <div id="SearchBarPanel">
 
                         <div id="SearchBarMenu">
-                            <form method="get" action="../../Products/ListFor/">
+                            <form method="get" action="/Products/ListFor">
                                 <input type="hidden" name="filters" value="true"/>
                                 <div class="input-group">
                                     <input placeholder="Szukaj produktu" get="name" name="name" type="text"
@@ -38,7 +38,7 @@ if (!VariablesHelper::IsSessionActive()) {
 
                     </div>
                     <div id="UserPanel">
-                        <?php echo '<a href="../../Account/Index/">';?>
+                        <?php echo '<a href="/Account/Index/">';?>
                             <div id="UserProfile">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-user"></span>
@@ -56,7 +56,7 @@ if (!VariablesHelper::IsSessionActive()) {
                                 </div>
                             </div>
                         </a>
-                        <?php echo '<a href="../../Account/Basket/">'?>
+                        <?php echo '<a href="/Account/Basket/">'?>
                             <div id="UserCart">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-shopping-cart"></span>
@@ -82,7 +82,7 @@ if (!VariablesHelper::IsSessionActive()) {
                         $name = $_SESSION['menuData'][$i]['CategoryName'];
                         $Id = $_SESSION['menuData'][$i]['CategoryId'];
 
-                        echo "<li style='margin: 0 20px;'><a class=\"navbar-brand MainMenuButton\" id='MainButton_$Id' category='$Id' href=\"../../Products/ListFor/$Id\">$name</a></li>";
+                        echo "<li style='margin: 0 20px;'><a class=\"navbar-brand MainMenuButton\" id='MainButton_$Id' category='$Id' href=\"/Products/ListFor/$Id\">$name</a></li>";
                     }
                 }
                 ?>

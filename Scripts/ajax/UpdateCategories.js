@@ -96,14 +96,13 @@ $(function () {
         $("#WaitLoader").show();
         $("#SaveCategories").prop('disabled', true);
 
-        setTimeout(function () {
             array = [];
             GetNewCategories("root");
 
             var jsonString = JSON.stringify(array);
 
             $.ajax({
-                url: 'UpdateCategories.php',
+                url: 'Scripts/ajax/UpdateCategories.php',
                 data: {data: jsonString},
                 type: 'POST',
 
@@ -117,7 +116,7 @@ $(function () {
             });
             $("#WaitLoader").hide();
             $("#SaveCategories").prop('disabled', false);
-        }, 1500);
+
     });
 
     $(".CategoryDraggable").draggable({cursor: "pointer", revert: "invalid"});

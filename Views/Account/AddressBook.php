@@ -6,7 +6,7 @@ function AddressBook($AddressesModel)
 
 echo'
     <div>
-        <a href="../../Account/AddAddress/"><button class="btn btn-warning" type="submit"><span class="glyphicon glyphicon-plus" ></span> Dodaj </button> </a>
+        <a href="/Account/AddAddress/"><button class="btn btn-warning" type="submit"><span class="glyphicon glyphicon-plus" ></span> Dodaj </button> </a>
     </div>';
     ?>
     <div class="col-md-8">
@@ -37,7 +37,7 @@ echo'
                 <td><?php echo $item->PhoneNumber; ?></td>
                 <td><?php echo $item->Vovoidship; ?></td>
                 <td>
-                    <a href="../../Account/DeleteAddress/<?php echo$item->AddressId;?>"><button class='btn btn-danger' id=''><span
+                    <a href="/Account/DeleteAddress/<?php echo$item->AddressId;?>"><button class='btn btn-danger' id=''><span
                             class='glyphicon glyphicon-minus'></span>Usuń </button> </a>
                 </td>
             </tr>

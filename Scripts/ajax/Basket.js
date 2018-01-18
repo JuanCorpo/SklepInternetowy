@@ -8,7 +8,7 @@ function removeFromBasket(productId){
 
 function callBasketScript(productId, action){
     $.ajax({
-        url: '../../Scripts/ajax/addToBasket.php',
+        url: '/Scripts/ajax/addToBasket.php',
         data: {
             Action: action,
             ID: productId

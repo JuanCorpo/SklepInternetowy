@@ -1,5 +1,5 @@
 <?php
-include_once  "Models/OrderModel.php";
+include_once  $_SERVER['DOCUMENT_ROOT'] . "/Models/OrderModel.php";
 
 class Orders
 {
