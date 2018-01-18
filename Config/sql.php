@@ -11,9 +11,9 @@ class SQL
 
     public function __construct()
     {
-        $this->Host = 'localhost';//'mysql.cba.pl';//
-        $this->Username = 'Alan';//'AllonerCorp';//
-        $this->Password = 'Alan';//'AllonerCorp12';//
+        $this->Host = 'mysql.cba.pl';//'localhost';//
+        $this->Username ='AllonerCorp';// 'Alan';//
+        $this->Password = 'AllonerCorp12';//'Alan';//
         $this->Database = 'juancorp';
     }
 
