@@ -216,7 +216,7 @@ class AdministrationController
                 foreach ($ProductModel->Parameters as $item) {
                     $this->context->Parameters->AddParameter($item);
                 }
-                header("Location: ../../Products/Show/$ProductId/");
+                header("Location: ../../Products/Show/$ProductId");
             }
             $ProductModel = $this->context->Products->GetProduct($ProductId);
             $Employees = $this->context->Users->GetEmployeesList();
