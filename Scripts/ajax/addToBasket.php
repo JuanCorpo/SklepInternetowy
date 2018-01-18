@@ -1,16 +1,18 @@
 <?php
 session_start();
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/sql.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/BasketModel.php");
-foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext/*.php") as $filename) {
+include_once('../../Code/Helpers/Cookie.php');
+include_once("../../Config/sql.php");
+include_once("../../Code/Helpers/VariablesHelper.php");
+include_once("../../Config/DatabaseContext.php");
+include_once("../../Models/UserModel.php");
+include_once("../../Models/ProductModel.php");
+include_once("../../Models/BasketModel.php");
+foreach (glob("Config/DatabaseContext/*.php") as $filename) {
     include_once $filename;
 }
 
 $userId = -1;
-if(VariablesHelper::IsUserActive()) {
+if (VariablesHelper::IsUserActive()) {
     $user = unserialize($_SESSION['user']);
     $userId = $user->Id;
 }
@@ -66,8 +68,8 @@ if ($action == 1) {
     foreach ($currentBasket as $item) {
         $product = $context->GetProduct($item->ProductId);
         $model[] = new BasketModel();
-        $model[count($model)-1]->Product = $product;
-        $model[count($model)-1]->Count = $item->Count;
+        $model[count($model) - 1]->Product = $product;
+        $model[count($model) - 1]->Count = $item->Count;
     }
 
     if (count($model) == 0) {
@@ -93,7 +95,7 @@ if ($action == 1) {
             $suma += ($item->Product->Price * $item->Count);
             echo '<tr >
                       <td> ' . $i++ . '</td>
-                      <td><a href="/Products/Show/' . $item->Product->ProductId . '">' . $item->Product->Name . '</a></td>
+                      <td><a href="../../Products/Show/' . $item->Product->ProductId . '/">' . $item->Product->Name . '</a></td>
                       <td>' . $item->Product->Price . 'zł</td>
                       <td style="width: 150px;">
                       <input style="width:100px;" placeholder="Podaj ilość" value="' . $item->Count . '" class="form-control" type="text" id="ProductOrder_' . $item->Product->ProductId . '" name="ProductOrder_' . $item->Product->ProductId . '"/>

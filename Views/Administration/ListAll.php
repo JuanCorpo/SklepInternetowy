@@ -7,7 +7,7 @@ function ListAll($model)
 <h2 style='display:inline;'>Lista produktów</h2>
 
     <div class='navbar-right'>
-        <a class=\"btn btn-warning\" type=\"submit\" href=\"/Administration/AddProduct\"><span class=\"glyphicon glyphicon-plus\" ></span> Dodaj</a>
+        <a class=\"btn btn-warning\" type=\"submit\" href=\"../../Administration/AddProduct/\"><span class=\"glyphicon glyphicon-plus\" ></span> Dodaj</a>
     </div>
          
 </div><hr>";

@@ -1,9 +1,9 @@
 <?php
-include_once("./Code/Helpers/VariablesHelper.php");
-include_once("./Code/Helpers/RoleHelper.php");
-include_once("./Code/Helpers/Cookie.php");
-include_once("./Config/DatabaseContext.php");
-foreach (glob("./Views/Site/*.php") as $filename) {
+include_once("Code/Helpers/VariablesHelper.php");
+include_once("Code/Helpers/RoleHelper.php");
+include_once("Code/Helpers/Cookie.php");
+include_once("Config/DatabaseContext.php");
+foreach (glob("Views/Site/*.php") as $filename) {
     include_once $filename;
 }
 
@@ -24,10 +24,10 @@ class SiteController
 
             $this->context->SiteInfos->SaveSiteInfo($Type, $Text);
 
-            header("Location: /Site/$Type");
+            header("Location: ../../Site/$Type/");
             return;
         }
-        header("Location: /");
+        header("Location: ../");
     }
 
     public function Installment()

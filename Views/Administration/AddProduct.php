@@ -3,9 +3,7 @@
 function AddProduct($model, $Categories, $Employees, $ParametersTypes)
 {
 
-    ?>
-    <!--Formularz dodawania produktu -->
-    <form class="form-horizontal" method='post' action='/Administration/AddProduct' enctype="multipart/form-data">
+   echo ' <form class="form-horizontal" method="post" action="../../Administration/AddProduct/" enctype="multipart/form-data">';?>
         <!-- Przycisk dodawania -->
         <div style='display:inline;'>
             <h2 style='display:inline;'>Dodaj produkt</h2>
@@ -123,6 +121,6 @@ function AddProduct($model, $Categories, $Employees, $ParametersTypes)
         <input type="hidden" value="0" name="ParamSize" id="ParamSize">
     </form>
     <!-- Skrypty -->
-    <script src="/Scripts/AddParameters.js"></script>
+    <script src="../../Scripts/AddParameters.js"></script>
     <?php
 }

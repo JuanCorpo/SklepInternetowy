@@ -8,7 +8,7 @@ function ParametersTypes($model)
         <hr>
         
         
-        <form action="/Administration/ParametersTypes" method="post">
+        <form action="../../Administration/ParametersTypes/" method="post">
             <div class="col-md-4">                
                 <input name="Name" placeholder="Nazwa parametru" class="form-control" type="text"/>
             </div>

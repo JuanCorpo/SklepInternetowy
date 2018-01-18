@@ -1,8 +1,8 @@
 <?php
 function AccountLoginView($model, $view)
 {
-    if ($model !==null && !(strlen($model->EmailConfirmToken)>1)) {
-        echo "<script>history.pushState(null, 'Logowanie', '/Account/Index');</script>";
+    if ($model != null && !(strlen($model->EmailConfirmToken)>1)) {
+        echo "<script>history.pushState(null, 'Logowanie', '../../Account/Index/');</script>";
     }
     $register = "active in";
     $login = "";
@@ -35,8 +35,8 @@ function AccountLoginView($model, $view)
             <div id='myTabContent' class='tab-content'>
                 <br/>
                 <div class='tab-pane fade $login' id='home'>
-                    <form id='loginForm' method='post' action='/Account/LoginPost'>";
-    if ($model !== null) {
+                    <form id='loginForm' method='post' action='../../Account/LoginPost/'>";
+    if ($model != null) {
         echo "<input type='hidden' name='emailToken' value='" . $model->EmailConfirmToken . "' />
               <input type='hidden' name='confirmedToken' value='" . $model->EmailConfirmed . "' />";
     }
@@ -80,7 +80,7 @@ function AccountLoginView($model, $view)
                     </form>
                 </div>
                 <div class='tab-pane fade $register' id='profile'>
-                    <form id='registerForm' method='post' action='/Account/RegisterPost'>
+                    <form id='registerForm' method='post' action='../../Account/RegisterPost/'>
                         <fieldset>
                             <div class='row'>
                                 <div class='form-group col-md-4 col-md-offset-4'>

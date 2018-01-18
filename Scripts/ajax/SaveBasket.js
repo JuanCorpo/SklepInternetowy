@@ -1,7 +1,7 @@
 function SaveBasket()
 {
     $.ajax({
-        url: '/Scripts/ajax/SaveBasket.php',
+        url: 'SaveBasket.php',
         // data: {
         //     Action: action,
         //     ID: productId

@@ -1,6 +1,7 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/sql.php");
-foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext/*.php") as $filename) {
+
+include_once "../../Config/sql.php";
+foreach (glob("Config/DatabaseContext/*.php") as $filename) {
     include_once $filename;
 }
 
@@ -14,7 +15,6 @@ $data = fixIds($data, $context->NewCategoryId());
 foreach ($data as $d) {
     $context->UpdateCategory($d[0], $d[1], $d[2]);
 }
-
 
 function allPrentsTo($oldPar, $newPar, $arr)
 {

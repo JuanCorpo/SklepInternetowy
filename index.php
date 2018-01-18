@@ -1,4 +1,5 @@
 <?php
+
 include_once("Config/DatabaseContext.php");
 include_once("Config/route.php");
 include_once("Models/UserModel.php");
@@ -27,7 +28,7 @@ $_SESSION['menuData'] = $databaseContext->Categories->LoadCategories();
 
 echo "<body>";
 echo "
-<img src='/Content/loader.gif' id='WaitLoader'/>
+<img src='Content/loader.gif' id='WaitLoader'/>
 <nav id=\"Header\" class=\"navbar navbar-default\">";
 
 if (RoleHelper::IsInRole(1)) {

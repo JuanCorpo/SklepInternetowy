@@ -1,5 +1,5 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php";
+include "Code/Helpers/Cookie.php";
 
 class Users
 {

@@ -8,7 +8,7 @@ function removeFromBasket(productId){
 
 function callBasketScript(productId, action){
     $.ajax({
-        url: '/Scripts/ajax/addToBasket.php',
+        url: '../../Scripts/ajax/addToBasket.php',
         data: {
             Action: action,
             ID: productId
@@ -20,9 +20,9 @@ function callBasketScript(productId, action){
         },
         success: function (data) {
             //console.log("TAK");
-            //console.log(data);
+            console.log(data);
             if(action === -1) {
-                $("#BasketProductList").innerHTML = data;
+                //$("#BasketProductList").innerHTML = data;
                 document.getElementById("BasketProductList").innerHTML = data;
             }
         }

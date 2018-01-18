@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Juan
- * Date: 2018-01-15
- * Time: 22:55
- */
 
 class AddressesModel
 {
@@ -18,8 +12,6 @@ class AddressesModel
     public $Vovoidship;
 
     public function GetFullAddress() {
-        //TODO
-        //
-        //
+        return $this->City . ' ' . $this->Street . ' ' . $this->HouseNumber . ' ' . $this->PhoneNumber . ' ' . $this->Vovoidship;
     }
 }

@@ -3,12 +3,12 @@
 function AddressBook($AddressesModel)
 {
     SidePanel();
-    ?>
 
+echo'
     <div>
-        <a href="/Account/AddAddress"><button class="btn btn-warning" type="submit"><span class="glyphicon glyphicon-plus" ></span> Dodaj </button> </a>
-    </div>
-
+        <a href="../../Account/AddAddress/"><button class="btn btn-warning" type="submit"><span class="glyphicon glyphicon-plus" ></span> Dodaj </button> </a>
+    </div>';
+    ?>
     <div class="col-md-8">
     <table class="table table-striped table-hover ">
         <thead>
@@ -24,7 +24,10 @@ function AddressBook($AddressesModel)
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($AddressesModel as $item) { ?>
+        <?php
+        if(count($AddressesModel) > 0)
+        foreach ($AddressesModel as $item) {
+            ?>
             <tr>
                 <td><?php echo $item->Country; ?></td>
                 <td><?php echo $item->City; ?></td>
@@ -34,11 +37,16 @@ function AddressBook($AddressesModel)
                 <td><?php echo $item->PhoneNumber; ?></td>
                 <td><?php echo $item->Vovoidship; ?></td>
                 <td>
-                    <button class='btn btn-danger' id='" + (ParamSize - 1) + "'><span
+                    <button class='btn btn-danger' id=''><span
                             class='glyphicon glyphicon-minus'></span>Usuń</a> </button>
                 </td>
             </tr>
-            <?php } ?>
+            <?php
+        }else{
+            echo "<tr><td style='text-align: center' colspan='100%'>Brak adresów</td></tr>";
+        }
+
+            ?>
         </tbody>
     </table>
     </div>

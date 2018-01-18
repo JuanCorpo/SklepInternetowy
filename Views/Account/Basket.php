@@ -4,7 +4,7 @@ function Basket($model,$userAddresses)
     SidePanel();
     echo '<div id=\"ProfileMainContent\" class="col-md-9">
 
-<form action="/Account/PlaceOrder" method="post">
+<form action="../../Account/PlaceOrder/" method="post">
     <div class="col-md-12" id="BasketProductList">';
 
     if (count($model) == 0) {
@@ -30,7 +30,7 @@ function Basket($model,$userAddresses)
             $suma += ($item->Product->Price * $item->Count);
             echo '<tr >
                       <td> ' . $i++ . '</td>
-                      <td><a href="/Products/Show/' . $item->Product->ProductId . '">' . $item->Product->Name . '</a></td>
+                      <td><a href="../../Products/Show/' . $item->Product->ProductId . '">' . $item->Product->Name . '</a></td>
                       <td>' . $item->Product->Price . 'zł</td>
                       <td style="width: 150px;">
                       <input style="width:100px;" placeholder="Podaj ilość" value="' . $item->Count . '" class="form-control" type="text" id="ProductOrder_' . $item->Product->ProductId . '" name="ProductOrder_' . $item->Product->ProductId . '"/>
@@ -80,7 +80,7 @@ function Basket($model,$userAddresses)
           <option value="-1">Wybierz adres</option>';
 
     foreach($userAddresses as $item){
-        echo "<option value='$item->Id'>$item->GetFullAddress()</option>";
+        echo "<option value='$item->Id'>".$item->GetFullAddress()."</option>";
     }
         echo '</select>
       </div>
@@ -94,8 +94,8 @@ function Basket($model,$userAddresses)
 
 </div>  
 </form>
-    <script src="/Scripts/ajax/Basket.js"></script>
-    <script src="/Scripts/ajax/SaveBasket.js"></script>
+    <script src="../../Scripts/ajax/Basket.js"></script>
+    <script src="../../Scripts/ajax/SaveBasket.js"></script>
 ';
 
     echo '</div>';

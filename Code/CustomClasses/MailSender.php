@@ -3,9 +3,9 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require $_SERVER['DOCUMENT_ROOT'] .'/Code/CustomClasses/PHPMailer/Exception.php';
-require $_SERVER['DOCUMENT_ROOT'] .'/Code/CustomClasses/PHPMailer/PHPMailer.php';
-require $_SERVER['DOCUMENT_ROOT'] .'/Code/CustomClasses/PHPMailer/SMTP.php';
+require 'Code/CustomClasses/PHPMailer/Exception.php';
+require 'Code/CustomClasses/PHPMailer/PHPMailer.php';
+require 'Code/CustomClasses/PHPMailer/SMTP.php';
 
 class MailSender
 {

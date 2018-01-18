@@ -5,7 +5,7 @@ function AddAddress()
     SidePanel();
 ?>
     <div class="col-md-8">
-    <form class="form-horizontal" method='post' action='/Account/AddAddress'>
+    <?php echo "<form class='form-horizontal' method='post' action='../../Account/AddAddress/'>";?>
         <div style='display:inline;'>
             <h2 style='display:inline;'>Dodaj adres do książki adresowej</h2>
             <div class='navbar-right'>

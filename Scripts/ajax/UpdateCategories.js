@@ -103,7 +103,7 @@ $(function () {
             var jsonString = JSON.stringify(array);
 
             $.ajax({
-                url: '/Scripts/ajax/UpdateCategories.php',
+                url: 'UpdateCategories.php',
                 data: {data: jsonString},
                 type: 'POST',
 
@@ -112,6 +112,7 @@ $(function () {
                 },
                 success: function (data) {
                     //$("#MainContainer").html(data);
+                    console.log(data);
                 }
             });
             $("#WaitLoader").hide();

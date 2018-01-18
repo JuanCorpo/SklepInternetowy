@@ -8,7 +8,7 @@ function EditProduct($ProductModel, $Employees, $Categories, $ParametersTypes)
 
     <!--Formularz dodawania produktu -->
     <div class="col-md-12">
-        <form class="form-horizontal" method='post' action='/Administration/EditProduct/<?php echo $ProductModel->ProductId; ?>' enctype="multipart/form-data">
+        <form class="form-horizontal" method='post' action='<?php echo DIR; ?>/Administration/EditProduct/<?php echo $ProductModel->ProductId; ?>' enctype="multipart/form-data">
             <div style='display:inline;'>
                 <h2 style='display:inline;'>Edytuj produkt</h2>
                 <div class='navbar-right'>

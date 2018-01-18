@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/EmailQueueModel.php";
+include_once "Models/EmailQueueModel.php";
 
 class EmailQueues
 {

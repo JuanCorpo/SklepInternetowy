@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/EmailTemplateModel.php";
+include_once "Models/EmailTemplateModel.php";
 
 class EmailTemplates
 {

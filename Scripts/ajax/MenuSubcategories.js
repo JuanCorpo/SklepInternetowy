@@ -51,7 +51,7 @@ $(document).ready(function () {
 
     function LoadSubcategories(rootCategoryId) {
         $.ajax({
-            url: '/Scripts/ajax/MenuSubcategories.php',
+            url: '../../Scripts/ajax/MenuSubcategories.php',
             data: {
                 ID: rootCategoryId
             },

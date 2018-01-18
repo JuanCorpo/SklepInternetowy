@@ -29,30 +29,30 @@ if (!Cookie::IsCookieEqual('Cookie', true)) {
                 <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Pomocne linki </h3>
                     <ul>
-                        <li><a href="/Site/Installment"> Jak kupić na raty </a></li>
-                        <li><a href="/Site/Complaint"> Reklamacje, zwroty, serwis </a></li>
-                        <li><a href="/Site/FAQ"> Częste pytania </a></li>
-                        <li><a href="/Site/Warranty"> Gwarancje </a></li>
+                        <li><a href="../../Site/Installment/"> Jak kupić na raty </a></li>
+                        <li><a href="../../Site/Complaint/"> Reklamacje, zwroty, serwis </a></li>
+                        <li><a href="../../Site/FAQ/"> Częste pytania </a></li>
+                        <li><a href="../../Site/Warranty/"> Gwarancje </a></li>
                     </ul>
                 </div>
                 <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Informacje prawne </h3>
                     <ul>
-                        <li><a href="/Site/Terms"> Regulamin </a></li>
-                        <li><a href="/Site/Cookies"> Polityka prywatności i cookies </a></li>
-                        <li><a href="/Site/Security"> Bezpieczeństwo danych osobowych </a></li>
-                        <li><a href="/Site/Downloads"> Materiały do pobrania </a></li>
+                        <li><a href="../../Site/Terms/"> Regulamin </a></li>
+                        <li><a href="../../Site/Cookies/"> Polityka prywatności i cookies </a></li>
+                        <li><a href="../../Site/Security/"> Bezpieczeństwo danych osobowych </a></li>
+                        <li><a href="../../Site/Downloads/"> Materiały do pobrania </a></li>
                     </ul>
                 </div>
                 <div class="col-md-2">
                     <h3 style="font-size: 12pt;"> Sklep </h3>
                     <ul>
-                        <li><a href="/Site/Contact"> Kontakt </a></li>
-                        <li><a href="/Site/About"> O nas </a></li>
-                        <li><a href="/Site/Career"> Kariera </a></li>
-                        <li><a href="/Site/Corpo"> Dane firmy </a></li>
-                        <li><a href="/Site/TradeCooperation"> Współpraca handlowa </a></li>
-                        <li><a href="/Site/Reference"> Nasze referencje </a></li>
+                        <li><a href="../../Site/Contact/"> Kontakt </a></li>
+                        <li><a href="../../Site/About/"> O nas </a></li>
+                        <li><a href="../../Site/Career/"> Kariera </a></li>
+                        <li><a href="../../Site/Corpo/"> Dane firmy </a></li>
+                        <li><a href="../../Site/TradeCooperation/"> Współpraca handlowa </a></li>
+                        <li><a href="../../Site/Reference/"> Nasze referencje </a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -60,7 +60,7 @@ if (!Cookie::IsCookieEqual('Cookie', true)) {
                     <ul>
                         <li>
                             <div class="input-append newsletter-box text-center">
-                                <form id='newsLetterForm' method='post' action='/Account/AddToNewsLetter'>
+                                <?php echo "<form id='newsLetterForm' method='post' action='../../Account/AddToNewsLetter/'>";?>
                                     <input type="text" name="Email" class="full text-center"
                                            placeholder="Twój adres e-mail...">
                                     <button class="btn  bg-gray" type="submit"> Zapisz się do newslettera <i
@@ -70,7 +70,7 @@ if (!Cookie::IsCookieEqual('Cookie', true)) {
                         </li>
                     </ul>
                     <ul class="social">
-                        <li><a href="#"> <i class=" fa fa-facebook"> </i> </a></li>
+                        <li><a href="#"> <i class="fa fa-facebook"> </i> </a></li>
                         <li><a href="#"> <i class="fa fa-twitter"> </i> </a></li>
                         <li><a href="#"> <i class="fa fa-google-plus"> </i> </a></li>
                         <li><a href="#"> <i class="fa fa-pinterest"> </i> </a></li>
