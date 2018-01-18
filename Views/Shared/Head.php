@@ -7,10 +7,8 @@
     <link href="/Styles/menu.css" rel="stylesheet">
     
     <link href="/Styles/glyphicons.css" rel="stylesheet">
-    <link href="/Styles/bootstrap-slider.css" rel="stylesheet">
-    <link href="/Styles/bootstrap.css" rel="stylesheet">
-    <link href="/Styles/jquery-ui.css" rel="stylesheet">
-    
+    <link href="/Styles/lumen.css" rel="stylesheet">
+    <link href="/Styles/jquery-ui.css" rel="stylesheet">    
 
     <script src="/Scripts/jquery-3.2.1.min.js"></script>
     <script src="/Scripts/jquery-ui.min.js"></script>
