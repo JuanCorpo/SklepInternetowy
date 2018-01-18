@@ -146,4 +146,28 @@ class Products
 
         $this->SQL->Query($query);
     }
+
+    public function GetProductsForMainSite()
+    {
+        $ProductsTableModel = [];
+        $result = $this->SQL->Query("SELECT * FROM products LIMIT 8");
+        foreach ($result as $item)
+        {
+            $ProductsTableModel[] = new ProductModel();
+            $ProductsTableModel[count($ProductsTableModel) - 1]->ProductId = $item['ProductId'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->CategoryId = $item['CategoryId'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Name = $item['ProductName'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Price = $item['ProductPrice'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->ImageDirectory = $item['ImageDirectory'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Rating = $item['Rating'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->NoOfRatings = $item['NumberOfRatings'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->StockSize = $item['StockStatus'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->ProductEmployeeId = $item['ProductEmployeeId'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Description = $item['Description'];
+
+            $ProductsTableModel[count($ProductsTableModel) - 1]->AssignedEmployee = $this->Context->Users->GetUserBy($item['ProductEmployeeId'],null);
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($item['ProductId']);
+        }
+        return $ProductsTableModel;
+    }
 }
