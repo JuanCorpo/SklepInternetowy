@@ -119,7 +119,14 @@ class Products
             $result = $this->SQL->Query("SELECT * FROM products WHERE CategoryId=$id");
 
             foreach ($result as $item) {
-                $products[] = $this->GetProduct($item['ProductId']);
+                $products[] = new ProductModel();
+                $products[count($products) - 1] = $this->GetProduct($item['ProductId']);
+
+                $employeeId = $products[count($products) - 1]->ProductEmployeeId;
+                $productId = $products[count($products) - 1]->ProductId;
+
+                $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserBy($employeeId);
+                $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($productId);
             }
         }
         return $products;

@@ -24,27 +24,46 @@ class ProductsController
 
         $model = new ProductListViewModel($this->context, 10, 1);
 
-        if( VariablesHelper::GetGetValue('filters') == true){
+        $categoryGet = $category;
+
+        if (VariablesHelper::GetGetValue('filters') == true) {
+            $catId = VariablesHelper::GetGetValue('categoryId');
+            if ($catId != null) {
+                $categoryGet = $catId;
+            }
+        }
+
+        $productsCategoryIds = $this->context->Products->GetProductsIdFrom($categoryGet, 0);
+        $productsAll = $this->context->Products->GetProductsFromCategories($productsCategoryIds);
+
+        $products = [];
+        if (VariablesHelper::GetGetValue('filters') == true) {
             $name = VariablesHelper::GetGetValue('name');
             $priceMin = VariablesHelper::GetGetValue('priceMin');
             $priceMax = VariablesHelper::GetGetValue('priceMax');
+
+            if ($name != null) {
+                foreach ($productsAll as $item) {
+                    if (strpos($item->Name, $name) !== false) {
+                        $products[] = $item;
+                    }
+
+                }
+            }
+            $model->Populate($products);
+        } else {
+            $model->Populate($productsAll);
         }
 
-        $productsCategoryIds = $this->context->Products->GetProductsIdFrom($category, 0);
-        $productsIds = $this->context->Products->GetProductsFromCategories($productsCategoryIds);
+        $model->OtherCategories = $this->context->Products->LoadProductForCategory($categoryGet);
 
-        $model->Populate($productsIds);
-
-        $model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
-
-        ListFor($model);
+        ListFor($model, $categoryGet);
         return;
     }
 
     public function Show($productId)
     {
         $product = $this->context->Products->GetProduct($productId);
-
 
         ProductsShow($product);
         return;

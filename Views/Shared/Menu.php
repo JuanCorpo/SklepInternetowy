@@ -23,7 +23,7 @@ if (!VariablesHelper::IsSessionActive()) {
                     <div id="SearchBarPanel">
 
                         <div id="SearchBarMenu">
-                            <form method="get" action="/Products/ListFor">
+                            <form method="get" action="/Products/ListFor/0">
                                 <input type="hidden" name="filters" value="true"/>
                                 <div class="input-group">
                                     <input placeholder="Szukaj produktu" get="name" name="name" type="text"

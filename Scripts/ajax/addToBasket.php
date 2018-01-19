@@ -92,8 +92,9 @@ if ($action == 1) {
         $i = 1;
         $suma = 0.0;
         foreach ($model as $item) {
-            $suma += ($item->Product->Price * $item->Count);
-            echo '<tr >
+            if ($item != null) {
+                $suma += ($item->Product->Price * $item->Count);
+                echo '<tr >
                       <td> ' . $i++ . '</td>
                       <td><a href="/Products/Show/' . $item->Product->ProductId . '/">' . $item->Product->Name . '</a></td>
                       <td>' . $item->Product->Price . 'zł</td>
@@ -106,7 +107,7 @@ if ($action == 1) {
                       </td>
                      
                     </tr>';
-
+            }
         }
         echo '<tr ><td></td>   <td></td>    <td>' . $suma . 'zł</td>  <td></td>  <td></td></tr>';
         echo '</table>';

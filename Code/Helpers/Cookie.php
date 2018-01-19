@@ -37,7 +37,9 @@ class Cookie
         if (Cookie::isCookieSet('basket')) {
             foreach ($basket as $item) {
                 $product = $context->Products->GetProduct($item->ProductId);
-                $price += $product->Price;
+                if($product != null) {
+                    $price += $product->Price;
+                }
             }
         }
 
@@ -52,9 +54,11 @@ class Cookie
         if (Cookie::isCookieSet('basket')) {
             foreach ($basket as $item) {
                 $product = $context->Products->GetProduct($item->ProductId);
-                $model[] = new BasketModel();
-                $model[count($model) - 1]->Product = $product;
-                $model[count($model) - 1]->Count = $item->Count;
+                if($product != null) {
+                    $model[] = new BasketModel();
+                    $model[count($model) - 1]->Product = $product;
+                    $model[count($model) - 1]->Count = $item->Count;
+                }
             }
             return $model;
         }

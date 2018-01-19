@@ -1,9 +1,9 @@
 <?php
 
-function ListFor($model)
+function ListFor($model, $categoryId)
 {
     echo "<div class='col-md-3'>";
-    _ProductListForFilters($model);
+    _ProductListForFilters($model, $categoryId);
     echo "</div>
     <div class='col-md-9'>";
 
@@ -32,7 +32,7 @@ function ListFor($model)
                 <div class="panel panel-primary col-md-12">
                     <a href="/Products/Show/' . $item->ProductId . '">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Item id:  ' . $item->Name . ' </h3>
+                            <h3 class="panel-title">' . $item->Name . ' </h3>
                             <small>ID produktu: ' . $item->ProductId . '</small>
                         </div>
                     </a>
