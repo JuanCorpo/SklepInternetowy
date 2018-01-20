@@ -1,11 +1,11 @@
 <?php
-include_once("./Models/ProductModel.php");
-include_once("./ViewModel/ProductListViewModel.php");
-include_once("./Code/Helpers/VariablesHelper.php");
-include_once("./Code/Helpers/RoleHelper.php");
-include_once("./Code/Helpers/Cookie.php");
-include_once("./Config/DatabaseContext.php");
-foreach (glob("./Views/Products/*.php") as $filename) {
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/ProductModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/ViewModel/ProductListViewModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/RoleHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Products/*.php") as $filename) {
     include_once $filename;
 }
 
@@ -24,14 +24,40 @@ class ProductsController
 
         $model = new ProductListViewModel($this->context, 10, 1);
 
-        $productsCategoryIds = $this->context->Products->GetProductsIdFrom($category, 0);
-        $productsIds = $this->context->Products->GetProductsFromCategories($productsCategoryIds);
+        $categoryGet = $category;
 
-        $model->Populate($productsIds);
+        if (VariablesHelper::GetGetValue('filters') == true) {
+            $catId = VariablesHelper::GetGetValue('categoryId');
+            if ($catId != null) {
+                $categoryGet = $catId;
+            }
+        }
 
-        $model->OtherCategories = $this->context->Products->LoadProductForCategory($category);
+        $productsCategoryIds = $this->context->Products->GetProductsIdFrom($categoryGet, 0);
+        $productsAll = $this->context->Products->GetProductsFromCategories($productsCategoryIds);
 
-        ListFor($model);
+        $products = [];
+        if (VariablesHelper::GetGetValue('filters') == true) {
+            $name = VariablesHelper::GetGetValue('name');
+            $priceMin = VariablesHelper::GetGetValue('priceMin');
+            $priceMax = VariablesHelper::GetGetValue('priceMax');
+
+            if ($name != null) {
+                foreach ($productsAll as $item) {
+                    if (strpos($item->Name, $name) !== false) {
+                        $products[] = $item;
+                    }
+
+                }
+            }
+            $model->Populate($products);
+        } else {
+            $model->Populate($productsAll);
+        }
+
+        $model->OtherCategories = $this->context->Products->LoadProductForCategory($categoryGet);
+
+        ListFor($model, $categoryGet);
         return;
     }
 

@@ -45,7 +45,6 @@ class Route
         $useController = $Controller . 'Controller';
         $class = new $useController($this->databaseContext);
 
-
         if ($args != null) {
             if (count($args) == 3) {// Controller/Action/Par1
                 $class->$Action($args[2]);

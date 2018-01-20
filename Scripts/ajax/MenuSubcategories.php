@@ -1,5 +1,4 @@
 <?php
-
 $ID = $_POST['ID'];
 
 $GLOBALS['counter'] = 0;

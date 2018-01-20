@@ -12,6 +12,13 @@ class VariablesHelper
         }
         return false;
     }
+
+    public static function IsAnyGetActive(){
+        if ( !empty($_GET) || count($_GET) != 0){
+            return true;
+        }
+        return false;
+    }
     // Sprawdzenie czy zmienne istnieją
     public static function IsPostSet($postName)
     {

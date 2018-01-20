@@ -50,6 +50,10 @@
     border-radius: 5px;
 }
 
+#MainContainer{
+    width: 1280px;
+}
+
 #WaitLoader {
     display: none;
     width: 50px;

@@ -1,14 +1,15 @@
 <?php
-include_once("Config/DatabaseContext.php");
-include_once("Config/route.php");
-include_once("Models/UserModel.php");
-include_once("Code/Helpers/VariablesHelper.php");
-include_once("Code/Helpers/RoleHelper.php");
+
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/sql.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/route.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/RoleHelper.php");
 
 session_start();
 echo "<html lang=\"pl-PL\">";
 include_once("Views/Shared/Head.php");
-
 $route = new Route();
 $databaseContext = new DatabaseContext();
 
@@ -27,13 +28,14 @@ $_SESSION['menuData'] = $databaseContext->Categories->LoadCategories();
 
 echo "<body>";
 echo "
-<img src='/Content/loader.gif' id='WaitLoader'/>
+<img src='Content/loader.gif' id='WaitLoader'/>
 <nav id=\"Header\" class=\"navbar navbar-default\">";
 
 if (RoleHelper::IsInRole(1)) {
     include_once "Views/Shared/_AdministrationBar.php";
 }
 
+$_SESSION['basketPrice'] = Cookie::GetBasketValue($databaseContext);
 include_once("Views/Shared/Menu.php");
 echo "</nav>";
 echo "

@@ -3,7 +3,7 @@
 function SiteInfoView($text, $type)
 {
     if (RoleHelper::IsInRole(1)) {
-        echo "<form method='post' action='/Site/SaveSiteInfo'>";
+        echo "<form method='post' action='Site/SaveSiteInfo/'>";
         echo "<div class='row'>
             <div class='col-md-12'>            
             <div class='navbar-left'>

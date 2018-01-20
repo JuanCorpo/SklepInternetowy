@@ -1,13 +1,13 @@
 <?php
-foreach (glob("./Views/Administration/*.php") as $filename) {
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Administration/*.php") as $filename) {
     include_once $filename;
 }
-include_once("./Code/Helpers/RoleHelper.php");
-include_once("./ViewModel/ProductListViewModel.php");
-include_once("./Models/ProductModel.php");
-include_once("./Code/Helpers/VariablesHelper.php");
-include_once("./Code/Helpers/Cookie.php");
-include_once("./Config/DatabaseContext.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/RoleHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/ViewModel/ProductListViewModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/ProductModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
 
 class AdministrationController
 {
@@ -25,7 +25,7 @@ class AdministrationController
 
             $model = $this->context->Categories->LoadCategories();
 
-            $_SESSION['context'] = serialize($this->context->Categories);
+            $_SESSION['context'] = serialize($this->context);
             AdministrationCategories($model);
             return;
 
@@ -150,8 +150,80 @@ class AdministrationController
     }
 
     public function Settings(){
-
+        // TODO popeawić czytelność
         Settings();
         return;
+    }
+
+    public function ParametersTypes()
+    {
+        $model = null;
+        if(VariablesHelper::IsAnyPostActive()){
+
+            $model = new ParametersTypesModel();
+            $model->ParameterName = VariablesHelper::GetPostValue('Name');
+            $model->Prefix = VariablesHelper::GetPostValue('prefix');
+            $model->Suffix = VariablesHelper::GetPostValue('Suffix');
+            $model->ValueType = VariablesHelper::GetPostValue('ValueType');
+
+            $this->context->ParametersTypes->AddParameterType($model);
+            header("Location: Administration/ParametersTypes");
+        }
+
+        $model = $this->context->ParametersTypes->GetParametersTypes();
+        ParametersTypes($model);
+        return;
+    }
+
+    public function EditProduct($ProductId) {
+        if (RoleHelper::IsInRole(1)) {
+
+            if (VariablesHelper::IsAnyPostActive()) {
+                $ProductModel = new ProductModel();
+                // Wypełnienie danymi z formularza
+
+                $Picture_dir = "Content/Pictures/";
+                $Target_file = $Picture_dir . basename($_FILES["ImageUpload"]["name"]);
+                $ImageFileType = pathinfo($Target_file, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["ImageUpload"]["tmp_name"], $Target_file);
+
+                $ProductModel->ProductId = $ProductId;
+                $ProductModel->CategoryId = VariablesHelper::GetPostValue("CategorySelect");
+                $ProductModel->Name = VariablesHelper::GetPostValue("ProductName");
+                $ProductModel->Price = VariablesHelper::GetPostValue("ProductPrice");
+                $ProductModel->StockSize = VariablesHelper::GetPostValue("StockSize");
+                $ProductModel->Description = VariablesHelper::GetPostValue("desc");
+                $ProductModel->ProductEmployeeId = VariablesHelper::GetPostValue("EmployeerSelect");
+                $ProductModel->ImageDirectory = "/" . $Target_file;
+
+                $this->context->Products->UpdateProduct($ProductModel);
+
+                $this->context->Parameters->DeleteParameters($ProductId);
+
+                for ($i = 0; $i <= VariablesHelper::GetPostValue("ParamSize"); $i++) {
+                    if (VariablesHelper::IsPostSet("ParamId_" . $i)) {
+                        $ParamId = VariablesHelper::GetPostValue("ParamId_" . $i);
+                        $ParamVal = VariablesHelper::GetPostValue("ParamVal_" . $i);
+
+                        $ProductModel->Parameters[] = new ParametersModel();
+                        $ProductModel->Parameters[count($ProductModel->Parameters) - 1]->CategoryId = $ProductModel->CategoryId;
+                        $ProductModel->Parameters[count($ProductModel->Parameters) - 1]->ParameterId = $ParamId;
+                        $ProductModel->Parameters[count($ProductModel->Parameters) - 1]->ParameterValue = $ParamVal;
+                        $ProductModel->Parameters[count($ProductModel->Parameters) - 1]->ProductId = $ProductId;
+                    }
+                }
+                // Przesłanie modelu parametrów do bazy danych
+                foreach ($ProductModel->Parameters as $item) {
+                    $this->context->Parameters->AddParameter($item);
+                }
+                header("Location: /Products/Show/$ProductId");
+            }
+            $ProductModel = $this->context->Products->GetProduct($ProductId);
+            $Employees = $this->context->Users->GetEmployeesList();
+            $Categories = $this->context->Categories->GetCategories();
+            $ParametersTypes = $this->context->ParametersTypes->GetParametersTypes();
+            EditProduct($ProductModel, $Employees, $Categories, $ParametersTypes);
+            return;
+        }
     }
 }

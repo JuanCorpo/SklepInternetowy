@@ -1,4 +1,5 @@
 <?php
+
 include_once $_SERVER['DOCUMENT_ROOT'] . "/Models/ProductModel.php";
 
 class Products
@@ -118,7 +119,14 @@ class Products
             $result = $this->SQL->Query("SELECT * FROM products WHERE CategoryId=$id");
 
             foreach ($result as $item) {
-                $products[] = $this->GetProduct($item['ProductId']);
+                $products[] = new ProductModel();
+                $products[count($products) - 1] = $this->GetProduct($item['ProductId']);
+
+                $employeeId = $products[count($products) - 1]->ProductEmployeeId;
+                $productId = $products[count($products) - 1]->ProductId;
+
+                $products[count($products) - 1]->AssignedEmployee = $this->Context->Users->GetUserBy($employeeId);
+                $products[count($products) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($productId);
             }
         }
         return $products;
@@ -129,5 +137,45 @@ class Products
         $this->SQL->Query("INSERT INTO products VALUES ('', $ProductModel->CategoryId, '$ProductModel->Name', $ProductModel->Price, '$ProductModel->ImageDirectory', $ProductModel->Rating, $ProductModel->NoOfRatings, $ProductModel->StockSize, '$ProductModel->Description', $ProductModel->ProductEmployeeId)");
         $result = $this->SQL->Query("SELECT ProductId FROM products ORDER BY ProductId DESC LIMIT 1");
         return $result[0]['ProductId'];
+    }
+
+    public function UpdateProduct($ProductModel)
+    {
+        $ProductId = $ProductModel->ProductId;
+        $query = "UPDATE products SET 
+        CategoryId = $ProductModel->CategoryId,
+        ProductName = '$ProductModel->Name',
+        ProductPrice = $ProductModel->Price,
+        ImageDirectory = '$ProductModel->ImageDirectory',
+        StockStatus = $ProductModel->StockSize,
+        Description = '$ProductModel->Description',
+        ProductEmployeeId = $ProductModel->ProductEmployeeId WHERE ProductId = $ProductId";
+
+
+        $this->SQL->Query($query);
+    }
+
+    public function GetProductsForMainSite()
+    {
+        $ProductsTableModel = [];
+        $result = $this->SQL->Query("SELECT * FROM products LIMIT 8");
+        foreach ($result as $item)
+        {
+            $ProductsTableModel[] = new ProductModel();
+            $ProductsTableModel[count($ProductsTableModel) - 1]->ProductId = $item['ProductId'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->CategoryId = $item['CategoryId'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Name = $item['ProductName'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Price = $item['ProductPrice'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->ImageDirectory = $item['ImageDirectory'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Rating = $item['Rating'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->NoOfRatings = $item['NumberOfRatings'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->StockSize = $item['StockStatus'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->ProductEmployeeId = $item['ProductEmployeeId'];
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Description = $item['Description'];
+
+            $ProductsTableModel[count($ProductsTableModel) - 1]->AssignedEmployee = $this->Context->Users->GetUserBy($item['ProductEmployeeId'],null);
+            $ProductsTableModel[count($ProductsTableModel) - 1]->Parameters = $this->Context->Parameters->LoadParametersForProduct($item['ProductId']);
+        }
+        return $ProductsTableModel;
     }
 }

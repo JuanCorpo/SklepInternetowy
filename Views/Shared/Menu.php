@@ -1,7 +1,7 @@
 <?php
 
 if (!VariablesHelper::IsSessionActive()) {
-    include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
+    include_once($_SERVER['DOCUMENT_ROOT'] . "Models/UserModel.php");
     session_start();
 }
 ?>
@@ -11,7 +11,7 @@ if (!VariablesHelper::IsSessionActive()) {
 
         <div id="TopMenuContainer">
             <div id="MainLogo">
-                <a href="/">
+                <?php echo '<a href="/">';?>
                     <div id="BANNER"></div>
                 </a>
             </div>
@@ -23,7 +23,8 @@ if (!VariablesHelper::IsSessionActive()) {
                     <div id="SearchBarPanel">
 
                         <div id="SearchBarMenu">
-                            <form method="get" action="/Products/ListFor">
+                            <form method="get" action="/Products/ListFor/0">
+                                <input type="hidden" name="filters" value="true"/>
                                 <div class="input-group">
                                     <input placeholder="Szukaj produktu" get="name" name="name" type="text"
                                            class="form-control">
@@ -37,7 +38,7 @@ if (!VariablesHelper::IsSessionActive()) {
 
                     </div>
                     <div id="UserPanel">
-                        <a href="/Account/Index">
+                        <?php echo '<a href="/Account/Index/">';?>
                             <div id="UserProfile">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-user"></span>
@@ -55,11 +56,17 @@ if (!VariablesHelper::IsSessionActive()) {
                                 </div>
                             </div>
                         </a>
-                        <a href="/Account/Basket">
+                        <?php echo '<a href="/Account/Basket/">'?>
                             <div id="UserCart">
                                     <span style="font-size: 30pt;margin-top: 15px;"
                                           class="glyphicon glyphicon-shopping-cart"></span>
-                                <div style="display: inline-block;">Koszyk<br/>0,00zł</div>
+                                <div style="display: inline-block;">Koszyk<br/>
+                                    <?php
+
+                                    echo $_SESSION['basketPrice'] .'zł';
+
+                                    ?>
+                                </div>
                             </div>
                         </a>
                     </div>

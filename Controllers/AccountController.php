@@ -1,10 +1,11 @@
 <?php
-include_once('./Code/Helpers/Cookie.php');
-include_once("./Models/UserModel.php");
-include_once("./Code/Helpers/VariablesHelper.php");
-include_once("./Code/CustomClasses/MailSender.php");
-include_once("./Config/DatabaseContext.php");
-foreach (glob("./Views/Account/*.php") as $filename) {
+include_once($_SERVER['DOCUMENT_ROOT'] . '/Code/Helpers/Cookie.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/UserModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Models/AddressesModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Code/CustomClasses/MailSender.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Views/Account/*.php") as $filename) {
     include_once $filename;
 }
 
@@ -36,6 +37,7 @@ class AccountController
 
     public function Profile($model)
     {
+        $model = unserialize( $_SESSION['user']);
         AccountProfileView($model);
         return;
     }
@@ -74,7 +76,7 @@ class AccountController
                     $newToken = $model->generateEmailToken();
                     $this->context->Users->SaveEmailConfirmToken($model->UserPrivateMail, $newToken);
 
-                    $actual_link = "http://$_SERVER[HTTP_HOST]" . "/Account/Confirm/" . $newToken;
+                    $actual_link = "http://$_SERVER[HTTP_HOST]".DIR . "//Account/Confirm/" . $newToken;
                     MailSender::SendEmailConfirmInfo($this->context, $email, Array($model->UserName, $actual_link, $model->UserPrivateMail));
 
                     if (VariablesHelper::IsPostSet('Newsletter')) {
@@ -130,7 +132,7 @@ class AccountController
                     if ($model->EmailConfirmToken === $token && $confirmed === $model->EmailConfirmed) {
                     }
                 } else {
-                    header("Location: /Account/Confirm/" . $token . "?error");
+                    header("Location: /Account/Confirm/" . $token . "/?error");
                 }
             }
 
@@ -153,7 +155,7 @@ class AccountController
             } else {
                 $model = new UserModel();
                 $model->UserPrivateMail = "";
-                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.1";
+                $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email";
 
                 $this->Login($model, 0);
                 return;
@@ -161,7 +163,7 @@ class AccountController
         }
         $model = new UserModel();
         $model->UserPrivateMail = "";
-        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email.2";
+        $model->ErrorLogin = "Dane logowania nie są poprawne albo nie potwierdzono adresu email";
 
         $this->Login($model, 0);
         return;
@@ -198,8 +200,25 @@ class AccountController
 
     public function ChangePassword()
     {
+        $model = null;
         if (VariablesHelper::IsUserActive()) {
-            ChangePassword();
+            $model = unserialize( $_SESSION['user']);
+            if (VariablesHelper::IsAnyPostActive()) {
+                $OldPassword = VariablesHelper::GetPostValue('OldPassword');
+                $NewPassword = VariablesHelper::GetPostValue('NewPassword');
+                $NewPasswordConfirm =  VariablesHelper::GetPostValue('NewPasswordConfirm');
+                $Email = VariablesHelper::GetPostValue('Email');
+                $User = $this->context->Users->ValidateUser($Email, sha1($OldPassword));
+                if ($User != null && $NewPassword == $NewPasswordConfirm) {
+                    $this->context->Users->ChangePasswordInDataBase($User->UserPrivateMail, sha1($NewPassword));
+                    $model->ErrorLogin = "Hasło zostało zmienione!";
+                    $model->ErrorCode = 1;
+                } else {
+                    $model->ErrorLogin = "Podane dane są nieprawidłowe!";
+                    $model->ErrorCode = 2;
+                }
+            }
+            ChangePassword($model);
             return;
         }
         header("Location: /");
@@ -229,7 +248,8 @@ class AccountController
     {
         if (VariablesHelper::IsUserActive()) {
 
-            AddressBook();
+            $AddressesModel = $this->context->Addresses->GetUserAddresses( unserialize($_SESSION['user'])->Id);
+            AddressBook($AddressesModel);
             return;
         }
         header("Location: /");
@@ -294,30 +314,18 @@ class AccountController
     public function Basket()
     {
         $model = null;
+        $userAddresses = null;
+
         if (VariablesHelper::IsUserActive()) {
             $user = unserialize($_SESSION['user']);
             //$model = $this->context->Baskets->GetBasket($user->Id);
-
-
-        }else{
-
+            $userAddresses = $this->context->Addresses->GetUserAddresses($user->Id);
         }
-        $basket = unserialize(Cookie::GetCookieValue('basket'));
+        $model = Cookie::GetBasketsProducts($this->context);
+        $_SESSION['context'] = serialize($this->context);
 
-        $model = [];
-
-        foreach ($basket as $item) {
-            $product = $this->context->Products->GetProduct($item->ProductId);
-            $model[] = new BasketModel();
-            $model[count($model)-1]->Product = $product;
-            $model[count($model)-1]->Count = $item->Count;
-        }
-        $_SESSION['context'] = serialize($this->context->Products);
-
-        Basket($model);
+        Basket($model,$userAddresses);
         return;
-
-
     }
 
     /// Pytania
@@ -349,6 +357,106 @@ class AccountController
         }
         header("Location: /");
     }
+    public function PlaceOrder()
+    {
+        $products = Cookie::GetBasketsProducts($this->context);
+        $id = $this->context->Baskets->AddBasket($products);
+        $user = unserialize( $_SESSION['user']);
 
+        $order = new OrderModel();
 
+        $order->OrderStatusId = 0;
+        $order->Price = Cookie::GetBasketValue($this->context);
+        $order->Date = date('Y-m-d H:i:s');
+        $order->BasketId = $id;
+        $order->UserId =$user->Id;
+        $order->StatusId = 0;
+
+        $this->context->Orders->AddOrder($order);
+        MailSender::SendOrderPlacedInfo($this->context, $user->UserPrivateMail);
+
+        header("Location: /");
+    }
+
+    public function AddAddress() {
+        $AddressModel = null;
+        if (VariablesHelper::IsUserActive()) {
+
+            if (VariablesHelper::IsAnyPostActive()) {
+                $AddressModel = new AddressesModel();
+                $AddressModel->UserId = unserialize($_SESSION['user'])->Id;
+                $AddressModel->Country = VariablesHelper::GetPostValue('Country');
+                $AddressModel->City = VariablesHelper::GetPostValue('City');
+                $AddressModel->Street = VariablesHelper::GetPostValue('Street');
+                $AddressModel->HouseNumber = VariablesHelper::GetPostValue('HouseNumber');
+                $AddressModel->PostalCode = VariablesHelper::GetPostValue('PostalCode');
+                $AddressModel->PhoneNumber = VariablesHelper::GetPostValue('PhoneNumber');
+                $AddressModel->Vovoidship = VariablesHelper::GetPostValue('Vovoidship');
+
+                $this->context->Addresses->AddAddress($AddressModel);
+
+                header('location: /Account/AddressBook');
+
+            }
+            }
+        AddAddress();
+    }
+
+    public function DeleteAddress($AddressId) {
+
+                $this->context->Addresses->DeleteAddress($AddressId);
+
+                header('location: /Account/AddressBook');
+    }
+
+    public function ChangeUserMail()
+    {
+        $UserModel = null;
+        if (VariablesHelper::IsUserActive()) {
+            $UserModel = unserialize( $_SESSION['user']);
+            if (VariablesHelper::IsAnyPostActive()) {
+                $UserId = $UserModel->Id;
+                $OldMail = VariablesHelper::GetPostValue('OldMail');
+                $NewMail = VariablesHelper::GetPostValue('NewMail');
+                $NewMailConfirm =  VariablesHelper::GetPostValue('NewMailConfirm');
+                if ($UserModel->UserPrivateMail == $OldMail && $NewMail == $NewMailConfirm) {
+                    $this->context->Users->ChangeMailInDataBase($UserId, $NewMail);
+                    $UserModel->ErrorLogin = "Mail został zmieniony!";
+                    $UserModel->ErrorCode = 1;
+                    $UserModel->UserPrivateMail = $NewMail;
+                    $_SESSION['user'] = serialize($UserModel);
+                } else {
+                    $UserModel->ErrorLogin = "Podane dane są nieprawidłowe!";
+                    $UserModel->ErrorCode = 2;
+                }
+            }
+            ChangeEmail($UserModel);
+            return;
+        }
+        header("Location: /");
+    }
+
+    public function ChangeBasicInfo()
+    {
+        $UserModel = null;
+        if (VariablesHelper::IsUserActive()) {
+            $UserModel = unserialize( $_SESSION['user']);
+            if (VariablesHelper::IsAnyPostActive()) {
+                $UserId = $UserModel->Id;
+                $UserName = VariablesHelper::GetPostValue('UserName');
+                $FirstName = VariablesHelper::GetPostValue('FirstName');
+                $SurName = VariablesHelper::GetPostValue('SurName');
+                    $this->context->Users->ChangeBasicInfoInDataBase($UserId, $UserName, $FirstName, $SurName);
+                    $UserModel->ErrorLogin = "Dane zostały zmienione!";
+                    $UserModel->ErrorCode = 1;
+                    $UserModel->UserName = $UserName;
+                $UserModel->FirstName = $FirstName;
+                $UserModel->SurName = $SurName;
+                    $_SESSION['user'] = serialize($UserModel);
+            }
+            BasicInfo($UserModel);
+            return;
+        }
+        header("Location: /");
+    }
 }

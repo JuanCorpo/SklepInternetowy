@@ -1,5 +1,6 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . "/Code/Helpers/Cookie.php";
 
 class Users
 {
@@ -183,5 +184,20 @@ class Users
     {
         return $this->GetUsersAll("UserRole = 2");
         // return $this->SQL->Query("SELECT * FROM users WHERE UserRole=2");
+    }
+
+    public function ChangePasswordInDataBase($UserMail, $NewPassword)
+    {
+        $this->SQL->Query("UPDATE users SET UserPassword = '$NewPassword' WHERE UserPrivateEmail='$UserMail'");
+    }
+
+    public function ChangeMailInDataBase($UserId, $NewMail)
+    {
+        $this->SQL->Query("UPDATE users SET UserPrivateEmail = '$NewMail' WHERE UserId=$UserId");
+    }
+
+    public function ChangeBasicInfoInDataBase($UserId, $UserName, $FirstName, $SurName)
+    {
+        $this->SQL->Query("UPDATE users SET UserName = '$UserName', FirstName = '$FirstName', SurName = '$SurName' WHERE UserId=$UserId");
     }
 }

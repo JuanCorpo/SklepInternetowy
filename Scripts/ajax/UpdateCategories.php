@@ -1,20 +1,23 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . "/Config/sql.php");
-foreach (glob($_SERVER['DOCUMENT_ROOT'] . "/Config/DatabaseContext/*.php") as $filename) {
+
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Config/DatabaseContext.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Code/Helpers/VariablesHelper.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Models/UserModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Models/CategoriesModel.php");
+include_once($_SERVER['DOCUMENT_ROOT'] ."/Models/BasketModel.php");
+foreach (glob($_SERVER['DOCUMENT_ROOT'] ."/Config/DatabaseContext/*.php") as $filename) {
     include_once $filename;
 }
-
 session_start();
 $data = json_decode(stripslashes($_POST['data']));
 
 $context = unserialize($_SESSION['context']);
 
-$data = fixIds($data, $context->NewCategoryId());
+$data = fixIds($data, $context->Categories->NewCategoryId());
 
 foreach ($data as $d) {
-    $context->UpdateCategory($d[0], $d[1], $d[2]);
+    $context->Categories->UpdateCategory($d[0], $d[1], $d[2]);
 }
-
 
 function allPrentsTo($oldPar, $newPar, $arr)
 {

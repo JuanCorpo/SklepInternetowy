@@ -12,7 +12,7 @@ class SQL
     public function __construct()
     {
         $this->Host = 'mysql.cba.pl';//'localhost';//
-        $this->Username = 'AllonerCorp';//'Alan';//
+        $this->Username ='AllonerCorp';// 'Alan';//
         $this->Password = 'AllonerCorp12';//'Alan';//
         $this->Database = 'juancorp';
     }

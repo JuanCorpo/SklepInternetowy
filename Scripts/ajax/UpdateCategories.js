@@ -96,7 +96,6 @@ $(function () {
         $("#WaitLoader").show();
         $("#SaveCategories").prop('disabled', true);
 
-        setTimeout(function () {
             array = [];
             GetNewCategories("root");
 
@@ -112,11 +111,12 @@ $(function () {
                 },
                 success: function (data) {
                     //$("#MainContainer").html(data);
+                    console.log(data);
                 }
             });
             $("#WaitLoader").hide();
             $("#SaveCategories").prop('disabled', false);
-        }, 1500);
+
     });
 
     $(".CategoryDraggable").draggable({cursor: "pointer", revert: "invalid"});

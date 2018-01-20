@@ -20,9 +20,9 @@ function callBasketScript(productId, action){
         },
         success: function (data) {
             //console.log("TAK");
-            //console.log(data);
+            console.log(data);
             if(action === -1) {
-                $("#BasketProductList").innerHTML = data;
+                //$("#BasketProductList").innerHTML = data;
                 document.getElementById("BasketProductList").innerHTML = data;
             }
         }

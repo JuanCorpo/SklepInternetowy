@@ -1,48 +1,49 @@
 <?php
-function _ProductListForFilters($model)
+function _ProductListForFilters($model, $categoryId)
 {
     echo "
     <div class='panel panel-default'>
-        <form id='FilterForm' method='get'>
-        
-                <div class='panel-heading'>Filtry</div>
-                
-                <div class='panel-body'>
-                    Panel content
-                </div>
-                <div class='panel-body'>
-                    Panel content
-                </div>
-                <div class='panel-body'>
-                    Panel content
-                </div>
-                <div class='panel-body'>
-<p>
-  <label for=\"amount\">Price range:</label>
-  <input type=\"text\" id=\"amount\" readonly style=\"border:0; color:#f6931f; font-weight:bold;\">
-</p>
- 
-<div id=\"slider-range\"></div>
-    
-                </div>"; ?>
-    <script>
-        $(function () {
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [75, 300],
-                slide: function (event, ui) {
-                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                }
-            });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-                " - $" + $("#slider-range").slider("values", 1));
-        });
-    </script>
-    <?php echo "
-                   <input class=\"btn btn-primary\" type='submit' value='Szukaj'/> 
+        <form style='min-height:50%' id='FilterForm' method='get'>
+             <input type=\"hidden\" name=\"filters\" value=\"true\"/>
+             <input type=\"hidden\" name=\"categoryId\" value=\"$categoryId\"/>
+             <div class='panel-heading'><h2>Wyszukiwanie</h2></div>
+             
+             <div style='margin-left: 20px;'>
+             ";
+
+    $params = [];
+    foreach ($model->ItemList as $product) {
+        foreach ($product->Parameters as $item) {
+            $params[] = $item;
+        }
+    }
+
+    usort($params, "cmp");
+
+    $prevParamId = -1;
+    foreach ($params as $item) {
+        if ($prevParamId != $item->ParameterType->ParameterId) {
+            echo "<h3>" . $item->ParameterType->ParameterName . "</h3>";
+            $prevParamId = $item->ParameterType->ParameterId;
+        }
+
+        echo '
+        <div class="checkbox">
+          <label>
+            <input name="' . $prevParamId . '" value="' . $item->ParameterValue . '" type="checkbox"> ' . $item->ParameterValue . " " . $item->ParameterType->Suffix . '
+          </label>
+        </div>
+        ';
+    }
+
+    echo "<input class=\"btn btn-primary\" type='submit' value='Szukaj'/> 
+            </div>
          </form>
     </div>
     ";
+}
+
+function cmp($a, $b)
+{
+    return strcmp($a->ParameterId, $b->ParameterId);
 }
